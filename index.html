@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="es">
 <head>
 
@@ -8,8 +9,9 @@
 <title>Fogón del Valle | Restaurante · Trevelin</title>
 
 <meta
-    name="description"
-    content="Fogón del Valle. Cocina patagónica, vinos de la cordillera y sabores de estación en Trevelin."
+name="description"
+content="Fogón del Valle. Cocina patagónica, vinos de la cordillera y sabores de estación en Trevelin."
+
 >
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -373,16 +375,105 @@ MENU
 
 .menu-grid {
     display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:65px;
+    grid-template-columns:1fr;
+    gap:14px;
 }
 
-.menu-category h3 {
+.menu-category {
+    background:white;
+    border:1px solid var(--border);
+    overflow:hidden;
+}
+
+.menu-category-header {
+    width:100%;
+    border:0;
+    background:white;
+    color:var(--wine);
+    padding:22px 25px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+    cursor:pointer;
+    text-align:left;
+    transition:.25s;
+}
+
+.menu-category-header:hover {
+    background:var(--cream);
+}
+
+.menu-category-title {
+    display:flex;
+    align-items:center;
+    gap:14px;
+}
+
+.menu-category-icon {
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:var(--cream);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:19px;
+    flex-shrink:0;
+}
+
+.menu-category-name {
     font-family:"Cormorant Garamond",serif;
     font-size:34px;
-    color:var(--wine);
-    padding-bottom:15px;
-    border-bottom:1px solid var(--border);
+    line-height:1;
+}
+
+.menu-category-description {
+    display:block;
+    color:var(--muted);
+    font-family:"DM Sans",sans-serif;
+    font-size:11px;
+    margin-top:5px;
+}
+
+.menu-category-toggle {
+    width:36px;
+    height:36px;
+    border-radius:50%;
+    border:1px solid var(--border);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:22px;
+    color:var(--terracotta);
+    flex-shrink:0;
+    transition:.3s;
+}
+
+.menu-category.active .menu-category-toggle {
+    background:var(--terracotta);
+    color:white;
+    border-color:var(--terracotta);
+    transform:rotate(180deg);
+}
+
+.menu-category-content {
+    display:grid;
+    grid-template-rows:0fr;
+    transition:grid-template-rows .35s ease;
+}
+
+.menu-category.active .menu-category-content {
+    grid-template-rows:1fr;
+}
+
+.menu-category-inner {
+    min-height:0;
+    overflow:hidden;
+}
+
+.menu-category-items {
+    padding:0 25px 10px;
 }
 
 .menu-item {
@@ -390,7 +481,7 @@ MENU
     grid-template-columns:1fr auto;
     gap:20px;
     padding:22px 0;
-    border-bottom:1px solid var(--border);
+    border-top:1px solid var(--border);
 }
 
 .menu-item h4 {
@@ -402,6 +493,7 @@ MENU
     color:var(--muted);
     font-size:13px;
     margin-top:4px;
+    max-width:700px;
 }
 
 .menu-price {
@@ -787,6 +879,7 @@ MIS PEDIDOS
     display:flex;
     justify-content:space-between;
     align-items:center;
+    gap:15px;
     background:var(--cream-light);
 }
 
@@ -798,6 +891,63 @@ MIS PEDIDOS
     color:var(--wine);
     font-size:21px;
     font-weight:700;
+}
+
+.order-actions {
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    justify-content:flex-end;
+}
+
+.order-edit-btn,
+.order-cancel-edit-btn {
+    border:1px solid var(--terracotta);
+    background:transparent;
+    color:var(--terracotta);
+    padding:9px 14px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:700;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.order-edit-btn:hover {
+    background:var(--terracotta);
+    color:white;
+}
+
+.order-edit-locked {
+    font-size:11px;
+    color:var(--muted);
+    font-style:italic;
+}
+
+.editing-banner {
+    background:var(--wine);
+    color:white;
+    padding:14px 18px;
+    margin-bottom:15px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    font-size:13px;
+}
+
+.editing-banner strong {
+    color:#e9c98e;
+}
+
+.editing-banner button {
+    border:1px solid rgba(255,255,255,.4);
+    background:transparent;
+    color:white;
+    padding:7px 12px;
+    border-radius:18px;
+    cursor:pointer;
+    font-size:11px;
 }
 
 /* =========================================================
@@ -936,6 +1086,12 @@ CARRITO
     font-size:32px;
 }
 
+.cart-editing-label {
+    font-size:11px;
+    color:#e9c98e;
+    margin-top:3px;
+}
+
 .close-cart {
     border:0;
     background:transparent;
@@ -1011,6 +1167,10 @@ CARRITO
 
 .checkout-btn {
     width:100%;
+}
+
+.checkout-btn.editing {
+    background:var(--wine);
 }
 
 /* =========================================================
@@ -1145,11 +1305,6 @@ RESPONSIVE
         gap:45px;
     }
 
-    .menu-grid {
-        grid-template-columns:1fr;
-        gap:45px;
-    }
-
     .dishes,
     .experience-grid {
         grid-template-columns:1fr;
@@ -1220,6 +1375,32 @@ RESPONSIVE
         grid-column:auto;
     }
 
+    .menu-category-header {
+        padding:18px;
+    }
+
+    .menu-category-name {
+        font-size:28px;
+    }
+
+    .menu-category-description {
+        max-width:190px;
+    }
+
+    .menu-category-items {
+        padding:0 18px 8px;
+    }
+
+    .menu-item {
+        grid-template-columns:1fr;
+        gap:8px;
+    }
+
+    .menu-price {
+        order:-1;
+        justify-self:start;
+    }
+
     .order-card-header {
         flex-direction:column;
         align-items:flex-start;
@@ -1230,7 +1411,18 @@ RESPONSIVE
     }
 
     .order-card-footer {
-        gap:15px;
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .order-actions {
+        width:100%;
+        justify-content:flex-start;
+    }
+
+    .editing-banner {
+        align-items:flex-start;
+        flex-direction:column;
     }
 
 }
@@ -1263,6 +1455,7 @@ TOAST
 }
 
 </style>
+
 </head>
 
 <body>
@@ -1282,11 +1475,7 @@ FOGÓN DEL VALLE
 
 <nav class="nav-links">
 
-<a href="#historia">Historia</a>
-<a href="#menu">Menú</a>
-<a href="#mis-pedidos">Mis pedidos</a>
-<a href="#experiencia">Experiencia</a>
-<a href="#galeria">Galería</a>
+<a href="#historia">Historia</a> <a href="#menu">Menú</a> <a href="#mis-pedidos">Mis pedidos</a> <a href="#experiencia">Experiencia</a> <a href="#galeria">Galería</a>
 
 <button class="cart-button" id="openCart" type="button">
 🛒 Carrito
@@ -1298,7 +1487,6 @@ FOGÓN DEL VALLE
 </div>
 
 </header>
-
 
 <!-- =========================================================
 HERO
@@ -1339,7 +1527,6 @@ Ver mi pedido
 
 </section>
 
-
 <!-- =========================================================
 HISTORIA
 ========================================================= -->
@@ -1353,6 +1540,7 @@ HISTORIA
 <img
 src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1200&q=85"
 alt="Plato de cocina de estación"
+
 >
 
 <div class="image-note">
@@ -1366,7 +1554,6 @@ Cocina de estación · Patagonia
 </div>
 
 </div>
-
 
 <div class="intro-content">
 
@@ -1406,7 +1593,6 @@ Cocina con identidad.
 
 </section>
 
-
 <!-- =========================================================
 MENU DINÁMICO
 ========================================================= -->
@@ -1426,7 +1612,7 @@ Sabores del valle.
 </h2>
 
 <p class="section-text">
-Elegí tus platos y agregalos a tu pedido.
+Elegí una categoría para descubrir sus platos.
 </p>
 
 </div>
@@ -1442,7 +1628,6 @@ Cargando menú...
 </div>
 
 </section>
-
 
 <!-- =========================================================
 PLATOS DESTACADOS
@@ -1467,7 +1652,6 @@ Algunos de nuestros platos favoritos.
 </p>
 
 </div>
-
 
 <div class="dishes">
 
@@ -1495,7 +1679,6 @@ y el aroma inconfundible de nuestro fogón.
 
 </article>
 
-
 <article class="dish">
 
 <div class="dish-image">
@@ -1519,7 +1702,6 @@ con una mirada contemporánea.
 </div>
 
 </article>
-
 
 <article class="dish">
 
@@ -1551,7 +1733,6 @@ de una de nuestras especialidades.
 
 </section>
 
-
 <!-- =========================================================
 MIS PEDIDOS
 ========================================================= -->
@@ -1571,8 +1752,8 @@ Mis pedidos.
 </h2>
 
 <p class="section-text">
-Consultá los platos que pediste, el total y el estado
-de cada pedido.
+Acá solamente vas a ver tus propios pedidos.
+Podés editar un pedido mientras todavía no haya sido aceptado.
 </p>
 
 </div>
@@ -1606,7 +1787,6 @@ Iniciar sesión
 
 </section>
 
-
 <!-- =========================================================
 EXPERIENCIA
 ========================================================= -->
@@ -1632,7 +1812,6 @@ de la comida, el vino y el paisaje.
 
 </div>
 
-
 <div class="experience-grid">
 
 <div class="experience-card">
@@ -1652,7 +1831,6 @@ y buscamos poner en valor a productores locales.
 
 </div>
 
-
 <div class="experience-card">
 
 <div class="experience-number">
@@ -1669,7 +1847,6 @@ pensada para acompañar nuestra cocina.
 </p>
 
 </div>
-
 
 <div class="experience-card">
 
@@ -1694,7 +1871,6 @@ cocina lenta, aromas y encuentros alrededor de la mesa.
 
 </section>
 
-
 <!-- =========================================================
 GALERÍA
 ========================================================= -->
@@ -1714,7 +1890,6 @@ Así se vive Fogón.
 </h2>
 
 </div>
-
 
 <div class="gallery">
 
@@ -1759,7 +1934,6 @@ alt="Cena"
 
 </section>
 
-
 <!-- =========================================================
 FAQ
 ========================================================= -->
@@ -1780,7 +1954,6 @@ Antes de venir.
 
 </div>
 
-
 <div class="faq-list">
 
 <div class="faq-item">
@@ -1799,7 +1972,6 @@ fines de semana y temporada alta.
 
 </div>
 
-
 <div class="faq-item">
 
 <button class="faq-question" type="button">
@@ -1815,7 +1987,6 @@ y podemos adaptar algunos platos.
 </div>
 
 </div>
-
 
 <div class="faq-item">
 
@@ -1837,7 +2008,6 @@ Sí. Nuestro restaurante recibe familias.
 </div>
 
 </section>
-
 
 <!-- =========================================================
 RESERVA / PEDIDO
@@ -1873,7 +2043,6 @@ Realizar pedido
 
 </section>
 
-
 <!-- =========================================================
 FOOTER
 ========================================================= -->
@@ -1902,7 +2071,6 @@ Demo ficticia · Desarrollada por WEBS PATAGONIA
 
 </footer>
 
-
 <!-- =========================================================
 CARRITO
 ========================================================= -->
@@ -1913,16 +2081,23 @@ CARRITO
 
 <div class="cart-header">
 
+<div>
+
 <h2>
 Tu pedido
 </h2>
+
+<div class="cart-editing-label" id="cartEditingLabel" style="display:none">
+Editando pedido
+</div>
+
+</div>
 
 <button class="close-cart" id="closeCart" type="button">
 ×
 </button>
 
 </div>
-
 
 <div class="cart-items" id="cartItems">
 
@@ -1931,7 +2106,6 @@ Tu carrito está vacío.
 </div>
 
 </div>
-
 
 <div class="cart-footer">
 
@@ -1962,7 +2136,6 @@ Confirmar pedido
 
 </div>
 
-
 <!-- =========================================================
 LOGIN / REGISTRO
 ========================================================= -->
@@ -1983,7 +2156,6 @@ Ingresar
 Ingresá para confirmar tu pedido.
 </p>
 
-
 <form id="authForm">
 
 <div class="form-group" id="nameGroup" style="display:none">
@@ -1997,10 +2169,10 @@ type="text"
 id="authName"
 placeholder="Tu nombre"
 autocomplete="name"
+
 >
 
 </div>
-
 
 <div class="form-group">
 
@@ -2011,13 +2183,13 @@ Email
 <input
 type="email"
 id="authEmail"
-placeholder="tu@email.com"
+placeholder="[tu@email.com](mailto:tu@email.com)"
 autocomplete="email"
 required
+
 >
 
 </div>
-
 
 <div class="form-group">
 
@@ -2031,10 +2203,10 @@ id="authPassword"
 placeholder="Mínimo 6 caracteres"
 autocomplete="current-password"
 required
+
 >
 
 </div>
-
 
 <button
 type="submit"
@@ -2047,7 +2219,6 @@ Ingresar
 </button>
 
 </form>
-
 
 <div class="auth-switch">
 
@@ -2065,7 +2236,6 @@ Crear cuenta
 
 </div>
 
-
 <!-- =========================================================
 USUARIO LOGUEADO
 ========================================================= -->
@@ -2082,13 +2252,11 @@ Salir
 
 </div>
 
-
 <!-- =========================================================
 TOAST
 ========================================================= -->
 
 <div class="toast" id="toast"></div>
-
 
 <script>
 
@@ -2127,6 +2295,9 @@ const cartCount =
 
 const cartTotal =
     document.getElementById("cartTotal");
+
+const cartEditingLabel =
+    document.getElementById("cartEditingLabel");
 
 const authModal =
     document.getElementById("authModal");
@@ -2182,6 +2353,10 @@ let authMode = "login";
 let currentUser = null;
 
 let menuItems = [];
+
+let myOrders = [];
+
+let editingOrderId = null;
 
 let isSubmittingOrder = false;
 
@@ -2248,6 +2423,72 @@ function escapeHtml(text) {
 
 
 /* =========================================================
+ICONO DE CATEGORÍA
+========================================================= */
+
+function getCategoryIcon(name) {
+
+    const value =
+        String(name || "")
+        .toLowerCase();
+
+
+    if (
+        value.includes("empan")
+    ) {
+        return "🥟";
+    }
+
+    if (
+        value.includes("carne") ||
+        value.includes("cordero") ||
+        value.includes("bife")
+    ) {
+        return "🥩";
+    }
+
+    if (
+        value.includes("pesc") ||
+        value.includes("trucha") ||
+        value.includes("mar")
+    ) {
+        return "🐟";
+    }
+
+    if (
+        value.includes("pasta") ||
+        value.includes("risotto")
+    ) {
+        return "🍝";
+    }
+
+    if (
+        value.includes("postre") ||
+        value.includes("dulce")
+    ) {
+        return "🍰";
+    }
+
+    if (
+        value.includes("vino") ||
+        value.includes("bebida")
+    ) {
+        return "🍷";
+    }
+
+    if (
+        value.includes("entrada") ||
+        value.includes("comenzar")
+    ) {
+        return "🥗";
+    }
+
+    return "🍽️";
+
+}
+
+
+/* =========================================================
 ESTADO DEL PEDIDO
 ========================================================= */
 
@@ -2293,6 +2534,20 @@ function getOrderStatus(status) {
         name:"Pedido"
 
     };
+
+}
+
+
+/* =========================================================
+PEDIDO EDITABLE
+========================================================= */
+
+function isOrderEditable(order) {
+
+    return (
+        order &&
+        order.status === "received"
+    );
 
 }
 
@@ -2375,11 +2630,7 @@ async function loadMenu() {
 
 
     /*
-     * Eliminamos duplicados por nombre.
-     *
-     * Esto evita que un mismo plato aparezca
-     * dos veces aunque existan registros
-     * duplicados en la base.
+     * Cada producto queda una sola vez.
      */
 
     (data || []).forEach(
@@ -2462,7 +2713,7 @@ async function loadMenu() {
 
 
 /* =========================================================
-RENDER MENÚ
+RENDER MENÚ ACORDEÓN
 ========================================================= */
 
 function renderMenu(categories) {
@@ -2471,6 +2722,9 @@ function renderMenu(categories) {
 
     const renderedNames =
         new Set();
+
+
+    const usableCategories = [];
 
 
     categories.forEach(
@@ -2520,12 +2774,6 @@ function renderMenu(categories) {
                         }
 
 
-                        /*
-                         * Solamente renderizamos
-                         * productos que realmente
-                         * están en menuItems.
-                         */
-
                         const exists =
                             menuItems.some(
                                 menuItem =>
@@ -2550,10 +2798,26 @@ function renderMenu(categories) {
                 );
 
 
-            if (!availableItems.length) {
-                return;
+            if (
+                availableItems.length
+            ) {
+
+                usableCategories.push({
+                    category,
+                    items:availableItems
+                });
+
             }
 
+        }
+    );
+
+
+    usableCategories.forEach(
+        ({
+            category,
+            items
+        }) => {
 
             const categoryElement =
                 document.createElement(
@@ -2565,71 +2829,231 @@ function renderMenu(categories) {
                 "menu-category";
 
 
-            let html = `
+            const icon =
+                getCategoryIcon(
+                    category.name
+                );
 
-                <h3>
-                    ${escapeHtml(
-                        category.name
-                    )}
-                </h3>
+
+            categoryElement.innerHTML = `
+
+                <button
+                    class="menu-category-header"
+                    type="button"
+                    aria-expanded="false"
+                >
+
+                    <div class="menu-category-title">
+
+                        <div class="menu-category-icon">
+                            ${icon}
+                        </div>
+
+                        <div>
+
+                            <div class="menu-category-name">
+                                ${escapeHtml(
+                                    category.name
+                                )}
+                            </div>
+
+                            ${
+                                category.description
+                                ?
+
+                                `<span class="menu-category-description">
+                                    ${escapeHtml(
+                                        category.description
+                                    )}
+                                </span>`
+
+                                :
+
+                                ""
+                            }
+
+                        </div>
+
+                    </div>
+
+
+                    <span class="menu-category-toggle">
+                        +
+                    </span>
+
+                </button>
+
+
+                <div class="menu-category-content">
+
+                    <div class="menu-category-inner">
+
+                        <div class="menu-category-items">
+
+                            ${items
+                                .map(
+                                    item => `
+
+                                        <div class="menu-item">
+
+                                            <div>
+
+                                                <h4>
+                                                    ${escapeHtml(
+                                                        item.name
+                                                    )}
+                                                </h4>
+
+                                                <p>
+                                                    ${escapeHtml(
+                                                        item.description || ""
+                                                    )}
+                                                </p>
+
+                                                <div class="menu-actions">
+
+                                                    <button
+                                                        class="add-btn"
+                                                        type="button"
+                                                        onclick="addToCart(${Number(item.id)})"
+                                                    >
+
+                                                        + Agregar al pedido
+
+                                                    </button>
+
+                                                </div>
+
+                                            </div>
+
+
+                                            <div class="menu-price">
+
+                                                ${formatPrice(
+                                                    item.price
+                                                )}
+
+                                            </div>
+
+                                        </div>
+
+                                    `
+                                )
+                                .join("")
+                            }
+
+                        </div>
+
+                    </div>
+
+                </div>
 
             `;
 
 
-            availableItems.forEach(
-                item => {
+            const headerButton =
+                categoryElement.querySelector(
+                    ".menu-category-header"
+                );
 
-                    html += `
 
-                        <div class="menu-item">
+            headerButton.addEventListener(
+                "click",
+                () => {
 
-                            <div>
+                    const isActive =
+                        categoryElement.classList.contains(
+                            "active"
+                        );
 
-                                <h4>
-                                    ${escapeHtml(
-                                        item.name
-                                    )}
-                                </h4>
 
-                                <p>
-                                    ${escapeHtml(
-                                        item.description || ""
-                                    )}
-                                </p>
+                    /*
+                     * Cerramos todas las categorías.
+                     */
 
-                                <div class="menu-actions">
+                    document
+                        .querySelectorAll(
+                            ".menu-category.active"
+                        )
+                        .forEach(
+                            openCategory => {
 
-                                    <button
-                                        class="add-btn"
-                                        type="button"
-                                        onclick="addToCart(${Number(item.id)})">
+                                openCategory.classList.remove(
+                                    "active"
+                                );
 
-                                        + Agregar al pedido
 
-                                    </button>
+                                const openButton =
+                                    openCategory.querySelector(
+                                        ".menu-category-header"
+                                    );
 
-                                </div>
 
-                            </div>
+                                if (openButton) {
 
-                            <div class="menu-price">
+                                    openButton.setAttribute(
+                                        "aria-expanded",
+                                        "false"
+                                    );
 
-                                ${formatPrice(
-                                    item.price
-                                )}
+                                }
 
-                            </div>
 
-                        </div>
+                                const toggle =
+                                    openCategory.querySelector(
+                                        ".menu-category-toggle"
+                                    );
 
-                    `;
+
+                                if (toggle) {
+
+                                    toggle.textContent =
+                                        "+";
+
+                                }
+
+                            }
+                        );
+
+
+                    /*
+                     * Si estaba cerrada,
+                     * abrimos solamente esta.
+                     *
+                     * Si estaba abierta,
+                     * queda cerrada.
+                     */
+
+                    if (!isActive) {
+
+                        categoryElement.classList.add(
+                            "active"
+                        );
+
+
+                        headerButton.setAttribute(
+                            "aria-expanded",
+                            "true"
+                        );
+
+
+                        const toggle =
+                            categoryElement.querySelector(
+                                ".menu-category-toggle"
+                            );
+
+
+                        if (toggle) {
+
+                            toggle.textContent =
+                                "−";
+
+                        }
+
+                    }
 
                 }
             );
-
-
-            categoryElement.innerHTML =
-                html;
 
 
             menuContainer.appendChild(
@@ -2758,7 +3182,19 @@ function renderCart() {
             false;
 
         checkoutButton.textContent =
-            "Confirmar pedido";
+            editingOrderId
+            ? "Guardar cambios"
+            : "Confirmar pedido";
+
+        cartEditingLabel.style.display =
+            editingOrderId
+            ? "block"
+            : "none";
+
+        checkoutButton.classList.toggle(
+            "editing",
+            Boolean(editingOrderId)
+        );
 
         return;
 
@@ -2837,7 +3273,9 @@ function renderCart() {
 
                     <button
                         type="button"
-                        onclick="changeQuantity(${item.id}, -1)">
+                        aria-label="Restar una unidad"
+                        onclick="changeQuantity(${item.id}, -1)"
+                    >
 
                         −
 
@@ -2849,7 +3287,9 @@ function renderCart() {
 
                     <button
                         type="button"
-                        onclick="changeQuantity(${item.id}, 1)">
+                        aria-label="Agregar una unidad"
+                        onclick="changeQuantity(${item.id}, 1)"
+                    >
 
                         +
 
@@ -2857,12 +3297,14 @@ function renderCart() {
 
                     <button
                         type="button"
+                        aria-label="Eliminar producto"
                         onclick="removeFromCart(${item.id})"
                         style="
                             margin-left:auto;
                             border-color:#999;
                             color:#777;
-                        ">
+                        "
+                    >
 
                         ×
 
@@ -2887,6 +3329,24 @@ function renderCart() {
 
     cartTotal.textContent =
         formatPrice(total);
+
+
+    checkoutButton.textContent =
+        editingOrderId
+        ? "Guardar cambios"
+        : "Confirmar pedido";
+
+
+    checkoutButton.classList.toggle(
+        "editing",
+        Boolean(editingOrderId)
+    );
+
+
+    cartEditingLabel.style.display =
+        editingOrderId
+        ? "block"
+        : "none";
 
 }
 
@@ -3025,6 +3485,159 @@ cartOverlay.addEventListener(
 
     }
 );
+
+
+/* =========================================================
+CANCELAR EDICIÓN
+========================================================= */
+
+function cancelOrderEditing() {
+
+    editingOrderId =
+        null;
+
+    cart =
+        [];
+
+    renderCart();
+
+    closeCart();
+
+    showToast(
+        "Edición cancelada."
+    );
+
+}
+
+
+/* =========================================================
+EDITAR PEDIDO
+========================================================= */
+
+window.editOrder =
+function(orderId) {
+
+    if (!currentUser) {
+
+        prepareLogin();
+
+        openAuth();
+
+        return;
+
+    }
+
+
+    const order =
+        myOrders.find(
+            item =>
+                Number(item.id) ===
+                Number(orderId)
+        );
+
+
+    if (!order) {
+
+        showToast(
+            "No encontramos ese pedido."
+        );
+
+        return;
+
+    }
+
+
+    if (
+        Number(order.user_id) !==
+        Number(currentUser.id)
+    ) {
+
+        showToast(
+            "No podés editar este pedido."
+        );
+
+        return;
+
+    }
+
+
+    if (
+        !isOrderEditable(order)
+    ) {
+
+        showToast(
+            "Este pedido ya fue aceptado y no se puede editar."
+        );
+
+        return;
+
+    }
+
+
+    const products =
+        Array.isArray(
+            order.order_items
+        )
+        ? order.order_items
+        : [];
+
+
+    if (!products.length) {
+
+        showToast(
+            "Este pedido no tiene productos para editar."
+        );
+
+        return;
+
+    }
+
+
+    editingOrderId =
+        Number(order.id);
+
+
+    cart =
+        products
+        .map(
+            product => ({
+
+                id:
+                    Number(
+                        product.menu_item_id
+                    ),
+
+                name:
+                    product.product_name,
+
+                price:
+                    Number(
+                        product.unit_price
+                    ),
+
+                quantity:
+                    Number(
+                        product.quantity
+                    )
+
+            })
+        )
+        .filter(
+            item =>
+                item.id &&
+                item.quantity > 0
+        );
+
+
+    renderCart();
+
+    openCart();
+
+    showToast(
+        `Editando pedido #${order.id}`
+    );
+
+};
 
 
 /* =========================================================
@@ -3395,7 +4008,8 @@ async function loadCurrentUser() {
 
 
     const {
-        data: profile
+        data: profile,
+        error: profileError
     } =
         await supabaseClient
 
@@ -3411,6 +4025,16 @@ async function loadCurrentUser() {
         )
 
         .maybeSingle();
+
+
+    if (profileError) {
+
+        console.warn(
+            "No se pudo cargar el perfil:",
+            profileError
+        );
+
+    }
 
 
     let displayName =
@@ -3478,10 +4102,21 @@ document
             currentUser =
                 null;
 
+            myOrders =
+                [];
+
+            editingOrderId =
+                null;
+
+            cart =
+                [];
+
 
             userBar.style.display =
                 "none";
 
+
+            renderCart();
 
             renderLoggedOutOrders();
 
@@ -3536,12 +4171,14 @@ async function loadMyOrders() {
 
         .select(`
             id,
+            user_id,
             customer_name,
             customer_email,
             total,
             status,
             notes,
             created_at,
+            updated_at,
             order_items (
                 id,
                 menu_item_id,
@@ -3601,9 +4238,22 @@ async function loadMyOrders() {
     }
 
 
+    /*
+     * Aunque la consulta ya filtra por user_id,
+     * filtramos nuevamente en memoria como
+     * defensa adicional de interfaz.
+     */
+
+    myOrders =
+        (orders || []).filter(
+            order =>
+                order.user_id ===
+                currentUser.id
+        );
+
+
     if (
-        !orders ||
-        orders.length === 0
+        myOrders.length === 0
     ) {
 
         ordersContainer.innerHTML = `
@@ -3633,7 +4283,7 @@ async function loadMyOrders() {
 
 
     renderMyOrders(
-        orders
+        myOrders
     );
 
 }
@@ -3712,6 +4362,12 @@ function renderOrderCard(
         )
         ? order.order_items
         : [];
+
+
+    const editable =
+        isOrderEditable(
+            order
+        );
 
 
     return `
@@ -3855,19 +4511,69 @@ function renderOrderCard(
 
             <div class="order-card-footer">
 
-                <span class="order-total-label">
+                <div>
 
-                    Total del pedido
+                    <span class="order-total-label">
 
-                </span>
+                        Total del pedido
 
-                <strong class="order-total">
+                    </span>
 
-                    ${formatPrice(
-                        order.total
-                    )}
+                    <br>
 
-                </strong>
+                    <strong class="order-total">
+
+                        ${formatPrice(
+                            order.total
+                        )}
+
+                    </strong>
+
+                </div>
+
+
+                <div class="order-actions">
+
+                    ${
+                        editable
+
+                        ?
+
+                        `
+
+                            <button
+                                class="order-edit-btn"
+                                type="button"
+                                onclick="editOrder(${Number(order.id)})"
+                            >
+
+                                ✏️ Editar pedido
+
+                            </button>
+
+                        `
+
+                        :
+
+                        `
+
+                            <span class="order-edit-locked">
+
+                                ${
+                                    order.status === "cancelled"
+
+                                    ? "Pedido cancelado"
+
+                                    : "Edición bloqueada porque el restaurante ya lo está gestionando."
+
+                                }
+
+                            </span>
+
+                        `
+                    }
+
+                </div>
 
             </div>
 
@@ -3940,7 +4646,247 @@ function renderLoggedOutOrders() {
 
 
 /* =========================================================
-CONFIRMAR PEDIDO
+GUARDAR CAMBIOS DE PEDIDO
+========================================================= */
+
+async function updateExistingOrder() {
+
+    if (!editingOrderId) {
+
+        throw new Error(
+            "No hay ningún pedido en edición."
+        );
+
+    }
+
+
+    const order =
+        myOrders.find(
+            item =>
+                Number(item.id) ===
+                Number(editingOrderId)
+        );
+
+
+    if (!order) {
+
+        throw new Error(
+            "No encontramos el pedido que querés editar."
+        );
+
+    }
+
+
+    if (
+        order.user_id !==
+        currentUser.id
+    ) {
+
+        throw new Error(
+            "No podés editar este pedido."
+        );
+
+    }
+
+
+    if (
+        !isOrderEditable(order)
+    ) {
+
+        throw new Error(
+            "El restaurante ya aceptó este pedido y ya no se puede editar."
+        );
+
+    }
+
+
+    if (!cart.length) {
+
+        throw new Error(
+            "El pedido no puede quedar vacío."
+        );
+
+    }
+
+
+    const total =
+        cart.reduce(
+            (
+                sum,
+                item
+            ) =>
+                sum +
+                (
+                    Number(item.price) *
+                    Number(item.quantity)
+                ),
+            0
+        );
+
+
+    /*
+     * Actualizamos el total del pedido.
+     */
+
+    const {
+        error: orderUpdateError
+    } =
+        await supabaseClient
+
+        .from("orders")
+
+        .update({
+
+            total:
+                total,
+
+            updated_at:
+                new Date().toISOString()
+
+        })
+
+        .eq(
+            "id",
+            Number(editingOrderId)
+        )
+
+        .eq(
+            "user_id",
+            currentUser.id
+        );
+
+
+    if (orderUpdateError) {
+
+        throw new Error(
+            "No pudimos actualizar el pedido: " +
+            orderUpdateError.message
+        );
+
+    }
+
+
+    /*
+     * Eliminamos los productos anteriores
+     * y volvemos a guardar los nuevos.
+     */
+
+    const {
+        error: deleteItemsError
+    } =
+        await supabaseClient
+
+        .from("order_items")
+
+        .delete()
+
+        .eq(
+            "order_id",
+            Number(editingOrderId)
+        );
+
+
+    if (deleteItemsError) {
+
+        throw new Error(
+            "No pudimos actualizar los productos del pedido: " +
+            deleteItemsError.message
+        );
+
+    }
+
+
+    const newOrderItems =
+        cart.map(
+            item => ({
+
+                order_id:
+                    Number(editingOrderId),
+
+                menu_item_id:
+                    Number(item.id),
+
+                product_name:
+                    item.name,
+
+                quantity:
+                    Number(item.quantity),
+
+                unit_price:
+                    Number(item.price),
+
+                subtotal:
+                    Number(item.price) *
+                    Number(item.quantity)
+
+            })
+        );
+
+
+    const {
+        error: insertItemsError
+    } =
+        await supabaseClient
+
+        .from("order_items")
+
+        .insert(
+            newOrderItems
+        );
+
+
+    if (insertItemsError) {
+
+        throw new Error(
+            "El total se actualizó, pero no pudimos guardar los nuevos productos: " +
+            insertItemsError.message
+        );
+
+    }
+
+
+    editingOrderId =
+        null;
+
+
+    cart =
+        [];
+
+
+    renderCart();
+
+    closeCart();
+
+
+    await loadMyOrders();
+
+
+    showToast(
+        "¡Pedido actualizado correctamente! 🍷"
+    );
+
+
+    setTimeout(
+        () => {
+
+            document
+                .getElementById(
+                    "mis-pedidos"
+                )
+                .scrollIntoView({
+                    behavior:"smooth",
+                    block:"start"
+                });
+
+        },
+        300
+    );
+
+}
+
+
+/* =========================================================
+CONFIRMAR / ACTUALIZAR PEDIDO
 ========================================================= */
 
 checkoutButton.addEventListener(
@@ -3955,7 +4901,7 @@ checkoutButton.addEventListener(
         if (!cart.length) {
 
             alert(
-                "Agregá al menos un producto al carrito."
+                "Agregá al menos un producto al pedido."
             );
 
             return;
@@ -3985,10 +4931,27 @@ checkoutButton.addEventListener(
 
 
         checkoutButton.textContent =
-            "Enviando pedido...";
+            editingOrderId
+            ? "Guardando cambios..."
+            : "Enviando pedido...";
 
 
         try {
+
+            /*
+             * Si estamos editando un pedido existente,
+             * actualizamos ese pedido en lugar de crear
+             * uno nuevo.
+             */
+
+            if (editingOrderId) {
+
+                await updateExistingOrder();
+
+                return;
+
+            }
+
 
             const total =
                 cart.reduce(
@@ -4208,14 +5171,14 @@ checkoutButton.addEventListener(
         } catch(error) {
 
             console.error(
-                "Error creando pedido:",
+                "Error creando/actualizando pedido:",
                 error
             );
 
 
             alert(
                 error.message ||
-                "No pudimos enviar el pedido."
+                "No pudimos guardar el pedido."
             );
 
 
@@ -4230,7 +5193,9 @@ checkoutButton.addEventListener(
 
 
             checkoutButton.textContent =
-                "Confirmar pedido";
+                editingOrderId
+                ? "Guardar cambios"
+                : "Confirmar pedido";
 
         }
 
@@ -4350,14 +5315,6 @@ AUTH STATE
 
 supabaseClient.auth.onAuthStateChange(
     (event, session) => {
-
-        /*
-         * No hacemos consultas adicionales
-         * dentro del callback.
-         *
-         * Programamos la actualización
-         * para después del evento.
-         */
 
         setTimeout(
             async () => {
