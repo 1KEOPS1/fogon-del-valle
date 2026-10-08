@@ -1,23 +1,49 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Fogón del Valle | Restaurante · Trevelin</title>
 
-<meta name="description" content="Fogón del Valle. Cocina patagónica, vinos de la cordillera y sabores de estación en Trevelin.">
+<meta
+    name="description"
+    content="Fogón del Valle. Cocina patagónica, vinos de la cordillera y sabores de estación en Trevelin."
+>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+>
+
+<!-- =========================================================
+     SUPABASE
+========================================================= -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const SUPABASE_URL = "https://gyjxkcrseotwahclwupu.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY =
+"sb_publishable_zY7b84xLNWlpLWbxTHpV6Q_Ai1JvaeK";
+
+const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+);
+</script>
+
 
 <style>
 
 /* =========================================================
    FOGÓN DEL VALLE
-   DEMO FICTICIA — WEBS PATAGONIA
+   V2 — SUPABASE
 ========================================================= */
 
 :root {
@@ -50,6 +76,10 @@ body {
     line-height: 1.6;
 }
 
+body.no-scroll {
+    overflow: hidden;
+}
+
 img {
     width: 100%;
     display: block;
@@ -63,6 +93,7 @@ a {
 button {
     font-family: inherit;
 }
+
 
 /* =========================================================
    HEADER
@@ -112,30 +143,57 @@ header.scrolled {
 
 .nav-links {
     display: flex;
-    gap: 28px;
+    gap: 25px;
     align-items: center;
 }
 
-.nav-links a {
+.nav-links a,
+.nav-links button {
     font-size: 14px;
     color: rgba(255,255,255,.9);
     transition: .25s;
+    background: none;
+    border: 0;
+    cursor: pointer;
 }
 
-.nav-links a:hover {
+.nav-links a:hover,
+.nav-links button:hover {
     color: #e8bd7d;
 }
 
 .nav-button {
-    padding: 11px 18px;
-    border: 1px solid rgba(255,255,255,.5);
+    padding: 11px 18px !important;
+    border: 1px solid rgba(255,255,255,.5) !important;
     border-radius: 30px;
 }
 
 .nav-button:hover {
-    background: white;
+    background: white !important;
     color: var(--dark) !important;
 }
+
+.user-nav {
+    display: none;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-nav.active {
+    display: flex;
+}
+
+.user-name {
+    font-size: 12px;
+    color: #ead6b4;
+}
+
+.logout-btn {
+    border: 1px solid rgba(255,255,255,.3) !important;
+    border-radius: 20px;
+    padding: 7px 12px;
+}
+
 
 /* =========================================================
    HERO
@@ -218,6 +276,7 @@ header.scrolled {
     font-size: 14px;
     transition: .3s;
     cursor: pointer;
+    border: none;
 }
 
 .btn-primary {
@@ -252,6 +311,7 @@ header.scrolled {
     text-transform: uppercase;
     letter-spacing: 2px;
 }
+
 
 /* =========================================================
    GENERAL
@@ -293,6 +353,7 @@ header.scrolled {
     color: var(--muted);
     font-size: 16px;
 }
+
 
 /* =========================================================
    INTRO
@@ -360,6 +421,7 @@ header.scrolled {
     font-style: italic;
 }
 
+
 /* =========================================================
    MENU
 ========================================================= */
@@ -408,6 +470,48 @@ header.scrolled {
     font-weight: 700;
     white-space: nowrap;
 }
+
+.menu-actions {
+    margin-top: 10px;
+}
+
+.add-btn {
+    background: transparent;
+    border: 1px solid var(--terracotta);
+    color: var(--terracotta);
+    padding: 7px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .25s;
+}
+
+.add-btn:hover {
+    background: var(--terracotta);
+    color: white;
+}
+
+
+/* =========================================================
+   LOADING MENU
+========================================================= */
+
+.menu-loading {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 40px;
+    color: var(--muted);
+}
+
+.menu-error {
+    grid-column: 1 / -1;
+    padding: 25px;
+    background: #f8dddd;
+    color: #762727;
+    border-left: 4px solid #a93434;
+}
+
 
 /* =========================================================
    FEATURED
@@ -471,6 +575,7 @@ header.scrolled {
     font-size: 13px;
 }
 
+
 /* =========================================================
    EXPERIENCE
 ========================================================= */
@@ -515,6 +620,7 @@ header.scrolled {
     font-size: 14px;
 }
 
+
 /* =========================================================
    GALLERY
 ========================================================= */
@@ -543,6 +649,7 @@ header.scrolled {
 .gallery-item:hover img {
     transform: scale(1.04);
 }
+
 
 /* =========================================================
    TESTIMONIAL
@@ -578,6 +685,7 @@ header.scrolled {
     text-transform: uppercase;
     letter-spacing: 2px;
 }
+
 
 /* =========================================================
    FAQ
@@ -633,8 +741,9 @@ header.scrolled {
     max-height: 200px;
 }
 
+
 /* =========================================================
-   RESERVATION CTA
+   RESERVATION
 ========================================================= */
 
 .reservation {
@@ -668,6 +777,7 @@ header.scrolled {
     color: rgba(255,255,255,.8);
     margin-bottom: 32px;
 }
+
 
 /* =========================================================
    CONTACT
@@ -760,6 +870,318 @@ header.scrolled {
     border-color: var(--gold);
 }
 
+
+/* =========================================================
+   AUTH / MODALS
+========================================================= */
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(20,12,10,.78);
+    backdrop-filter: blur(5px);
+    z-index: 3000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.modal-overlay.active {
+    display: flex;
+}
+
+.modal {
+    width: min(460px, 100%);
+    background: var(--cream-light);
+    padding: 35px;
+    border-radius: 6px;
+    box-shadow: 0 30px 80px rgba(0,0,0,.3);
+    position: relative;
+}
+
+.modal h2 {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 42px;
+    color: var(--wine);
+    line-height: 1;
+    margin-bottom: 10px;
+}
+
+.modal-subtitle {
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 25px;
+}
+
+.modal-close {
+    position: absolute;
+    top: 15px;
+    right: 18px;
+    border: 0;
+    background: transparent;
+    font-size: 28px;
+    color: var(--muted);
+    cursor: pointer;
+}
+
+.auth-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 25px;
+}
+
+.auth-tab {
+    flex: 1;
+    border: 0;
+    background: transparent;
+    padding: 12px;
+    cursor: pointer;
+    color: var(--muted);
+    font-weight: 600;
+}
+
+.auth-tab.active {
+    color: var(--wine);
+    border-bottom: 2px solid var(--terracotta);
+}
+
+.auth-form {
+    display: none;
+}
+
+.auth-form.active {
+    display: block;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: var(--dark);
+}
+
+.input-group input {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid var(--border);
+    background: white;
+    outline: none;
+}
+
+.input-group input:focus {
+    border-color: var(--gold);
+}
+
+.auth-message {
+    margin-top: 15px;
+    font-size: 13px;
+    padding: 10px;
+    display: none;
+}
+
+.auth-message.show {
+    display: block;
+}
+
+.auth-message.error {
+    background: #f7dddd;
+    color: #7a2929;
+}
+
+.auth-message.success {
+    background: #e1f0df;
+    color: #2f6330;
+}
+
+
+/* =========================================================
+   CART
+========================================================= */
+
+.cart-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(20,12,10,.55);
+    z-index: 2500;
+    display: none;
+}
+
+.cart-overlay.active {
+    display: block;
+}
+
+.cart-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: min(440px, 94vw);
+    background: var(--cream-light);
+    z-index: 2600;
+    transform: translateX(100%);
+    transition: .35s ease;
+    display: flex;
+    flex-direction: column;
+    box-shadow: -20px 0 50px rgba(0,0,0,.2);
+}
+
+.cart-panel.active {
+    transform: translateX(0);
+}
+
+.cart-header {
+    background: var(--wine);
+    color: white;
+    padding: 22px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cart-header h2 {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 32px;
+}
+
+.cart-close {
+    border: 0;
+    background: transparent;
+    color: white;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.cart-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.cart-empty {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--muted);
+}
+
+.cart-item {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 15px;
+    padding: 17px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.cart-item h4 {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 22px;
+    color: var(--wine);
+}
+
+.cart-item-price {
+    color: var(--terracotta);
+    font-weight: 700;
+    font-size: 13px;
+}
+
+.cart-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.cart-controls button {
+    width: 27px;
+    height: 27px;
+    border: 1px solid var(--border);
+    background: white;
+    cursor: pointer;
+}
+
+.cart-remove {
+    color: #9b3c31;
+}
+
+.cart-footer {
+    padding: 20px;
+    border-top: 1px solid var(--border);
+    background: white;
+}
+
+.cart-total {
+    display: flex;
+    justify-content: space-between;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.cart-total span:last-child {
+    color: var(--terracotta);
+}
+
+
+/* =========================================================
+   ORDERS
+========================================================= */
+
+.orders-section {
+    background: var(--cream);
+    display: none;
+}
+
+.orders-section.active {
+    display: block;
+}
+
+.order-card {
+    background: white;
+    border: 1px solid var(--border);
+    padding: 22px;
+    margin-bottom: 15px;
+}
+
+.order-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.order-number {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 26px;
+    color: var(--wine);
+}
+
+.order-status {
+    padding: 6px 12px;
+    border-radius: 20px;
+    background: #efe4d4;
+    color: var(--wine);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.order-items-list {
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.order-total {
+    font-weight: 700;
+    color: var(--terracotta);
+}
+
+
 /* =========================================================
    FOOTER
 ========================================================= */
@@ -798,6 +1220,7 @@ footer {
     text-align: right;
 }
 
+
 /* =========================================================
    DEMO BADGE
 ========================================================= */
@@ -817,6 +1240,31 @@ footer {
     letter-spacing: 1px;
     box-shadow: 0 8px 25px rgba(0,0,0,.2);
 }
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+.toast {
+    position: fixed;
+    bottom: 25px;
+    left: 50%;
+    transform: translate(-50%, 120px);
+    background: var(--dark);
+    color: white;
+    padding: 14px 20px;
+    border-radius: 5px;
+    z-index: 5000;
+    transition: .35s;
+    font-size: 13px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.25);
+}
+
+.toast.show {
+    transform: translate(-50%, 0);
+}
+
 
 /* =========================================================
    RESPONSIVE
@@ -873,6 +1321,10 @@ footer {
 
     .footer-copy {
         text-align: left;
+    }
+
+    .user-nav {
+        display: none !important;
     }
 }
 
@@ -941,12 +1393,22 @@ footer {
         bottom: 12px;
         right: 12px;
     }
+
+    .modal {
+        padding: 25px;
+    }
+
+    .modal h2 {
+        font-size: 36px;
+    }
 }
 
 </style>
 </head>
 
+
 <body>
+
 
 <!-- ======================================================
      HEADER
@@ -962,11 +1424,29 @@ footer {
         </a>
 
         <nav class="nav-links">
+
             <a href="#historia">Nuestra historia</a>
+
             <a href="#menu">Menú</a>
+
             <a href="#experiencia">Experiencia</a>
+
             <a href="#galeria">Galería</a>
-            <a href="#contacto" class="nav-button">Reservar mesa</a>
+
+            <button
+                type="button"
+                onclick="abrirAuth()">
+                Ingresar
+            </button>
+
+            <button
+                type="button"
+                class="nav-button"
+                onclick="abrirCarrito()">
+                🛒 Carrito
+                <span id="cartCount">0</span>
+            </button>
+
         </nav>
 
     </div>
@@ -1003,9 +1483,11 @@ footer {
                 Descubrir el menú
             </a>
 
-            <a href="#contacto" class="btn btn-outline">
-                Reservar una mesa
-            </a>
+            <button
+                class="btn btn-outline"
+                onclick="abrirAuth()">
+                Ingresar para pedir
+            </button>
 
         </div>
 
@@ -1031,7 +1513,8 @@ footer {
 
             <img
                 src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1200&q=85"
-                alt="Plato de cocina de estación">
+                alt="Plato de cocina de estación"
+            >
 
             <div class="image-note">
                 <strong>Producto local.</strong>
@@ -1080,7 +1563,7 @@ footer {
 
 
 <!-- ======================================================
-     MENU
+     MENU DINÁMICO
 ====================================================== -->
 
 <section class="section menu" id="menu">
@@ -1104,114 +1587,12 @@ footer {
 
         </div>
 
+        <div
+            class="menu-grid"
+            id="menuContainer">
 
-        <div class="menu-grid">
-
-            <div class="menu-category">
-
-                <h3>Para comenzar</h3>
-
-                <div class="menu-item">
-                    <div>
-                        <h4>Empanadas del Fogón</h4>
-                        <p>Cordero patagónico, cebolla caramelizada y especias.</p>
-                    </div>
-                    <div class="menu-price">$8.500</div>
-                </div>
-
-                <div class="menu-item">
-                    <div>
-                        <h4>Hongos de estación</h4>
-                        <p>Hongos salteados, manteca de hierbas y pan de campo.</p>
-                    </div>
-                    <div class="menu-price">$9.200</div>
-                </div>
-
-                <div class="menu-item">
-                    <div>
-                        <h4>Trucha ahumada</h4>
-                        <p>Trucha, crema ácida, verdes y crocante de semillas.</p>
-                    </div>
-                    <div class="menu-price">$11.500</div>
-                </div>
-
-            </div>
-
-
-            <div class="menu-category">
-
-                <h3>Principales</h3>
-
-                <div class="menu-item">
-                    <div>
-                        <h4>Cordero al fuego</h4>
-                        <p>Cocción lenta, papas rústicas y vegetales de estación.</p>
-                    </div>
-                    <div class="menu-price">$19.800</div>
-                </div>
-
-                <div class="menu-item">
-                    <div>
-                        <h4>Trucha del valle</h4>
-                        <p>Trucha grillada, puré de raíces y manteca de hierbas.</p>
-                    </div>
-                    <div class="menu-price">$18.500</div>
-                </div>
-
-                <div class="menu-item">
-                    <div>
-                        <h4>Risotto de hongos</h4>
-                        <p>Arroz cremoso, hongos de estación y queso patagónico.</p>
-                    </div>
-                    <div class="menu-price">$15.900</div>
-                </div>
-
-            </div>
-
-
-            <div class="menu-category">
-
-                <h3>Postres</h3>
-
-                <div class="menu-item">
-                    <div>
-                        <h4>Torta negra patagónica</h4>
-                        <p>Receta inspirada en la tradición galesa del valle.</p>
-                    </div>
-                    <div class="menu-price">$7.500</div>
-                </div>
-
-                <div class="menu-item">
-                    <div>
-                        <h4>Peras al Malbec</h4>
-                        <p>Peras especiadas, reducción de vino y crema.</p>
-                    </div>
-                    <div class="menu-price">$7.900</div>
-                </div>
-
-            </div>
-
-
-            <div class="menu-category">
-
-                <h3>Vinos</h3>
-
-                <div class="menu-item">
-                    <div>
-                        <h4>Selección de la cordillera</h4>
-                        <p>Etiquetas seleccionadas de productores patagónicos.</p>
-                    </div>
-                    <div class="menu-price">Consultar</div>
-                </div>
-
-                <div class="menu-item">
-                    <div>
-                        <h4>Copa de la casa</h4>
-                        <p>Consultar variedad disponible.</p>
-                    </div>
-                    <div class="menu-price">$5.500</div>
-                </div>
-
+            <div class="menu-loading">
+                Cargando nuestra carta...
             </div>
 
         </div>
@@ -1252,17 +1633,25 @@ footer {
             <article class="dish">
 
                 <div class="dish-image">
+
                     <img
                         src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1000&q=85"
-                        alt="Carne a la parrilla">
+                        alt="Carne a la parrilla"
+                    >
+
                 </div>
 
                 <div class="dish-content">
-                    <h3>Cordero al fuego</h3>
+
+                    <h3>
+                        Cordero al fuego
+                    </h3>
+
                     <p>
                         Cocción lenta, vegetales de estación
                         y el aroma inconfundible de nuestro fogón.
                     </p>
+
                 </div>
 
             </article>
@@ -1271,17 +1660,25 @@ footer {
             <article class="dish">
 
                 <div class="dish-image">
+
                     <img
                         src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1000&q=85"
-                        alt="Plato de cocina gourmet">
+                        alt="Plato de cocina gourmet"
+                    >
+
                 </div>
 
                 <div class="dish-content">
-                    <h3>Sabores de estación</h3>
+
+                    <h3>
+                        Sabores de estación
+                    </h3>
+
                     <p>
                         Ingredientes locales trabajados con
                         una mirada contemporánea.
                     </p>
+
                 </div>
 
             </article>
@@ -1290,17 +1687,25 @@ footer {
             <article class="dish">
 
                 <div class="dish-image">
+
                     <img
                         src="https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?auto=format&fit=crop&w=1000&q=85"
-                        alt="Plato de pescado">
+                        alt="Plato de pescado"
+                    >
+
                 </div>
 
                 <div class="dish-content">
-                    <h3>Trucha del valle</h3>
+
+                    <h3>
+                        Trucha del valle
+                    </h3>
+
                     <p>
                         Producto patagónico protagonista
                         de una de nuestras especialidades.
                     </p>
+
                 </div>
 
             </article>
@@ -1342,9 +1747,13 @@ footer {
 
             <div class="experience-card">
 
-                <div class="experience-number">01</div>
+                <div class="experience-number">
+                    01
+                </div>
 
-                <h3>Producto local</h3>
+                <h3>
+                    Producto local
+                </h3>
 
                 <p>
                     Trabajamos con ingredientes de la región
@@ -1356,9 +1765,13 @@ footer {
 
             <div class="experience-card">
 
-                <div class="experience-number">02</div>
+                <div class="experience-number">
+                    02
+                </div>
 
-                <h3>Vinos de la cordillera</h3>
+                <h3>
+                    Vinos de la cordillera
+                </h3>
 
                 <p>
                     Una selección de etiquetas patagónicas
@@ -1370,9 +1783,13 @@ footer {
 
             <div class="experience-card">
 
-                <div class="experience-number">03</div>
+                <div class="experience-number">
+                    03
+                </div>
 
-                <h3>El ritual del fuego</h3>
+                <h3>
+                    El ritual del fuego
+                </h3>
 
                 <p>
                     El fuego forma parte de nuestra identidad:
@@ -1412,33 +1829,48 @@ footer {
         <div class="gallery">
 
             <div class="gallery-item">
+
                 <img
                     src="https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=1200&q=85"
-                    alt="Restaurante">
+                    alt="Restaurante"
+                >
+
             </div>
 
             <div class="gallery-item">
+
                 <img
                     src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=900&q=85"
-                    alt="Mesa de restaurante">
+                    alt="Mesa de restaurante"
+                >
+
             </div>
 
             <div class="gallery-item">
+
                 <img
                     src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=900&q=85"
-                    alt="Carne">
+                    alt="Carne"
+                >
+
             </div>
 
             <div class="gallery-item">
+
                 <img
                     src="https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?auto=format&fit=crop&w=900&q=85"
-                    alt="Pescado">
+                    alt="Pescado"
+                >
+
             </div>
 
             <div class="gallery-item">
+
                 <img
                     src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=900&q=85"
-                    alt="Cena">
+                    alt="Cena"
+                >
+
             </div>
 
         </div>
@@ -1458,7 +1890,9 @@ footer {
 
         <div class="quote">
 
-            <div class="quote-mark">“</div>
+            <div class="quote-mark">
+                “
+            </div>
 
             <p>
                 Una mesa, una copa de vino y el paisaje del valle.
@@ -1503,15 +1937,22 @@ footer {
             <div class="faq-item">
 
                 <button class="faq-question">
+
                     ¿Necesito reservar?
-                    <span class="faq-icon">+</span>
+
+                    <span class="faq-icon">
+                        +
+                    </span>
+
                 </button>
 
                 <div class="faq-answer">
+
                     <p>
                         Recomendamos reservar especialmente durante
                         fines de semana y temporada alta.
                     </p>
+
                 </div>
 
             </div>
@@ -1520,15 +1961,22 @@ footer {
             <div class="faq-item">
 
                 <button class="faq-question">
+
                     ¿Tienen opciones vegetarianas?
-                    <span class="faq-icon">+</span>
+
+                    <span class="faq-icon">
+                        +
+                    </span>
+
                 </button>
 
                 <div class="faq-answer">
+
                     <p>
                         Sí. Contamos con opciones vegetarianas
                         y podemos adaptar algunos platos.
                     </p>
+
                 </div>
 
             </div>
@@ -1537,15 +1985,22 @@ footer {
             <div class="faq-item">
 
                 <button class="faq-question">
+
                     ¿Aceptan familias con niños?
-                    <span class="faq-icon">+</span>
+
+                    <span class="faq-icon">
+                        +
+                    </span>
+
                 </button>
 
                 <div class="faq-answer">
+
                     <p>
                         Sí. Nuestro restaurante recibe familias
                         y contamos con opciones para los más chicos.
                     </p>
+
                 </div>
 
             </div>
@@ -1554,15 +2009,22 @@ footer {
             <div class="faq-item">
 
                 <button class="faq-question">
+
                     ¿Tienen estacionamiento?
-                    <span class="faq-icon">+</span>
+
+                    <span class="faq-icon">
+                        +
+                    </span>
+
                 </button>
 
                 <div class="faq-answer">
+
                     <p>
                         Sí. Disponemos de estacionamiento para
                         nuestros visitantes.
                     </p>
+
                 </div>
 
             </div>
@@ -1571,15 +2033,22 @@ footer {
             <div class="faq-item">
 
                 <button class="faq-question">
+
                     ¿Puedo reservar por WhatsApp?
-                    <span class="faq-icon">+</span>
+
+                    <span class="faq-icon">
+                        +
+                    </span>
+
                 </button>
 
                 <div class="faq-answer">
+
                     <p>
                         Sí. Podés comunicarte con nosotros
                         para consultar disponibilidad y horarios.
                     </p>
+
                 </div>
 
             </div>
@@ -1612,9 +2081,49 @@ footer {
             nacida en el corazón de Patagonia.
         </p>
 
-        <a href="#contacto" class="btn btn-primary">
+        <a
+            href="#contacto"
+            class="btn btn-primary">
             Consultar disponibilidad
         </a>
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     MIS PEDIDOS
+====================================================== -->
+
+<section
+    class="section orders-section"
+    id="misPedidos">
+
+    <div class="container">
+
+        <div class="section-header">
+
+            <div class="section-label">
+                Tu cuenta
+            </div>
+
+            <h2 class="section-title">
+                Mis pedidos.
+            </h2>
+
+            <p class="section-text">
+                Acá vas a poder consultar tus pedidos realizados
+                en Fogón del Valle.
+            </p>
+
+        </div>
+
+        <div id="ordersContainer">
+            <p style="color:var(--muted)">
+                Cargando pedidos...
+            </p>
+        </div>
 
     </div>
 
@@ -1625,7 +2134,9 @@ footer {
      CONTACTO
 ====================================================== -->
 
-<section class="section contact" id="contacto">
+<section
+    class="section contact"
+    id="contacto">
 
     <div class="container contact-grid">
 
@@ -1649,11 +2160,20 @@ footer {
 
                 <div class="contact-row">
 
-                    <div class="contact-icon">⌖</div>
+                    <div class="contact-icon">
+                        ⌖
+                    </div>
 
                     <div>
-                        <strong>Ubicación</strong>
-                        <span>Trevelin · Chubut · Patagonia Argentina</span>
+
+                        <strong>
+                            Ubicación
+                        </strong>
+
+                        <span>
+                            Trevelin · Chubut · Patagonia Argentina
+                        </span>
+
                     </div>
 
                 </div>
@@ -1661,11 +2181,20 @@ footer {
 
                 <div class="contact-row">
 
-                    <div class="contact-icon">◷</div>
+                    <div class="contact-icon">
+                        ◷
+                    </div>
 
                     <div>
-                        <strong>Horarios</strong>
-                        <span>Miércoles a domingo · 19:30 a 00:30</span>
+
+                        <strong>
+                            Horarios
+                        </strong>
+
+                        <span>
+                            Miércoles a domingo · 19:30 a 00:30
+                        </span>
+
                     </div>
 
                 </div>
@@ -1673,11 +2202,20 @@ footer {
 
                 <div class="contact-row">
 
-                    <div class="contact-icon">✉</div>
+                    <div class="contact-icon">
+                        ✉
+                    </div>
 
                     <div>
-                        <strong>Email</strong>
-                        <span>reservas@fogondelvalle.com</span>
+
+                        <strong>
+                            Email
+                        </strong>
+
+                        <span>
+                            reservas@fogondelvalle.com
+                        </span>
+
                     </div>
 
                 </div>
@@ -1696,36 +2234,54 @@ footer {
             <form id="reservationForm">
 
                 <div class="form-group">
+
                     <input
+                        id="reservationName"
                         type="text"
                         placeholder="Tu nombre"
-                        required>
+                        required
+                    >
+
                 </div>
 
                 <div class="form-group">
+
                     <input
+                        id="reservationEmail"
                         type="email"
                         placeholder="Tu email"
-                        required>
+                        required
+                    >
+
                 </div>
 
                 <div class="form-group">
+
                     <input
+                        id="reservationPhone"
                         type="tel"
                         placeholder="Teléfono / WhatsApp"
-                        required>
+                        required
+                    >
+
                 </div>
 
                 <div class="form-group">
+
                     <textarea
+                        id="reservationMessage"
                         placeholder="Contanos qué día te gustaría venir y cuántas personas serían..."
-                        required></textarea>
+                        required
+                    ></textarea>
+
                 </div>
 
                 <button
                     type="submit"
                     class="btn btn-primary">
+
                     Enviar consulta
+
                 </button>
 
             </form>
@@ -1752,7 +2308,7 @@ footer {
             </div>
 
             <div class="footer-demo">
-                Demo ficticia · Desarrollada por WEBS PATAGONIA
+                Demo · Desarrollada por WEBS PATAGONIA
             </div>
 
         </div>
@@ -1767,28 +2323,341 @@ footer {
 
 
 <!-- ======================================================
+     AUTH MODAL
+====================================================== -->
+
+<div
+    class="modal-overlay"
+    id="authModal">
+
+    <div class="modal">
+
+        <button
+            class="modal-close"
+            onclick="cerrarAuth()">
+            ×
+        </button>
+
+        <h2>
+            Tu cuenta.
+        </h2>
+
+        <p class="modal-subtitle">
+            Ingresá para realizar pedidos y consultar tu historial.
+        </p>
+
+
+        <div class="auth-tabs">
+
+            <button
+                class="auth-tab active"
+                id="loginTab"
+                onclick="mostrarLogin()">
+
+                Ingresar
+
+            </button>
+
+            <button
+                class="auth-tab"
+                id="registerTab"
+                onclick="mostrarRegistro()">
+
+                Crear cuenta
+
+            </button>
+
+        </div>
+
+
+        <!-- LOGIN -->
+
+        <form
+            id="loginForm"
+            class="auth-form active">
+
+            <div class="input-group">
+
+                <label>
+                    Email
+                </label>
+
+                <input
+                    id="loginEmail"
+                    type="email"
+                    required
+                    autocomplete="email"
+                >
+
+            </div>
+
+
+            <div class="input-group">
+
+                <label>
+                    Contraseña
+                </label>
+
+                <input
+                    id="loginPassword"
+                    type="password"
+                    required
+                    autocomplete="current-password"
+                >
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="btn btn-primary"
+                style="width:100%">
+
+                Ingresar
+
+            </button>
+
+        </form>
+
+
+        <!-- REGISTER -->
+
+        <form
+            id="registerForm"
+            class="auth-form">
+
+            <div class="input-group">
+
+                <label>
+                    Nombre
+                </label>
+
+                <input
+                    id="registerName"
+                    type="text"
+                    required
+                    autocomplete="name"
+                >
+
+            </div>
+
+
+            <div class="input-group">
+
+                <label>
+                    Email
+                </label>
+
+                <input
+                    id="registerEmail"
+                    type="email"
+                    required
+                    autocomplete="email"
+                >
+
+            </div>
+
+
+            <div class="input-group">
+
+                <label>
+                    Contraseña
+                </label>
+
+                <input
+                    id="registerPassword"
+                    type="password"
+                    minlength="6"
+                    required
+                    autocomplete="new-password"
+                >
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="btn btn-primary"
+                style="width:100%">
+
+                Crear cuenta
+
+            </button>
+
+        </form>
+
+
+        <div
+            id="authMessage"
+            class="auth-message">
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     CART
+====================================================== -->
+
+<div
+    class="cart-overlay"
+    id="cartOverlay"
+    onclick="cerrarCarrito()">
+</div>
+
+
+<div
+    class="cart-panel"
+    id="cartPanel">
+
+    <div class="cart-header">
+
+        <h2>
+            Tu pedido
+        </h2>
+
+        <button
+            class="cart-close"
+            onclick="cerrarCarrito()">
+
+            ×
+
+        </button>
+
+    </div>
+
+
+    <div
+        class="cart-body"
+        id="cartContainer">
+
+        <div class="cart-empty">
+            Tu carrito está vacío.
+        </div>
+
+    </div>
+
+
+    <div class="cart-footer">
+
+        <div class="cart-total">
+
+            <span>
+                Total
+            </span>
+
+            <span id="cartTotal">
+                $0
+            </span>
+
+        </div>
+
+        <button
+            class="btn btn-primary"
+            style="width:100%"
+            onclick="confirmarPedido()">
+
+            Realizar pedido
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     TOAST
+====================================================== -->
+
+<div
+    class="toast"
+    id="toast">
+</div>
+
+
+<!-- ======================================================
      DEMO BADGE
 ====================================================== -->
 
 <div class="demo-badge">
-    Demo ficticia
+    Demo · V2
 </div>
 
+
+<!-- ======================================================
+     JAVASCRIPT
+====================================================== -->
 
 <script>
 
 /* =========================================================
-   HEADER AL HACER SCROLL
+   VARIABLES
 ========================================================= */
 
-const header = document.getElementById("header");
+let currentUser = null;
+let currentProfile = null;
+
+let menuItems = [];
+let cart = [];
+
+
+/* =========================================================
+   FORMATO DE PESOS
+========================================================= */
+
+function formatPrice(value) {
+
+    return new Intl.NumberFormat("es-AR", {
+        style: "currency",
+        currency: "ARS",
+        maximumFractionDigits: 0
+    }).format(value);
+
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+function showToast(message) {
+
+    const toast =
+        document.getElementById("toast");
+
+    toast.textContent = message;
+
+    toast.classList.add("show");
+
+    setTimeout(() => {
+
+        toast.classList.remove("show");
+
+    }, 3000);
+
+}
+
+
+/* =========================================================
+   HEADER SCROLL
+========================================================= */
+
+const header =
+    document.getElementById("header");
 
 window.addEventListener("scroll", () => {
 
     if (window.scrollY > 60) {
+
         header.classList.add("scrolled");
+
     } else {
+
         header.classList.remove("scrolled");
+
     }
 
 });
@@ -1798,25 +2667,28 @@ window.addEventListener("scroll", () => {
    FAQ
 ========================================================= */
 
-const faqItems = document.querySelectorAll(".faq-item");
+const faqItems =
+    document.querySelectorAll(".faq-item");
 
 faqItems.forEach(item => {
 
-    const button = item.querySelector(".faq-question");
-    const icon = item.querySelector(".faq-icon");
+    const button =
+        item.querySelector(".faq-question");
+
+    const icon =
+        item.querySelector(".faq-icon");
 
     button.addEventListener("click", () => {
 
-        const wasActive = item.classList.contains("active");
+        const wasActive =
+            item.classList.contains("active");
 
         faqItems.forEach(other => {
 
             other.classList.remove("active");
 
-            const otherIcon =
-                other.querySelector(".faq-icon");
-
-            otherIcon.textContent = "+";
+            other.querySelector(".faq-icon")
+                .textContent = "+";
 
         });
 
@@ -1834,22 +2706,1345 @@ faqItems.forEach(item => {
 
 
 /* =========================================================
-   FORMULARIO DEMO
+   CARGAR MENÚ DESDE SUPABASE
 ========================================================= */
 
-const form = document.getElementById("reservationForm");
+async function cargarMenu() {
 
-form.addEventListener("submit", function(event) {
+    const container =
+        document.getElementById("menuContainer");
 
-    event.preventDefault();
+    container.innerHTML = `
+        <div class="menu-loading">
+            Cargando nuestra carta...
+        </div>
+    `;
 
-    alert(
-        "¡Gracias por tu consulta! Esta es una demostración de Fogón del Valle."
+    const { data, error } =
+        await supabaseClient
+            .from("menu_items")
+            .select(`
+                id,
+                category_id,
+                name,
+                description,
+                price,
+                image_url,
+                available,
+                sort_order,
+                menu_categories (
+                    id,
+                    name,
+                    sort_order
+                )
+            `)
+            .eq("available", true)
+            .order("sort_order", { ascending: true });
+
+
+    if (error) {
+
+        console.error("Error cargando menú:", error);
+
+        container.innerHTML = `
+            <div class="menu-error">
+                No pudimos cargar la carta.
+                Revisá la consola del navegador para ver el error.
+            </div>
+        `;
+
+        return;
+    }
+
+
+    menuItems = data || [];
+
+    renderMenu();
+
+}
+
+
+/* =========================================================
+   MOSTRAR MENÚ
+========================================================= */
+
+function renderMenu() {
+
+    const container =
+        document.getElementById("menuContainer");
+
+    if (!menuItems.length) {
+
+        container.innerHTML = `
+            <div class="menu-loading">
+                No hay platos disponibles en este momento.
+            </div>
+        `;
+
+        return;
+    }
+
+
+    const categories = {};
+
+
+    menuItems.forEach(item => {
+
+        const category =
+            item.menu_categories;
+
+        const categoryId =
+            category?.id || item.category_id;
+
+        const categoryName =
+            category?.name || "Nuestra carta";
+
+        if (!categories[categoryId]) {
+
+            categories[categoryId] = {
+
+                id: categoryId,
+
+                name: categoryName,
+
+                sort_order:
+                    category?.sort_order || 999,
+
+                items: []
+
+            };
+
+        }
+
+        categories[categoryId].items.push(item);
+
+    });
+
+
+    const categoryList =
+        Object.values(categories)
+            .sort((a,b) =>
+                a.sort_order - b.sort_order
+            );
+
+
+    container.innerHTML =
+        categoryList.map(category => `
+
+            <div class="menu-category">
+
+                <h3>
+                    ${escapeHtml(category.name)}
+                </h3>
+
+                ${category.items
+                    .sort((a,b) =>
+                        a.sort_order - b.sort_order
+                    )
+                    .map(item => renderMenuItem(item))
+                    .join("")}
+
+            </div>
+
+        `).join("");
+
+}
+
+
+/* =========================================================
+   ITEM DEL MENÚ
+========================================================= */
+
+function renderMenuItem(item) {
+
+    return `
+
+        <div class="menu-item">
+
+            <div>
+
+                <h4>
+                    ${escapeHtml(item.name)}
+                </h4>
+
+                <p>
+                    ${escapeHtml(item.description || "")}
+                </p>
+
+                <div class="menu-actions">
+
+                    <button
+                        class="add-btn"
+                        onclick="agregarAlCarrito(${item.id})">
+
+                        + Agregar al pedido
+
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div class="menu-price">
+
+                ${formatPrice(item.price)}
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHtml(value) {
+
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
+
+/* =========================================================
+   CARRITO
+========================================================= */
+
+function agregarAlCarrito(itemId) {
+
+    const item =
+        menuItems.find(
+            product => product.id === itemId
+        );
+
+    if (!item) return;
+
+
+    const existing =
+        cart.find(
+            product => product.id === itemId
+        );
+
+
+    if (existing) {
+
+        existing.quantity++;
+
+    } else {
+
+        cart.push({
+
+            id: item.id,
+
+            name: item.name,
+
+            price: Number(item.price),
+
+            quantity: 1
+
+        });
+
+    }
+
+
+    renderCart();
+
+    showToast(
+        `${item.name} agregado al pedido`
     );
 
-    form.reset();
+}
 
-});
+
+function cambiarCantidad(itemId, change) {
+
+    const item =
+        cart.find(
+            product => product.id === itemId
+        );
+
+    if (!item) return;
+
+
+    item.quantity += change;
+
+
+    if (item.quantity <= 0) {
+
+        cart =
+            cart.filter(
+                product => product.id !== itemId
+            );
+
+    }
+
+
+    renderCart();
+
+}
+
+
+function eliminarDelCarrito(itemId) {
+
+    cart =
+        cart.filter(
+            product => product.id !== itemId
+        );
+
+    renderCart();
+
+}
+
+
+/* =========================================================
+   RENDER CARRITO
+========================================================= */
+
+function renderCart() {
+
+    const container =
+        document.getElementById("cartContainer");
+
+    const count =
+        cart.reduce(
+            (total, item) =>
+                total + item.quantity,
+            0
+        );
+
+    document.getElementById("cartCount")
+        .textContent = count;
+
+
+    if (!cart.length) {
+
+        container.innerHTML = `
+            <div class="cart-empty">
+                Tu carrito está vacío.
+                <br><br>
+                Agregá algo delicioso de nuestra carta.
+            </div>
+        `;
+
+        document.getElementById("cartTotal")
+            .textContent = formatPrice(0);
+
+        return;
+    }
+
+
+    container.innerHTML =
+        cart.map(item => `
+
+            <div class="cart-item">
+
+                <div>
+
+                    <h4>
+                        ${escapeHtml(item.name)}
+                    </h4>
+
+                    <div class="cart-item-price">
+                        ${formatPrice(item.price)}
+                    </div>
+
+                    <div class="cart-controls">
+
+                        <button
+                            onclick="cambiarCantidad(${item.id}, -1)">
+                            −
+                        </button>
+
+                        <strong>
+                            ${item.quantity}
+                        </strong>
+
+                        <button
+                            onclick="cambiarCantidad(${item.id}, 1)">
+                            +
+                        </button>
+
+                        <button
+                            class="cart-remove"
+                            onclick="eliminarDelCarrito(${item.id})">
+
+                            ×
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <strong>
+                    ${formatPrice(
+                        item.price * item.quantity
+                    )}
+                </strong>
+
+            </div>
+
+        `).join("");
+
+
+    const total =
+        cart.reduce(
+            (sum, item) =>
+                sum + item.price * item.quantity,
+            0
+        );
+
+
+    document.getElementById("cartTotal")
+        .textContent = formatPrice(total);
+
+}
+
+
+/* =========================================================
+   ABRIR / CERRAR CARRITO
+========================================================= */
+
+function abrirCarrito() {
+
+    document
+        .getElementById("cartOverlay")
+        .classList.add("active");
+
+    document
+        .getElementById("cartPanel")
+        .classList.add("active");
+
+    document.body.classList.add("no-scroll");
+
+}
+
+
+function cerrarCarrito() {
+
+    document
+        .getElementById("cartOverlay")
+        .classList.remove("active");
+
+    document
+        .getElementById("cartPanel")
+        .classList.remove("active");
+
+    document.body.classList.remove("no-scroll");
+
+}
+
+
+/* =========================================================
+   AUTH MODAL
+========================================================= */
+
+function abrirAuth() {
+
+    document
+        .getElementById("authModal")
+        .classList.add("active");
+
+    document.body.classList.add("no-scroll");
+
+}
+
+
+function cerrarAuth() {
+
+    document
+        .getElementById("authModal")
+        .classList.remove("active");
+
+    document.body.classList.remove("no-scroll");
+
+    clearAuthMessage();
+
+}
+
+
+function mostrarLogin() {
+
+    document
+        .getElementById("loginTab")
+        .classList.add("active");
+
+    document
+        .getElementById("registerTab")
+        .classList.remove("active");
+
+    document
+        .getElementById("loginForm")
+        .classList.add("active");
+
+    document
+        .getElementById("registerForm")
+        .classList.remove("active");
+
+    clearAuthMessage();
+
+}
+
+
+function mostrarRegistro() {
+
+    document
+        .getElementById("registerTab")
+        .classList.add("active");
+
+    document
+        .getElementById("loginTab")
+        .classList.remove("active");
+
+    document
+        .getElementById("registerForm")
+        .classList.add("active");
+
+    document
+        .getElementById("loginForm")
+        .classList.remove("active");
+
+    clearAuthMessage();
+
+}
+
+
+function showAuthMessage(message, type) {
+
+    const box =
+        document.getElementById("authMessage");
+
+    box.textContent = message;
+
+    box.className =
+        `auth-message show ${type}`;
+
+}
+
+
+function clearAuthMessage() {
+
+    const box =
+        document.getElementById("authMessage");
+
+    box.textContent = "";
+
+    box.className = "auth-message";
+
+}
+
+
+/* =========================================================
+   REGISTRO
+========================================================= */
+
+document
+    .getElementById("registerForm")
+    .addEventListener("submit", async function(event) {
+
+        event.preventDefault();
+
+        const name =
+            document
+                .getElementById("registerName")
+                .value
+                .trim();
+
+        const email =
+            document
+                .getElementById("registerEmail")
+                .value
+                .trim();
+
+        const password =
+            document
+                .getElementById("registerPassword")
+                .value;
+
+
+        showAuthMessage(
+            "Creando tu cuenta...",
+            "success"
+        );
+
+
+        const { data, error } =
+            await supabaseClient.auth.signUp({
+
+                email,
+
+                password,
+
+                options: {
+
+                    data: {
+
+                        full_name: name
+
+                    }
+
+                }
+
+            });
+
+
+        if (error) {
+
+            console.error(error);
+
+            showAuthMessage(
+                error.message,
+                "error"
+            );
+
+            return;
+        }
+
+
+        if (data.session) {
+
+            showAuthMessage(
+                "Cuenta creada correctamente.",
+                "success"
+            );
+
+            setTimeout(() => {
+
+                cerrarAuth();
+
+                cargarUsuario();
+
+            }, 1000);
+
+        } else {
+
+            showAuthMessage(
+                "Cuenta creada. Revisá tu email para confirmar la cuenta si la confirmación está activada en Supabase.",
+                "success"
+            );
+
+        }
+
+    });
+
+
+/* =========================================================
+   LOGIN
+========================================================= */
+
+document
+    .getElementById("loginForm")
+    .addEventListener("submit", async function(event) {
+
+        event.preventDefault();
+
+        const email =
+            document
+                .getElementById("loginEmail")
+                .value
+                .trim();
+
+        const password =
+            document
+                .getElementById("loginPassword")
+                .value;
+
+
+        showAuthMessage(
+            "Ingresando...",
+            "success"
+        );
+
+
+        const { data, error } =
+            await supabaseClient.auth
+                .signInWithPassword({
+
+                    email,
+
+                    password
+
+                });
+
+
+        if (error) {
+
+            console.error(error);
+
+            showAuthMessage(
+                error.message,
+                "error"
+            );
+
+            return;
+        }
+
+
+        showAuthMessage(
+            "¡Bienvenido a Fogón del Valle!",
+            "success"
+        );
+
+
+        setTimeout(() => {
+
+            cerrarAuth();
+
+            cargarUsuario();
+
+        }, 700);
+
+    });
+
+
+/* =========================================================
+   CARGAR USUARIO
+========================================================= */
+
+async function cargarUsuario() {
+
+    const {
+        data: { user }
+    } =
+        await supabaseClient.auth.getUser();
+
+
+    currentUser = user;
+
+
+    if (!user) {
+
+        currentProfile = null;
+
+        actualizarInterfazUsuario();
+
+        return;
+    }
+
+
+    const { data: profile, error } =
+        await supabaseClient
+            .from("profiles")
+            .select("*")
+            .eq("id", user.id)
+            .maybeSingle();
+
+
+    if (error) {
+
+        console.error(
+            "Error obteniendo perfil:",
+            error
+        );
+
+    }
+
+
+    currentProfile = profile;
+
+    actualizarInterfazUsuario();
+
+}
+
+
+/* =========================================================
+   INTERFAZ DEL USUARIO
+========================================================= */
+
+function actualizarInterfazUsuario() {
+
+    const nav =
+        document.querySelector(".nav-links");
+
+
+    if (!currentUser) {
+
+        const oldUser =
+            document.getElementById("dynamicUserNav");
+
+        if (oldUser) oldUser.remove();
+
+        return;
+    }
+
+
+    const oldUser =
+        document.getElementById("dynamicUserNav");
+
+    if (oldUser) oldUser.remove();
+
+
+    const userNav =
+        document.createElement("div");
+
+    userNav.id = "dynamicUserNav";
+
+    userNav.style.display = "flex";
+    userNav.style.alignItems = "center";
+    userNav.style.gap = "8px";
+
+
+    const name =
+        currentProfile?.full_name ||
+        currentUser.email ||
+        "Cliente";
+
+
+    userNav.innerHTML = `
+
+        <span class="user-name">
+            Hola, ${escapeHtml(name)}
+        </span>
+
+        <button
+            type="button"
+            onclick="mostrarMisPedidos()">
+
+            Mis pedidos
+
+        </button>
+
+        ${
+            currentProfile?.role === "restaurant"
+
+            ? `
+
+                <button
+                    type="button"
+                    onclick="irAlPanel()">
+
+                    Panel restaurante
+
+                </button>
+
+            `
+
+            : ""
+        }
+
+        <button
+            type="button"
+            class="logout-btn"
+            onclick="cerrarSesion()">
+
+            Salir
+
+        </button>
+
+    `;
+
+
+    nav.appendChild(userNav);
+
+}
+
+
+/* =========================================================
+   CERRAR SESIÓN
+========================================================= */
+
+async function cerrarSesion() {
+
+    const { error } =
+        await supabaseClient.auth.signOut({
+            scope: "local"
+        });
+
+
+    if (error) {
+
+        console.error(error);
+
+        showToast(
+            "No se pudo cerrar la sesión."
+        );
+
+        return;
+    }
+
+
+    currentUser = null;
+    currentProfile = null;
+
+    actualizarInterfazUsuario();
+
+    document
+        .getElementById("misPedidos")
+        .classList.remove("active");
+
+
+    showToast(
+        "Sesión cerrada correctamente."
+    );
+
+}
+
+
+/* =========================================================
+   CONFIRMAR PEDIDO
+========================================================= */
+
+async function confirmarPedido() {
+
+    if (!cart.length) {
+
+        showToast(
+            "Agregá al menos un producto."
+        );
+
+        return;
+    }
+
+
+    if (!currentUser) {
+
+        cerrarCarrito();
+
+        abrirAuth();
+
+        showAuthMessage(
+            "Ingresá o creá una cuenta para realizar tu pedido.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    const total =
+        cart.reduce(
+            (sum, item) =>
+                sum + item.price * item.quantity,
+            0
+        );
+
+
+    const customerName =
+        currentProfile?.full_name ||
+        currentUser.email;
+
+
+    const customerEmail =
+        currentProfile?.email ||
+        currentUser.email;
+
+
+    const { data: order, error } =
+        await supabaseClient
+            .from("orders")
+            .insert({
+
+                user_id: currentUser.id,
+
+                customer_name:
+                    customerName,
+
+                customer_email:
+                    customerEmail,
+
+                status:
+                    "received",
+
+                total:
+                    total
+
+            })
+            .select()
+            .single();
+
+
+    if (error) {
+
+        console.error(
+            "Error creando pedido:",
+            error
+        );
+
+        showToast(
+            "No pudimos crear el pedido: " +
+            error.message
+        );
+
+        return;
+    }
+
+
+    const orderItems =
+        cart.map(item => ({
+
+            order_id:
+                order.id,
+
+            menu_item_id:
+                item.id,
+
+            product_name:
+                item.name,
+
+            quantity:
+                item.quantity,
+
+            unit_price:
+                item.price,
+
+            subtotal:
+                item.price * item.quantity
+
+        }));
+
+
+    const {
+        error: itemsError
+    } =
+        await supabaseClient
+            .from("order_items")
+            .insert(orderItems);
+
+
+    if (itemsError) {
+
+        console.error(
+            "Error creando detalle:",
+            itemsError
+        );
+
+        showToast(
+            "El pedido se creó pero hubo un problema con el detalle."
+        );
+
+        return;
+    }
+
+
+    cart = [];
+
+    renderCart();
+
+    cerrarCarrito();
+
+
+    showToast(
+        `Pedido #${order.id} recibido correctamente.`
+    );
+
+
+    await cargarPedidos();
+
+}
+
+
+/* =========================================================
+   MIS PEDIDOS
+========================================================= */
+
+async function mostrarMisPedidos() {
+
+    if (!currentUser) {
+
+        abrirAuth();
+
+        return;
+    }
+
+
+    const section =
+        document.getElementById("misPedidos");
+
+
+    section.classList.add("active");
+
+
+    section.scrollIntoView({
+        behavior: "smooth"
+    });
+
+
+    await cargarPedidos();
+
+}
+
+
+async function cargarPedidos() {
+
+    if (!currentUser) return;
+
+
+    const container =
+        document.getElementById("ordersContainer");
+
+
+    container.innerHTML = `
+        <p style="color:var(--muted)">
+            Cargando pedidos...
+        </p>
+    `;
+
+
+    const {
+        data: orders,
+        error
+    } =
+        await supabaseClient
+            .from("orders")
+            .select(`
+                id,
+                status,
+                total,
+                created_at,
+                order_items (
+                    product_name,
+                    quantity,
+                    unit_price,
+                    subtotal
+                )
+            `)
+            .eq("user_id", currentUser.id)
+            .order("created_at", {
+                ascending: false
+            });
+
+
+    if (error) {
+
+        console.error(error);
+
+        container.innerHTML = `
+            <p style="color:#9b3028">
+                No pudimos cargar tus pedidos.
+            </p>
+        `;
+
+        return;
+    }
+
+
+    if (!orders?.length) {
+
+        container.innerHTML = `
+            <div class="order-card">
+
+                <strong>
+                    Todavía no tenés pedidos.
+                </strong>
+
+                <p style="color:var(--muted);margin-top:8px">
+                    Elegí algo de nuestra carta para comenzar.
+                </p>
+
+            </div>
+        `;
+
+        return;
+    }
+
+
+    container.innerHTML =
+        orders.map(order => {
+
+            const date =
+                new Date(order.created_at)
+                    .toLocaleString("es-AR");
+
+
+            const items =
+                order.order_items
+                    ?.map(item =>
+                        `${item.quantity} × ${escapeHtml(item.product_name)}`
+                    )
+                    .join("<br>") ||
+                "Sin detalle";
+
+
+            const status =
+                traducirEstado(order.status);
+
+
+            return `
+
+                <div class="order-card">
+
+                    <div class="order-top">
+
+                        <div class="order-number">
+                            Pedido #${order.id}
+                        </div>
+
+                        <div class="order-status">
+                            ${status}
+                        </div>
+
+                    </div>
+
+                    <div
+                        style="font-size:12px;color:var(--muted);margin-bottom:12px">
+
+                        ${date}
+
+                    </div>
+
+                    <div class="order-items-list">
+
+                        ${items}
+
+                    </div>
+
+                    <div class="order-total">
+
+                        Total:
+                        ${formatPrice(order.total)}
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }).join("");
+
+}
+
+
+/* =========================================================
+   ESTADOS
+========================================================= */
+
+function traducirEstado(status) {
+
+    const states = {
+
+        received:
+            "Recibido",
+
+        accepted:
+            "Aceptado",
+
+        preparing:
+            "Preparando",
+
+        ready:
+            "Listo",
+
+        delivered:
+            "Entregado",
+
+        cancelled:
+            "Cancelado"
+
+    };
+
+
+    return states[status] ||
+        status;
+
+}
+
+
+/* =========================================================
+   PANEL RESTAURANTE
+========================================================= */
+
+function irAlPanel() {
+
+    if (
+        currentProfile?.role !==
+        "restaurant"
+    ) {
+
+        showToast(
+            "No tenés permisos para acceder."
+        );
+
+        return;
+    }
+
+
+    /*
+       Próximo paso:
+       crear admin.html conectado
+       a este mismo Supabase.
+    */
+
+    window.location.href =
+        "admin.html";
+
+}
+
+
+/* =========================================================
+   FORMULARIO DE RESERVA
+========================================================= */
+
+document
+    .getElementById("reservationForm")
+    .addEventListener("submit", function(event) {
+
+        event.preventDefault();
+
+        showToast(
+            "Consulta enviada. Esta función será conectada al sistema de reservas."
+        );
+
+        this.reset();
+
+    });
+
+
+/* =========================================================
+   AUTH STATE
+========================================================= */
+
+supabaseClient.auth.onAuthStateChange(
+    async (event, session) => {
+
+        console.log(
+            "Auth:",
+            event
+        );
+
+        currentUser =
+            session?.user || null;
+
+
+        if (currentUser) {
+
+            await cargarUsuario();
+
+        } else {
+
+            currentProfile = null;
+
+            actualizarInterfazUsuario();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   INICIO
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    async () => {
+
+        await cargarMenu();
+
+        await cargarUsuario();
+
+        renderCart();
+
+    }
+);
 
 </script>
 
