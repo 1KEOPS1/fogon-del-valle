@@ -1,2342 +1,5384 @@
 <!DOCTYPE html>
+
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#351316">
 
-  <title>Fogón del Valle | Restaurante · Trevelin</title>
-  <meta name="description" content="Sabores patagónicos, productos regionales y cocina al fuego en Fogón del Valle, Trevelin.">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<title>Fogón del Valle | Restaurante · Trevelin</title>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<meta
+name="description"
+content="Fogón del Valle. Cocina patagónica, vinos de la cordillera y sabores de estación en Trevelin."
 
-  <style>
-    :root {
-      --wine: #5A1F24;
-      --wine-dark: #351316;
-      --terracotta: #B65A3A;
-      --cream: #F4EBDD;
-      --cream-light: #FBF7F0;
-      --dark: #241B17;
-      --gold: #C79A55;
-      --muted: #756861;
-      --green: #58734d;
-      --red: #9b3c32;
-      --white: #fff;
-      --border: rgba(36,27,23,.14);
-      --shadow: 0 15px 45px rgba(36,27,23,.10);
-      --radius: 18px;
-    }
+>
 
-    * { box-sizing: border-box; }
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    html {
-      scroll-behavior: smooth;
-      scroll-padding-top: 90px;
-    }
+<link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+>
 
-    body {
-      margin: 0;
-      font-family: "DM Sans", sans-serif;
-      background: var(--cream-light);
-      color: var(--dark);
-      line-height: 1.6;
-    }
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    body.no-scroll { overflow: hidden; }
+<style>
 
-    button, input, textarea, select { font: inherit; }
-    button { cursor: pointer; }
-    button:disabled { opacity: .55; cursor: not-allowed; }
+:root {
+    --wine:#5A1F24;
+    --wine-dark:#351316;
+    --terracotta:#B65A3A;
+    --cream:#F4EBDD;
+    --cream-light:#FBF7F0;
+    --dark:#241B17;
+    --gold:#C79A55;
+    --muted:#756861;
+    --white:#fff;
+    --border:rgba(36,27,23,.14);
+    --green:#58734d;
+    --red:#9b3c32;
+}
 
-    a { color: inherit; text-decoration: none; }
-    img { max-width: 100%; display: block; }
+* {
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-    .container {
-      width: min(1120px, calc(100% - 36px));
-      margin: 0 auto;
-    }
+html {
+    scroll-behavior:smooth;
+}
 
-    .eyebrow {
-      color: var(--terracotta);
-      text-transform: uppercase;
-      font-size: .74rem;
-      letter-spacing: .17em;
-      font-weight: 700;
-    }
+body {
+    font-family:"DM Sans",sans-serif;
+    background:var(--cream-light);
+    color:var(--dark);
+    line-height:1.6;
+}
 
-    h1, h2, h3, .brand-name {
-      font-family: "Cormorant Garamond", serif;
-      line-height: 1.05;
-      margin-top: 0;
-    }
+body.no-scroll {
+    overflow:hidden;
+}
 
-    h1 { font-size: clamp(3rem, 7vw, 5.8rem); }
-    h2 { font-size: clamp(2.3rem, 4.5vw, 3.7rem); }
-    h3 { font-size: 1.8rem; }
+img {
+    width:100%;
+    display:block;
+}
 
-    p { color: var(--muted); }
+a {
+    color:inherit;
+    text-decoration:none;
+}
 
-    .section { padding: 85px 0; }
+button,
+input,
+textarea {
+    font-family:inherit;
+}
 
-    .section-heading {
-      max-width: 700px;
-      margin-bottom: 35px;
-    }
+/* =========================================================
+HEADER
+========================================================= */
 
-    .section-heading p { max-width: 600px; }
+header {
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    z-index:1000;
+    transition:.35s;
+    padding:22px 6%;
+    color:white;
+}
 
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 9px;
-      padding: 13px 20px;
-      border-radius: 999px;
-      border: 1px solid transparent;
-      font-weight: 700;
-      font-size: .91rem;
-      transition: .2s ease;
-      text-align: center;
-    }
+header.scrolled {
+    background:rgba(36,27,23,.97);
+    padding:15px 6%;
+    box-shadow:0 8px 30px rgba(0,0,0,.12);
+}
 
-    .btn-primary {
-      background: var(--wine);
-      color: var(--white);
-    }
+.nav {
+    max-width:1250px;
+    margin:auto;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
 
-    .btn-primary:hover {
-      background: var(--wine-dark);
-      transform: translateY(-1px);
-    }
+.logo {
+    font-family:"Cormorant Garamond",serif;
+    font-size:30px;
+    font-weight:700;
+    letter-spacing:1px;
+}
 
-    .btn-secondary {
-      border-color: var(--border);
-      background: transparent;
-      color: var(--dark);
-    }
+.logo span {
+    display:block;
+    font-family:"DM Sans",sans-serif;
+    font-size:9px;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    color:#ead6b4;
+    margin-top:-6px;
+}
 
-    .btn-secondary:hover { background: var(--cream); }
+.nav-links {
+    display:flex;
+    gap:20px;
+    align-items:center;
+}
 
-    .btn-light {
-      background: var(--cream-light);
-      color: var(--wine-dark);
-    }
+.nav-links a {
+    font-size:14px;
+    color:rgba(255,255,255,.9);
+}
 
-    .btn-small { padding: 9px 14px; font-size: .82rem; }
-    .btn-full { width: 100%; }
+.nav-button {
+    padding:10px 18px;
+    border:1px solid rgba(255,255,255,.5);
+    border-radius:30px;
+}
 
-    .site-header {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      background: rgba(251,247,240,.95);
-      backdrop-filter: blur(14px);
-      border-bottom: 1px solid var(--border);
-    }
+.cart-button {
+    border:1px solid rgba(255,255,255,.5);
+    background:transparent;
+    color:white;
+    padding:10px 16px;
+    border-radius:30px;
+    cursor:pointer;
+    display:flex;
+    gap:8px;
+    align-items:center;
+}
 
-    .nav {
-      min-height: 76px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-    }
+.cart-count {
+    background:var(--terracotta);
+    border-radius:50%;
+    width:21px;
+    height:21px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:11px;
+}
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      flex-shrink: 0;
-    }
+/* =========================================================
+HERO
+========================================================= */
 
-    .brand-mark {
-      display: grid;
-      place-items: center;
-      width: 43px;
-      height: 43px;
-      border-radius: 50%;
-      background: var(--wine);
-      color: var(--cream);
-      font-family: "Cormorant Garamond", serif;
-      font-size: 1.5rem;
-      border: 1px solid var(--gold);
-    }
+.hero {
+    min-height:100vh;
+    background:
+        linear-gradient(rgba(31,19,15,.48),rgba(31,19,15,.72)),
+        url("https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=2000&q=85")
+        center/cover;
+    display:flex;
+    align-items:center;
+}
 
-    .brand-name {
-      font-size: 1.45rem;
-      font-weight: 700;
-      color: var(--wine-dark);
-      margin: 0;
-    }
+.hero-content {
+    width:min(1250px,88%);
+    margin:auto;
+    color:white;
+    padding-top:80px;
+}
 
-    .brand-subtitle {
-      display: block;
-      color: var(--muted);
-      font-size: .64rem;
-      letter-spacing: .13em;
-      text-transform: uppercase;
-    }
+.eyebrow {
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    color:#e9c98e;
+    font-size:12px;
+    font-weight:600;
+    text-transform:uppercase;
+    letter-spacing:3px;
+    margin-bottom:20px;
+}
+
+.eyebrow::before {
+    content:"";
+    width:35px;
+    height:1px;
+    background:#e9c98e;
+}
+
+.hero h1 {
+    max-width:850px;
+    font-family:"Cormorant Garamond",serif;
+    font-size:clamp(58px,8vw,105px);
+    line-height:.88;
+    font-weight:500;
+    margin-bottom:30px;
+}
+
+.hero h1 em {
+    color:#e3b86f;
+}
+
+.hero p {
+    max-width:590px;
+    color:rgba(255,255,255,.85);
+    font-size:18px;
+    margin-bottom:38px;
+}
+
+.hero-buttons {
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+}
+
+.btn {
+    display:inline-flex;
+    justify-content:center;
+    align-items:center;
+    padding:15px 25px;
+    border-radius:4px;
+    font-weight:600;
+    font-size:14px;
+    transition:.3s;
+    cursor:pointer;
+    border:0;
+}
+
+.btn-primary {
+    background:var(--terracotta);
+    color:white;
+}
+
+.btn-primary:hover {
+    background:#99472e;
+    transform:translateY(-2px);
+}
+
+.btn-outline {
+    border:1px solid rgba(255,255,255,.55);
+    color:white;
+    background:transparent;
+}
+
+/* =========================================================
+GENERAL
+========================================================= */
+
+.section {
+    padding:110px 6%;
+}
+
+.container {
+    max-width:1180px;
+    margin:auto;
+}
+
+.section-header {
+    max-width:700px;
+    margin-bottom:55px;
+}
+
+.section-label {
+    color:var(--terracotta);
+    text-transform:uppercase;
+    letter-spacing:3px;
+    font-size:11px;
+    font-weight:700;
+    margin-bottom:12px;
+}
+
+.section-title {
+    font-family:"Cormorant Garamond",serif;
+    font-size:clamp(43px,5vw,68px);
+    line-height:.95;
+    font-weight:600;
+    color:var(--wine);
+}
+
+.section-text {
+    margin-top:20px;
+    color:var(--muted);
+}
+
+/* =========================================================
+INTRO
+========================================================= */
+
+.intro {
+    background:var(--cream);
+}
+
+.intro-grid {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:75px;
+    align-items:center;
+}
+
+.intro-image {
+    position:relative;
+}
+
+.intro-image img {
+    height:620px;
+    object-fit:cover;
+}
+
+.image-note {
+    position:absolute;
+    right:-25px;
+    bottom:35px;
+    background:var(--wine);
+    color:white;
+    padding:25px 30px;
+    max-width:210px;
+}
+
+.image-note strong {
+    display:block;
+    font-family:"Cormorant Garamond",serif;
+    font-size:27px;
+}
+
+.image-note span {
+    font-size:11px;
+    color:#dfc5a0;
+}
+
+.intro-content h2 {
+    font-family:"Cormorant Garamond",serif;
+    color:var(--wine);
+    font-size:58px;
+    line-height:1;
+    margin-bottom:25px;
+}
+
+.intro-content p {
+    color:var(--muted);
+    margin-bottom:18px;
+}
+
+.signature {
+    margin-top:30px;
+    font-family:"Cormorant Garamond",serif;
+    font-size:29px;
+    color:var(--wine);
+    font-style:italic;
+}
+
+/* =========================================================
+MENU
+========================================================= */
+
+.menu {
+    background:var(--cream-light);
+}
+
+.menu-grid {
+    display:grid;
+    grid-template-columns:1fr;
+    gap:14px;
+}
+
+.menu-category {
+    background:white;
+    border:1px solid var(--border);
+    overflow:hidden;
+}
+
+.menu-category-header {
+    width:100%;
+    border:0;
+    background:white;
+    color:var(--wine);
+    padding:22px 25px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+    cursor:pointer;
+    text-align:left;
+    transition:.25s;
+}
+
+.menu-category-header:hover {
+    background:var(--cream);
+}
+
+.menu-category-title {
+    display:flex;
+    align-items:center;
+    gap:14px;
+}
+
+.menu-category-icon {
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:var(--cream);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:19px;
+    flex-shrink:0;
+}
+
+.menu-category-name {
+    font-family:"Cormorant Garamond",serif;
+    font-size:34px;
+    line-height:1;
+}
+
+.menu-category-description {
+    display:block;
+    color:var(--muted);
+    font-family:"DM Sans",sans-serif;
+    font-size:11px;
+    margin-top:5px;
+}
+
+.menu-category-toggle {
+    width:36px;
+    height:36px;
+    border-radius:50%;
+    border:1px solid var(--border);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:22px;
+    color:var(--terracotta);
+    flex-shrink:0;
+    transition:.3s;
+}
+
+.menu-category.active .menu-category-toggle {
+    background:var(--terracotta);
+    color:white;
+    border-color:var(--terracotta);
+    transform:rotate(180deg);
+}
+
+.menu-category-content {
+    display:grid;
+    grid-template-rows:0fr;
+    transition:grid-template-rows .35s ease;
+}
+
+.menu-category.active .menu-category-content {
+    grid-template-rows:1fr;
+}
+
+.menu-category-inner {
+    min-height:0;
+    overflow:hidden;
+}
+
+.menu-category-items {
+    padding:0 25px 10px;
+}
+
+.menu-item {
+    display:grid;
+    grid-template-columns:1fr auto;
+    gap:20px;
+    padding:22px 0;
+    border-top:1px solid var(--border);
+}
+
+.menu-item h4 {
+    font-family:"Cormorant Garamond",serif;
+    font-size:25px;
+}
+
+.menu-item p {
+    color:var(--muted);
+    font-size:13px;
+    margin-top:4px;
+    max-width:700px;
+}
+
+.menu-price {
+    color:var(--terracotta);
+    font-weight:700;
+    white-space:nowrap;
+}
+
+.menu-actions {
+    margin-top:12px;
+}
+
+.add-btn {
+    border:1px solid var(--terracotta);
+    color:var(--terracotta);
+    background:transparent;
+    padding:8px 13px;
+    border-radius:20px;
+    cursor:pointer;
+    font-size:12px;
+    font-weight:700;
+    transition:.2s;
+}
+
+.add-btn:hover {
+    background:var(--terracotta);
+    color:white;
+}
+
+.menu-loading {
+    color:var(--muted);
+    padding:20px 0;
+}
+
+.menu-error {
+    color:var(--red);
+    background:#fff3f1;
+    padding:18px;
+    border:1px solid rgba(155,60,50,.2);
+}
+
+/* =========================================================
+FEATURED
+========================================================= */
+
+.featured {
+    background:var(--wine);
+    color:white;
+}
+
+.featured .section-label {
+    color:#e4bd7d;
+}
+
+.featured .section-title {
+    color:white;
+}
+
+.featured .section-text {
+    color:rgba(255,255,255,.65);
+}
+
+.dishes {
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:22px;
+}
+
+.dish {
+    background:#43191d;
+    overflow:hidden;
+}
+
+.dish-image {
+    height:320px;
+    overflow:hidden;
+}
+
+.dish-image img {
+    height:100%;
+    object-fit:cover;
+    transition:.5s;
+}
+
+.dish:hover img {
+    transform:scale(1.05);
+}
+
+.dish-content {
+    padding:24px;
+}
+
+.dish-content h3 {
+    font-family:"Cormorant Garamond",serif;
+    font-size:30px;
+}
+
+.dish-content p {
+    color:rgba(255,255,255,.65);
+    font-size:13px;
+}
+
+/* =========================================================
+EXPERIENCE
+========================================================= */
+
+.experience {
+    background:var(--cream);
+}
+
+.experience-grid {
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+}
+
+.experience-card {
+    border:1px solid var(--border);
+    padding:35px;
+    background:rgba(255,255,255,.35);
+}
+
+.experience-number {
+    color:var(--gold);
+    font-family:"Cormorant Garamond",serif;
+    font-size:22px;
+}
+
+.experience-card h3 {
+    font-family:"Cormorant Garamond",serif;
+    font-size:31px;
+    color:var(--wine);
+    margin:18px 0 10px;
+}
+
+.experience-card p {
+    color:var(--muted);
+    font-size:14px;
+}
+
+/* =========================================================
+GALLERY
+========================================================= */
+
+.gallery {
+    display:grid;
+    grid-template-columns:1.4fr 1fr 1fr;
+    grid-template-rows:260px 260px;
+    gap:8px;
+}
+
+.gallery-item {
+    overflow:hidden;
+}
+
+.gallery-item:first-child {
+    grid-row:span 2;
+}
+
+.gallery-item img {
+    height:100%;
+    object-fit:cover;
+}
+
+/* =========================================================
+FAQ
+========================================================= */
+
+.faq {
+    background:var(--cream);
+}
+
+.faq-list {
+    max-width:850px;
+    margin:auto;
+}
+
+.faq-item {
+    border-bottom:1px solid var(--border);
+}
+
+.faq-question {
+    width:100%;
+    border:0;
+    background:transparent;
+    padding:24px 0;
+    display:flex;
+    justify-content:space-between;
+    cursor:pointer;
+    text-align:left;
+    color:var(--wine);
+    font-family:"Cormorant Garamond",serif;
+    font-size:27px;
+}
+
+.faq-answer {
+    max-height:0;
+    overflow:hidden;
+    transition:.35s;
+    color:var(--muted);
+}
+
+.faq-answer p {
+    padding-bottom:22px;
+}
+
+.faq-item.active .faq-answer {
+    max-height:200px;
+}
+
+/* =========================================================
+RESERVATION
+========================================================= */
+
+.reservation {
+    min-height:600px;
+    background:
+        linear-gradient(rgba(50,25,20,.78),rgba(50,25,20,.78)),
+        url("https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=2000&q=85")
+        center/cover;
+    display:flex;
+    align-items:center;
+    text-align:center;
+    color:white;
+}
+
+.reservation-content {
+    max-width:760px;
+    margin:auto;
+}
+
+.reservation h2 {
+    font-family:"Cormorant Garamond",serif;
+    font-size:clamp(48px,6vw,78px);
+    line-height:.95;
+    margin-bottom:20px;
+}
+
+.reservation p {
+    color:rgba(255,255,255,.8);
+    margin-bottom:32px;
+}
+
+/* =========================================================
+MIS PEDIDOS
+========================================================= */
+
+.orders-section {
+    background:var(--cream-light);
+}
+
+.orders-header {
+    max-width:700px;
+    margin-bottom:45px;
+}
+
+.orders-login {
+    background:var(--cream);
+    border:1px solid var(--border);
+    padding:35px;
+    text-align:center;
+    max-width:700px;
+    margin:auto;
+}
+
+.orders-login h3 {
+    font-family:"Cormorant Garamond",serif;
+    font-size:32px;
+    color:var(--wine);
+    margin-bottom:8px;
+}
+
+.orders-login p {
+    color:var(--muted);
+    margin-bottom:20px;
+}
+
+.orders-empty {
+    background:var(--cream);
+    border:1px solid var(--border);
+    padding:45px;
+    text-align:center;
+    color:var(--muted);
+}
+
+.orders-empty h3 {
+    font-family:"Cormorant Garamond",serif;
+    color:var(--wine);
+    font-size:30px;
+    margin-bottom:8px;
+}
+
+.orders-empty p {
+    color:var(--muted);
+}
+
+.orders-empty-icon {
+    font-size:42px;
+    margin-bottom:12px;
+}
+
+.orders-list {
+    display:grid;
+    gap:25px;
+}
+
+.order-card {
+    background:white;
+    border:1px solid var(--border);
+    box-shadow:0 10px 30px rgba(36,27,23,.05);
+}
+
+.order-card-header {
+    padding:22px 25px;
+    background:var(--wine);
+    color:white;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+}
+
+.order-number {
+    font-family:"Cormorant Garamond",serif;
+    font-size:27px;
+}
+
+.order-date {
+    font-size:12px;
+    color:rgba(255,255,255,.65);
+    margin-top:3px;
+}
+
+.order-status {
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    padding:8px 12px;
+    border-radius:20px;
+    background:rgba(255,255,255,.12);
+    font-size:12px;
+    white-space:nowrap;
+}
+
+.order-products {
+    padding:10px 25px;
+}
+
+.order-product {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+    padding:17px 0;
+    border-bottom:1px solid var(--border);
+}
+
+.order-product:last-child {
+    border-bottom:0;
+}
+
+.order-product-name {
+    font-family:"Cormorant Garamond",serif;
+    color:var(--wine);
+    font-size:22px;
+}
+
+.order-product-detail {
+    color:var(--muted);
+    font-size:12px;
+    margin-top:2px;
+}
+
+.order-product-subtotal {
+    color:var(--terracotta);
+    font-weight:700;
+    white-space:nowrap;
+}
+
+.order-card-footer {
+    border-top:1px solid var(--border);
+    padding:20px 25px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    background:var(--cream-light);
+}
+
+.order-total-label {
+    color:var(--muted);
+}
+
+.order-total {
+    color:var(--wine);
+    font-size:21px;
+    font-weight:700;
+}
+
+.order-actions {
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    justify-content:flex-end;
+}
+
+.order-edit-btn,
+.order-cancel-edit-btn {
+    border:1px solid var(--terracotta);
+    background:transparent;
+    color:var(--terracotta);
+    padding:9px 14px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:700;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.order-edit-btn:hover {
+    background:var(--terracotta);
+    color:white;
+}
+
+.order-edit-locked {
+    font-size:11px;
+    color:var(--muted);
+    font-style:italic;
+}
+
+.editing-banner {
+    background:var(--wine);
+    color:white;
+    padding:14px 18px;
+    margin-bottom:15px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    font-size:13px;
+}
+
+.editing-banner strong {
+    color:#e9c98e;
+}
+
+.editing-banner button {
+    border:1px solid rgba(255,255,255,.4);
+    background:transparent;
+    color:white;
+    padding:7px 12px;
+    border-radius:18px;
+    cursor:pointer;
+    font-size:11px;
+}
+
+/* =========================================================
+CONTACT
+========================================================= */
+
+.contact {
+    background:var(--dark);
+    color:white;
+}
+
+.contact-grid {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:80px;
+}
+
+.contact .section-title {
+    color:white;
+}
+
+.contact .section-text {
+    color:rgba(255,255,255,.65);
+}
+
+.contact-info {
+    margin-top:35px;
+}
+
+.contact-row {
+    display:flex;
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.contact-icon {
+    width:40px;
+    height:40px;
+    border:1px solid rgba(255,255,255,.18);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:#d5ad70;
+}
+
+.contact-row strong {
+    display:block;
+    font-size:14px;
+}
+
+.contact-row span {
+    display:block;
+    color:rgba(255,255,255,.55);
+    font-size:13px;
+}
+
+/* =========================================================
+FOOTER
+========================================================= */
+
+footer {
+    background:#17110e;
+    color:rgba(255,255,255,.55);
+    padding:30px 6%;
+}
+
+.footer-inner {
+    max-width:1180px;
+    margin:auto;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.footer-brand {
+    color:white;
+    font-family:"Cormorant Garamond",serif;
+    font-size:25px;
+}
+
+.footer-demo {
+    margin-top:5px;
+    font-size:10px;
+    color:#a88351;
+    text-transform:uppercase;
+    letter-spacing:2px;
+}
+
+/* =========================================================
+CARRITO
+========================================================= */
+
+.cart-overlay {
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.55);
+    z-index:3000;
+    opacity:0;
+    pointer-events:none;
+    transition:.3s;
+}
+
+.cart-overlay.active {
+    opacity:1;
+    pointer-events:auto;
+}
+
+.cart-panel {
+    position:absolute;
+    right:0;
+    top:0;
+    height:100%;
+    width:min(440px,100%);
+    background:var(--cream-light);
+    transform:translateX(100%);
+    transition:.35s;
+    display:flex;
+    flex-direction:column;
+}
+
+.cart-overlay.active .cart-panel {
+    transform:translateX(0);
+}
+
+.cart-header {
+    padding:25px;
+    background:var(--wine);
+    color:white;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.cart-header h2 {
+    font-family:"Cormorant Garamond",serif;
+    font-size:32px;
+}
+
+.cart-editing-label {
+    font-size:11px;
+    color:#e9c98e;
+    margin-top:3px;
+}
+
+.close-cart {
+    border:0;
+    background:transparent;
+    color:white;
+    font-size:28px;
+    cursor:pointer;
+}
+
+.cart-items {
+    flex:1;
+    overflow:auto;
+    padding:20px;
+}
+
+.empty-cart {
+    text-align:center;
+    color:var(--muted);
+    padding:50px 20px;
+}
+
+.cart-item {
+    border-bottom:1px solid var(--border);
+    padding:16px 0;
+}
+
+.cart-item-top {
+    display:flex;
+    justify-content:space-between;
+    gap:15px;
+}
+
+.cart-item-name {
+    font-family:"Cormorant Garamond",serif;
+    font-size:23px;
+    color:var(--wine);
+}
+
+.cart-item-price {
+    font-weight:700;
+    color:var(--terracotta);
+}
+
+.quantity-controls {
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-top:10px;
+}
+
+.quantity-controls button {
+    width:28px;
+    height:28px;
+    border-radius:50%;
+    border:1px solid var(--terracotta);
+    background:transparent;
+    color:var(--terracotta);
+    cursor:pointer;
+}
+
+.cart-footer {
+    padding:22px;
+    border-top:1px solid var(--border);
+    background:white;
+}
+
+.cart-total {
+    display:flex;
+    justify-content:space-between;
+    font-size:20px;
+    font-weight:700;
+    margin-bottom:16px;
+}
+
+.checkout-btn {
+    width:100%;
+}
+
+.checkout-btn.editing {
+    background:var(--wine);
+}
+
+/* =========================================================
+AUTH MODAL
+========================================================= */
+
+.modal-overlay {
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.65);
+    z-index:4000;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.modal-overlay.active {
+    display:flex;
+}
+
+.modal {
+    background:var(--cream-light);
+    width:min(440px,100%);
+    padding:35px;
+    position:relative;
+}
+
+.modal h2 {
+    font-family:"Cormorant Garamond",serif;
+    color:var(--wine);
+    font-size:40px;
+    margin-bottom:8px;
+}
+
+.modal p {
+    color:var(--muted);
+    font-size:14px;
+    margin-bottom:25px;
+}
+
+.modal-close {
+    position:absolute;
+    right:18px;
+    top:15px;
+    border:0;
+    background:transparent;
+    font-size:25px;
+    cursor:pointer;
+}
+
+.form-group {
+    margin-bottom:15px;
+}
+
+.form-group label {
+    display:block;
+    font-size:12px;
+    font-weight:700;
+    margin-bottom:6px;
+}
+
+.form-group input {
+    width:100%;
+    padding:13px;
+    border:1px solid var(--border);
+    background:white;
+    outline:none;
+}
+
+.form-group input:focus {
+    border-color:var(--terracotta);
+}
+
+.auth-switch {
+    margin-top:18px;
+    text-align:center;
+    font-size:13px;
+}
+
+.auth-switch button {
+    border:0;
+    background:none;
+    color:var(--terracotta);
+    font-weight:700;
+    cursor:pointer;
+}
+
+/* =========================================================
+USER BAR
+========================================================= */
+
+.user-bar {
+    position:fixed;
+    bottom:18px;
+    left:18px;
+    z-index:2000;
+    background:var(--wine);
+    color:white;
+    padding:10px 15px;
+    border-radius:30px;
+    font-size:12px;
+    display:none;
+    align-items:center;
+    gap:10px;
+    box-shadow:0 8px 25px rgba(0,0,0,.2);
+}
+
+.logout-btn {
+    border:0;
+    background:var(--terracotta);
+    color:white;
+    padding:5px 9px;
+    border-radius:15px;
+    cursor:pointer;
+    font-size:10px;
+}
+
+/* =========================================================
+RESPONSIVE
+========================================================= */
+
+@media(max-width:900px) {
 
     .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 22px;
-      font-size: .88rem;
-      font-weight: 600;
+        display:none;
     }
 
-    .nav-links a:hover { color: var(--terracotta); }
+    .intro-grid,
+    .contact-grid {
+        grid-template-columns:1fr;
+        gap:45px;
+    }
 
-    .nav-actions {
-      display: flex;
-      align-items: center;
-      gap: 8px;
+    .dishes,
+    .experience-grid {
+        grid-template-columns:1fr;
+    }
+
+    .gallery {
+        grid-template-columns:1fr 1fr;
+        grid-template-rows:240px 240px 240px;
+    }
+
+    .gallery-item:first-child {
+        grid-column:span 2;
+        grid-row:span 1;
+    }
+
+    .footer-inner {
+        flex-direction:column;
+        align-items:flex-start;
+        gap:15px;
+    }
+
+}
+
+@media(max-width:600px) {
+
+    header {
+        padding:18px 5%;
+    }
+
+    .logo {
+        font-size:26px;
     }
 
     .hero {
-      min-height: 640px;
-      position: relative;
-      display: flex;
-      align-items: center;
-      color: white;
-      overflow: hidden;
-      background:
-        linear-gradient(90deg, rgba(32,17,14,.86), rgba(32,17,14,.40)),
-        url("https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=2000&q=85")
-        center/cover no-repeat;
+        min-height:92vh;
     }
 
     .hero-content {
-      position: relative;
-      z-index: 1;
-      padding: 100px 0;
-      max-width: 760px;
+        width:90%;
     }
 
-    .hero .eyebrow { color: #e6c58e; }
-    .hero h1 { margin: 18px 0; }
-    .hero p { color: rgba(255,255,255,.85); max-width: 550px; font-size: 1.08rem; }
-    .hero-buttons { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
-    .hero .btn-secondary { color: white; border-color: rgba(255,255,255,.5); }
-
-    .intro-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 55px;
-      align-items: center;
+    .hero h1 {
+        font-size:59px;
     }
 
-    .intro-image {
-      min-height: 420px;
-      border-radius: var(--radius);
-      background:
-        linear-gradient(0deg, rgba(53,19,22,.10), rgba(53,19,22,.02)),
-        url("https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1100&q=85")
-        center/cover;
-      box-shadow: var(--shadow);
+    .section {
+        padding:80px 6%;
     }
 
-    .intro-copy p { max-width: 560px; }
-
-    .info-strip {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 18px 30px;
-      margin-top: 25px;
-      font-size: .9rem;
-      font-weight: 600;
+    .section-title {
+        font-size:48px;
     }
 
-    .info-strip span { color: var(--wine); }
-
-    .menu-section { background: var(--cream); }
-
-    .menu-toolbar {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 15px;
-      margin-bottom: 24px;
+    .intro-content h2 {
+        font-size:48px;
     }
 
-    .menu-toolbar p { margin: 0; }
-
-    .menu-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 13px;
+    .intro-image img {
+        height:480px;
     }
 
-    .menu-category {
-      border: 1px solid var(--border);
-      border-radius: 15px;
-      background: var(--cream-light);
-      overflow: hidden;
-      transition: box-shadow .2s;
+    .gallery {
+        grid-template-columns:1fr;
+        grid-template-rows:repeat(5,250px);
     }
 
-    .menu-category.is-open {
-      box-shadow: 0 8px 24px rgba(36,27,23,.07);
+    .gallery-item:first-child {
+        grid-column:auto;
     }
 
-    .menu-category-toggle {
-      width: 100%;
-      border: 0;
-      background: transparent;
-      padding: 22px 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-      text-align: left;
-      color: var(--dark);
+    .menu-category-header {
+        padding:18px;
     }
 
-    .menu-category-toggle:hover { background: rgba(199,154,85,.08); }
-
-    .category-title {
-      display: block;
-      font-family: "Cormorant Garamond", serif;
-      font-size: 1.9rem;
-      font-weight: 700;
-      line-height: 1.1;
+    .menu-category-name {
+        font-size:28px;
     }
 
-    .category-description {
-      display: block;
-      margin-top: 5px;
-      color: var(--muted);
-      font-size: .85rem;
-      font-weight: 400;
+    .menu-category-description {
+        max-width:190px;
     }
 
-    .category-icon {
-      flex-shrink: 0;
-      width: 38px;
-      height: 38px;
-      border: 1px solid var(--border);
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      color: var(--wine);
-      font-size: 1.4rem;
-      transition: transform .25s;
-    }
-
-    .menu-category.is-open .category-icon { transform: rotate(45deg); }
-
-    .menu-category-content {
-      display: grid;
-      grid-template-rows: 0fr;
-      transition: grid-template-rows .3s ease;
-    }
-
-    .menu-category.is-open .menu-category-content {
-      grid-template-rows: 1fr;
-    }
-
-    .menu-category-inner { overflow: hidden; min-height: 0; }
-
-    .menu-items {
-      padding: 0 24px 24px;
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 15px;
+    .menu-category-items {
+        padding:0 18px 8px;
     }
 
     .menu-item {
-      display: grid;
-      grid-template-columns: 105px minmax(0, 1fr);
-      gap: 15px;
-      padding: 14px;
-      border: 1px solid var(--border);
-      border-radius: 13px;
-      background: white;
+        grid-template-columns:1fr;
+        gap:8px;
     }
 
-    .menu-item-image {
-      width: 105px;
-      height: 112px;
-      border-radius: 10px;
-      object-fit: cover;
-      background: var(--cream);
+    .menu-price {
+        order:-1;
+        justify-self:start;
     }
 
-    .menu-item-image.placeholder {
-      display: grid;
-      place-items: center;
-      color: var(--wine);
-      font-size: 1.6rem;
+    .order-card-header {
+        flex-direction:column;
+        align-items:flex-start;
     }
 
-    .menu-item h4 { margin: 0 0 5px; font-size: 1rem; }
-    .menu-item p { margin: 0 0 12px; font-size: .84rem; line-height: 1.5; }
-    .menu-item-bottom { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; }
-    .menu-price { font-weight: 700; color: var(--wine); white-space: nowrap; }
-
-    .empty-state {
-      padding: 25px;
-      text-align: center;
-      color: var(--muted);
-      border: 1px dashed var(--border);
-      border-radius: 12px;
+    .order-product {
+        align-items:flex-start;
     }
 
-    .featured-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 20px;
+    .order-card-footer {
+        flex-direction:column;
+        align-items:flex-start;
     }
 
-    .featured-card {
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-      box-shadow: 0 8px 25px rgba(36,27,23,.05);
+    .order-actions {
+        width:100%;
+        justify-content:flex-start;
     }
 
-    .featured-card img { height: 220px; width: 100%; object-fit: cover; }
-    .featured-card-content { padding: 20px; }
-    .featured-card h3 { margin-bottom: 9px; font-size: 1.7rem; }
-    .featured-card p { font-size: .9rem; }
-
-    .orders-section { background: white; }
-
-    .user-bar {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 15px;
-      padding: 17px 20px;
-      background: var(--cream);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      margin-bottom: 22px;
+    .editing-banner {
+        align-items:flex-start;
+        flex-direction:column;
     }
 
-    .user-bar p { margin: 3px 0 0; font-size: .85rem; }
+}
+
+/* =========================================================
+TOAST
+========================================================= */
+
+.toast {
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    z-index:6000;
+    background:var(--wine);
+    color:white;
+    padding:14px 18px;
+    border-radius:6px;
+    box-shadow:0 10px 35px rgba(0,0,0,.25);
+    transform:translateY(30px);
+    opacity:0;
+    pointer-events:none;
+    transition:.3s;
+    max-width:340px;
+    font-size:13px;
+}
+
+.toast.show {
+    transform:translateY(0);
+    opacity:1;
+}
+
+</style>
 
-    .orders-list { display: grid; gap: 16px; }
-
-    .order-card {
-      border: 1px solid var(--border);
-      border-radius: 15px;
-      padding: 22px;
-      background: var(--cream-light);
-    }
-
-    .order-header {
-      display: flex;
-      justify-content: space-between;
-      gap: 15px;
-      flex-wrap: wrap;
-      align-items: flex-start;
-    }
-
-    .order-header h3 { margin: 0; font-size: 1.6rem; }
-
-    .order-meta { font-size: .82rem; color: var(--muted); }
-
-    .status {
-      display: inline-block;
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: #eee5d8;
-      color: var(--wine);
-      font-size: .75rem;
-      font-weight: 700;
-    }
-
-    .status.received { background: #f6e7bd; color: #74551b; }
-    .status.accepted { background: #dfe8d7; color: #37542c; }
-    .status.preparing { background: #f6d9c9; color: #86452d; }
-    .status.ready { background: #d7e9dc; color: #285b3a; }
-    .status.delivered { background: #e2e4e5; color: #444; }
-    .status.cancelled { background: #f0d8d5; color: #8b2e28; }
-
-    .order-items-list {
-      padding: 13px 0;
-      margin: 12px 0;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .order-item-line {
-      display: flex;
-      justify-content: space-between;
-      gap: 15px;
-      padding: 4px 0;
-      font-size: .9rem;
-    }
-
-    .order-item-line span:last-child { white-space: nowrap; }
-
-    .order-footer {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-    }
-
-    .order-total { font-size: 1.2rem; font-weight: 700; color: var(--wine); }
-
-    .order-actions { display: flex; flex-wrap: wrap; gap: 8px; }
-
-    .experience {
-      color: white;
-      background:
-        linear-gradient(90deg, rgba(53,19,22,.92), rgba(53,19,22,.76)),
-        url("https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=1800&q=85")
-        center/cover;
-    }
-
-    .experience h2, .experience p { color: white; }
-    .experience .eyebrow { color: #e6c58e; }
-
-    .experience-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 40px;
-      align-items: center;
-    }
-
-    .experience-points { display: grid; gap: 15px; }
-    .experience-point { padding: 18px; border: 1px solid rgba(255,255,255,.22); border-radius: 13px; }
-    .experience-point strong { display: block; margin-bottom: 4px; }
-    .experience-point span { color: rgba(255,255,255,.78); font-size: .9rem; }
-
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: 1.2fr 1fr 1fr;
-      grid-template-rows: 180px 180px;
-      gap: 14px;
-    }
-
-    .gallery-grid img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 13px;
-    }
-
-    .gallery-grid img:first-child { grid-row: span 2; }
-
-    .faq-list { display: grid; gap: 10px; max-width: 850px; }
-
-    .faq-list details {
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 17px 20px;
-    }
-
-    .faq-list summary { font-weight: 700; cursor: pointer; }
-    .faq-list details p { margin-bottom: 0; }
-
-    .reservation-cta {
-      padding: 65px 0;
-      background: var(--wine);
-      color: white;
-      text-align: center;
-    }
-
-    .reservation-cta h2, .reservation-cta p { color: white; }
-    .reservation-cta p { max-width: 600px; margin: 0 auto 22px; opacity: .85; }
-
-    .site-footer {
-      padding: 35px 0;
-      background: var(--wine-dark);
-      color: white;
-    }
-
-    .footer-content {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      gap: 20px;
-      align-items: center;
-    }
-
-    .site-footer p { color: rgba(255,255,255,.65); margin: 4px 0; font-size: .85rem; }
-
-    /* Carrito lateral */
-    .overlay {
-      position: fixed;
-      inset: 0;
-      z-index: 100;
-      background: rgba(20,12,10,.55);
-      opacity: 0;
-      visibility: hidden;
-      transition: .25s;
-    }
-
-    .overlay.visible { opacity: 1; visibility: visible; }
-
-    .cart-drawer {
-      position: fixed;
-      z-index: 101;
-      top: 0;
-      right: 0;
-      height: 100dvh;
-      width: min(460px, 100%);
-      background: var(--cream-light);
-      box-shadow: -15px 0 50px rgba(0,0,0,.16);
-      transform: translateX(105%);
-      transition: transform .3s ease;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .cart-drawer.visible { transform: translateX(0); }
-
-    .drawer-header {
-      padding: 22px;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      justify-content: space-between;
-      gap: 15px;
-      align-items: center;
-    }
-
-    .drawer-header h2 { font-size: 2rem; margin: 0; }
-
-    .icon-button {
-      border: 1px solid var(--border);
-      background: white;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      font-size: 1.25rem;
-      color: var(--wine);
-    }
-
-    .cart-content { flex: 1; overflow-y: auto; padding: 20px; }
-
-    .cart-edit-banner {
-      background: #f6e7bd;
-      color: #74551b;
-      padding: 13px;
-      border-radius: 10px;
-      margin-bottom: 16px;
-      font-size: .85rem;
-    }
-
-    .cart-line {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 12px;
-      padding: 15px 0;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .cart-line h4 { margin: 0 0 4px; }
-    .cart-line p { margin: 0; font-size: .84rem; }
-
-    .quantity-control {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      margin-top: 9px;
-    }
-
-    .quantity-control button {
-      border: 1px solid var(--border);
-      border-radius: 50%;
-      width: 29px;
-      height: 29px;
-      background: white;
-      color: var(--wine);
-    }
-
-    .remove-link {
-      background: none;
-      border: none;
-      padding: 0;
-      margin-top: 6px;
-      color: var(--red);
-      font-size: .78rem;
-      text-decoration: underline;
-    }
-
-    .cart-footer {
-      padding: 20px;
-      border-top: 1px solid var(--border);
-      background: white;
-    }
-
-    .cart-total-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 15px;
-      font-weight: 700;
-      font-size: 1.1rem;
-    }
-
-    .cart-footer label {
-      display: block;
-      font-size: .83rem;
-      font-weight: 700;
-      margin: 13px 0 6px;
-    }
-
-    .cart-footer textarea,
-    .auth-form input,
-    .auth-form textarea {
-      width: 100%;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 11px 12px;
-      background: var(--cream-light);
-      color: var(--dark);
-      outline: none;
-    }
-
-    .cart-footer textarea:focus,
-    .auth-form input:focus { border-color: var(--gold); }
-
-    .cart-footer textarea { resize: vertical; min-height: 65px; }
-
-    .cart-footer .btn { margin-top: 9px; }
-
-    /* Modal de autenticación */
-    .modal-backdrop {
-      position: fixed;
-      inset: 0;
-      z-index: 120;
-      background: rgba(20,12,10,.62);
-      display: none;
-      place-items: center;
-      padding: 18px;
-      overflow-y: auto;
-    }
-
-    .modal-backdrop.visible { display: grid; }
-
-    .auth-modal {
-      width: min(440px, 100%);
-      background: var(--cream-light);
-      border-radius: 20px;
-      padding: 28px;
-      box-shadow: var(--shadow);
-      position: relative;
-      margin: auto;
-    }
-
-    .auth-modal h2 { font-size: 2.4rem; margin-bottom: 8px; }
-    .auth-modal > p { font-size: .9rem; }
-
-    .modal-close {
-      position: absolute;
-      top: 15px;
-      right: 15px;
-    }
-
-    .auth-tabs {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 6px;
-      background: var(--cream);
-      padding: 5px;
-      border-radius: 999px;
-      margin: 20px 0;
-    }
-
-    .auth-tab {
-      border: 0;
-      border-radius: 999px;
-      padding: 10px;
-      background: transparent;
-      font-weight: 700;
-      color: var(--muted);
-    }
-
-    .auth-tab.active { background: var(--wine); color: white; }
-
-    .auth-form { display: grid; gap: 13px; }
-    .auth-form label { display: block; font-size: .84rem; font-weight: 700; margin-bottom: 5px; }
-    .auth-form .btn { margin-top: 4px; }
-    .auth-note { font-size: .78rem; }
-
-    .toast {
-      position: fixed;
-      z-index: 200;
-      left: 50%;
-      bottom: 25px;
-      transform: translate(-50%, 20px);
-      background: var(--wine-dark);
-      color: white;
-      border-radius: 12px;
-      padding: 13px 18px;
-      width: max-content;
-      max-width: calc(100% - 30px);
-      box-shadow: var(--shadow);
-      opacity: 0;
-      visibility: hidden;
-      transition: .25s;
-      font-size: .9rem;
-    }
-
-    .toast.visible { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
-
-    .loading-note { padding: 22px; color: var(--muted); text-align: center; }
-    .error-note { padding: 20px; color: var(--red); background: #fff0ed; border-radius: 12px; }
-
-    @media (max-width: 900px) {
-      .nav-links { display: none; }
-      .intro-grid, .experience-grid { grid-template-columns: 1fr; }
-      .intro-image { min-height: 330px; }
-      .featured-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
-      .menu-items { grid-template-columns: 1fr; }
-    }
-
-    @media (max-width: 600px) {
-      .container { width: min(100% - 28px, 1120px); }
-      .section { padding: 62px 0; }
-      .nav { min-height: 68px; }
-      .brand-mark { width: 38px; height: 38px; }
-      .brand-name { font-size: 1.2rem; }
-      .brand-subtitle { font-size: .56rem; }
-      .nav-actions .btn { padding: 9px 12px; font-size: .8rem; }
-      .hero { min-height: 570px; }
-      .hero-content { padding: 75px 0; }
-      .hero h1 { font-size: 3.5rem; }
-      .hero p { font-size: .98rem; }
-      .intro-grid { gap: 25px; }
-      .featured-grid { grid-template-columns: 1fr; }
-      .featured-card img { height: 200px; }
-      .menu-category-toggle { padding: 18px; }
-      .category-title { font-size: 1.6rem; }
-      .menu-items { padding: 0 12px 15px; }
-      .menu-item { grid-template-columns: 85px minmax(0,1fr); padding: 10px; gap: 10px; }
-      .menu-item-image { width: 85px; height: 100px; }
-      .menu-item-bottom { align-items: flex-start; }
-      .menu-item-bottom .btn { padding: 8px 11px; }
-      .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: 180px 140px; }
-      .gallery-grid img:first-child { grid-row: auto; grid-column: span 2; }
-      .order-card { padding: 16px; }
-      .order-footer { align-items: flex-start; flex-direction: column; }
-      .auth-modal { padding: 23px 18px; }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        scroll-behavior: auto !important;
-        transition-duration: .01ms !important;
-      }
-    }
-  </style>
 </head>
 
 <body>
-  <header class="site-header">
-    <div class="container nav">
-      <a class="brand" href="#inicio" aria-label="Fogón del Valle, inicio">
-        <span class="brand-mark">F</span>
-        <span>
-          <span class="brand-name">Fogón del Valle</span>
-          <span class="brand-subtitle">Cocina patagónica · Trevelin</span>
-        </span>
-      </a>
 
-      <nav class="nav-links" aria-label="Navegación principal">
-        <a href="#historia">Nuestra historia</a>
-        <a href="#menu">Menú</a>
-        <a href="#pedidos">Mis pedidos</a>
-        <a href="#experiencia">Experiencia</a>
-      </nav>
+<!-- =========================================================
+HEADER
+========================================================= -->
 
-      <div class="nav-actions">
-        <button class="btn btn-secondary btn-small" id="loginNavButton" type="button">Ingresar</button>
-        <button class="btn btn-primary btn-small" id="cartOpenButton" type="button">
-          Pedido <span aria-hidden="true">·</span> <span id="cartCount">0</span>
-        </button>
-      </div>
-    </div>
-  </header>
+<header id="header">
 
-  <main>
-    <section class="hero" id="inicio">
-      <div class="container hero-content">
-        <span class="eyebrow">Sabores del sur · Cocina al fuego</span>
-        <h1>El sabor de la Patagonia, en cada encuentro.</h1>
-        <p>
-          Productos regionales, cocina honesta y el calor del fuego.
-          Una experiencia para disfrutar sin apuro en el corazón de Trevelin.
-        </p>
-        <div class="hero-buttons">
-          <a href="#menu" class="btn btn-light">Explorar el menú</a>
-          <a href="#historia" class="btn btn-secondary">Conocé nuestra historia</a>
-        </div>
-      </div>
-    </section>
+<div class="nav">
 
-    <section class="section" id="historia">
-      <div class="container intro-grid">
-        <div class="intro-image" role="img" aria-label="Mesa preparada para una experiencia gastronómica"></div>
-        <div class="intro-copy">
-          <span class="eyebrow">Nuestra esencia</span>
-          <h2>Una mesa, el fuego y la cordillera.</h2>
-          <p>
-            En Fogón del Valle celebramos la cocina patagónica con ingredientes
-            de estación, sabores regionales y una forma de cocinar que invita
-            a compartir.
-          </p>
-          <p>
-            Cada plato busca contar algo de este lugar: sus paisajes, sus
-            productores y la calidez de sentarse a la mesa.
-          </p>
-          <div class="info-strip">
-            <span>✦ Producto regional</span>
-            <span>✦ Cocina de estación</span>
-            <span>✦ Espíritu patagónico</span>
-          </div>
-        </div>
-      </div>
-    </section>
+<a href="#inicio" class="logo">
+FOGÓN DEL VALLE
+<span>Restaurante · Trevelin</span>
+</a>
 
-    <section class="section menu-section" id="menu">
-      <div class="container">
-        <div class="section-heading">
-          <span class="eyebrow">Nuestra carta</span>
-          <h2>Elegí tu próximo sabor.</h2>
-          <p>
-            Explorá las categorías y armá tu pedido. Tocá una categoría para
-            ver sus platos; al abrir otra, la anterior se cerrará automáticamente.
-          </p>
-        </div>
+<nav class="nav-links">
 
-        <div class="menu-toolbar">
-          <p id="menuStatus">Cargando carta...</p>
-          <button class="btn btn-secondary btn-small" id="refreshMenuButton" type="button">
-            Actualizar menú
-          </button>
-        </div>
+<a href="#historia">Historia</a> <a href="#menu">Menú</a> <a href="#mis-pedidos">Mis pedidos</a> <a href="#experiencia">Experiencia</a> <a href="#galeria">Galería</a>
 
-        <div id="menuGrid" class="menu-grid" aria-live="polite">
-          <div class="loading-note">Estamos preparando la carta...</div>
-        </div>
-      </div>
-    </section>
+<button class="cart-button" id="openCart" type="button">
+🛒 Carrito
+<span class="cart-count" id="cartCount">0</span>
+</button>
 
-    <section class="section" id="destacados">
-      <div class="container">
-        <div class="section-heading">
-          <span class="eyebrow">Recomendaciones</span>
-          <h2>Sabores para recordar.</h2>
-          <p>Algunos sabores que representan el espíritu de nuestra cocina.</p>
-        </div>
+</nav>
 
-        <div class="featured-grid">
-          <article class="featured-card">
-            <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=900&q=80" alt="Empanadas recién preparadas" loading="lazy">
-            <div class="featured-card-content">
-              <h3>Para compartir</h3>
-              <p>Una entrada para abrir el apetito y disfrutar entre amigos.</p>
-            </div>
-          </article>
+</div>
 
-          <article class="featured-card">
-            <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=900&q=80" alt="Carne preparada a la parrilla" loading="lazy">
-            <div class="featured-card-content">
-              <h3>Al calor del fuego</h3>
-              <p>Sabores intensos y platos inspirados en la cocina patagónica.</p>
-            </div>
-          </article>
+</header>
 
-          <article class="featured-card">
-            <img src="https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=900&q=80" alt="Postre servido en un plato" loading="lazy">
-            <div class="featured-card-content">
-              <h3>Un final dulce</h3>
-              <p>Una pausa para disfrutar el último sabor de la experiencia.</p>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
+<!-- =========================================================
+HERO
+========================================================= -->
 
-    <section class="section orders-section" id="pedidos">
-      <div class="container">
-        <div class="section-heading">
-          <span class="eyebrow">Tu cuenta</span>
-          <h2>Mis pedidos.</h2>
-          <p>Consultá tus pedidos y, mientras estén recibidos, podés modificar sus productos.</p>
-        </div>
+<section class="hero" id="inicio">
 
-        <div id="userBar" class="user-bar" hidden>
-          <div>
-            <strong id="userGreeting">¡Hola!</strong>
-            <p>Esta sección muestra únicamente tus pedidos.</p>
-          </div>
-          <button class="btn btn-secondary btn-small" id="signOutButton" type="button">Cerrar sesión</button>
-        </div>
+<div class="hero-content">
 
-        <div id="ordersContent">
-          <div class="empty-state">
-            <p>Ingresá a tu cuenta para consultar tus pedidos.</p>
-            <button class="btn btn-primary" type="button" data-open-auth>Ingresar o registrarme</button>
-          </div>
-        </div>
-      </div>
-    </section>
+<div class="eyebrow">
+Trevelin · Patagonia
+</div>
 
-    <section class="section experience" id="experiencia">
-      <div class="container experience-grid">
-        <div>
-          <span class="eyebrow">La experiencia Fogón</span>
-          <h2>Los mejores momentos se comparten.</h2>
-          <p>
-            Una propuesta inspirada en el paisaje patagónico, los productos
-            regionales y el placer de disfrutar de una buena mesa.
-          </p>
-          <a href="#menu" class="btn btn-light">Ver nuestra carta</a>
-        </div>
-        <div class="experience-points">
-          <div class="experience-point">
-            <strong>Ingredientes con identidad</strong>
-            <span>Una carta pensada alrededor de los sabores de la región.</span>
-          </div>
-          <div class="experience-point">
-            <strong>Cocina sin apuro</strong>
-            <span>Platos que invitan a disfrutar el momento y compartir.</span>
-          </div>
-          <div class="experience-point">
-            <strong>Un rincón patagónico</strong>
-            <span>Inspirado en la naturaleza y la calidez de Trevelin.</span>
-          </div>
-        </div>
-      </div>
-    </section>
+<h1>
+Sabores que nacen
+<em>del valle.</em>
+</h1>
 
-    <section class="section" id="galeria">
-      <div class="container">
-        <div class="section-heading">
-          <span class="eyebrow">Un poco de nuestro mundo</span>
-          <h2>La Patagonia en la mesa.</h2>
-        </div>
+<p>
+Cocina patagónica de estación, productos locales
+y vinos de la cordillera en un ambiente cálido
+frente al paisaje de Trevelin.
+</p>
 
-        <div class="gallery-grid">
-          <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1000&q=80" alt="Mesa gastronómica" loading="lazy">
-          <img src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=800&q=80" alt="Ingredientes frescos" loading="lazy">
-          <img src="https://images.unsplash.com/photo-1547595628-c61a29f496f0?auto=format&fit=crop&w=800&q=80" alt="Plato preparado" loading="lazy">
-          <img src="https://images.unsplash.com/photo-1515003197210-e0cd7184f8b5?auto=format&fit=crop&w=800&q=80" alt="Comida para compartir" loading="lazy">
-          <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80" alt="Ambiente de restaurante" loading="lazy">
-        </div>
-      </div>
-    </section>
+<div class="hero-buttons">
 
-    <section class="section" id="preguntas">
-      <div class="container">
-        <div class="section-heading">
-          <span class="eyebrow">Información útil</span>
-          <h2>Preguntas frecuentes.</h2>
-        </div>
+<a href="#menu" class="btn btn-primary">
+Descubrir el menú
+</a>
 
-        <div class="faq-list">
-          <details>
-            <summary>¿Cómo hago un pedido?</summary>
-            <p>Ingresá a tu cuenta, explorá la carta y agregá los productos al carrito. Desde allí podés confirmar tu pedido.</p>
-          </details>
-          <details>
-            <summary>¿Puedo modificar un pedido?</summary>
-            <p>Sí. Podés editarlo mientras siga en estado “Recibido”. Una vez que el restaurante lo acepte o comience a prepararlo, la edición se bloquea.</p>
-          </details>
-          <details>
-            <summary>¿Cómo consulto mis pedidos anteriores?</summary>
-            <p>Ingresá con tu cuenta y visitá la sección “Mis pedidos”. Allí vas a encontrar los pedidos asociados a tu usuario.</p>
-          </details>
-          <details>
-            <summary>¿Dónde consulto los ingredientes o alérgenos?</summary>
-            <p>Si tenés alguna alergia o necesitás conocer ingredientes específicos, consultá con el restaurante antes de confirmar el pedido.</p>
-          </details>
-        </div>
-      </div>
-    </section>
+<button class="btn btn-outline" id="heroCart" type="button">
+Ver mi pedido
+</button>
 
-    <section class="reservation-cta">
-      <div class="container">
-        <span class="eyebrow" style="color:#e6c58e">Tu próxima experiencia</span>
-        <h2>El sabor de encontrarnos.</h2>
-        <p>Explorá la carta y prepará tu pedido desde Fogón del Valle.</p>
-        <a href="#menu" class="btn btn-light">Explorar menú</a>
-      </div>
-    </section>
-  </main>
+</div>
 
-  <footer class="site-footer">
-    <div class="container footer-content">
-      <div>
-        <div class="brand-name" style="color:white">Fogón del Valle</div>
-        <p>Cocina patagónica · Trevelin, Chubut</p>
-      </div>
-      <div>
-        <p>Una experiencia inspirada en los sabores del sur.</p>
-        <p>© <span id="currentYear"></span> Fogón del Valle</p>
-      </div>
-    </div>
-  </footer>
+</div>
 
-  <!-- Fondo y panel del carrito -->
-  <div class="overlay" id="cartOverlay"></div>
+</section>
 
-  <aside class="cart-drawer" id="cartDrawer" aria-label="Tu pedido" aria-hidden="true">
-    <div class="drawer-header">
-      <h2 id="cartTitle">Tu pedido</h2>
-      <button class="icon-button" id="cartCloseButton" type="button" aria-label="Cerrar carrito">×</button>
-    </div>
-    <div class="cart-content" id="cartContent"></div>
-    <div class="cart-footer" id="cartFooter"></div>
-  </aside>
+<!-- =========================================================
+HISTORIA
+========================================================= -->
 
-  <!-- Modal de acceso -->
-  <div class="modal-backdrop" id="authModal" role="dialog" aria-modal="true" aria-labelledby="authTitle">
-    <div class="auth-modal">
-      <button class="icon-button modal-close" id="authCloseButton" type="button" aria-label="Cerrar">×</button>
-      <span class="eyebrow">Fogón del Valle</span>
-      <h2 id="authTitle">Tu mesa te espera.</h2>
-      <p>Ingresá a tu cuenta o creá una para hacer y consultar tus pedidos.</p>
+<section class="section intro" id="historia">
 
-      <div class="auth-tabs">
-        <button class="auth-tab active" id="loginTab" type="button">Ingresar</button>
-        <button class="auth-tab" id="registerTab" type="button">Registrarme</button>
-      </div>
+<div class="container intro-grid">
 
-      <form class="auth-form" id="authForm">
-        <div id="nameField" hidden>
-          <label for="authName">Nombre y apellido</label>
-          <input id="authName" type="text" autocomplete="name" maxlength="100" placeholder="Tu nombre completo">
-        </div>
-        <div>
-          <label for="authEmail">Correo electrónico</label>
-          <input id="authEmail" type="email" autocomplete="email" required maxlength="254" placeholder="vos@ejemplo.com">
-        </div>
-        <div>
-          <label for="authPassword">Contraseña</label>
-          <input id="authPassword" type="password" autocomplete="current-password" required minlength="6" placeholder="Mínimo 6 caracteres">
-        </div>
-        <button class="btn btn-primary btn-full" id="authSubmitButton" type="submit">Ingresar</button>
-        <p class="auth-note" id="authNote">Si es tu primera vez, elegí “Registrarme”.</p>
-      </form>
-    </div>
-  </div>
+<div class="intro-image">
 
-  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+<img
+src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1200&q=85"
+alt="Plato de cocina de estación"
 
-  <script>
-    "use strict";
+>
 
-    // ==========================================================
-    // CONFIGURACIÓN SUPABASE
-    // Usá la URL del proyecto y la clave pública publishable/anon.
-    // Nunca coloques una service_role o secret key en el navegador.
-    // ==========================================================
+<div class="image-note">
 
-    const SUPABASE_URL = "https://gyjxkcrseotwahclwupu.supabase.co";
-    const SUPABASE_ANON_KEY = "PEGAR_AQUI_TU_PUBLISHABLE_KEY";
+<strong>Producto local.</strong>
 
-    const money = new Intl.NumberFormat("es-AR", {
-      style: "currency",
-      currency: "ARS",
-      maximumFractionDigits: 0
-    });
+<span>
+Cocina de estación · Patagonia
+</span>
 
-    const STATUS_LABELS = {
-      received: "Recibido",
-      accepted: "Aceptado",
-      preparing: "En preparación",
-      ready: "Listo",
-      delivered: "Entregado",
-      cancelled: "Cancelado"
-    };
+</div>
 
-    const CATEGORY_EMOJI = {
-      "para comenzar": "🥟",
-      "empanadas": "🥟",
-      "carnes": "🥩",
-      "principales": "🍽️",
-      "pescados": "🐟",
-      "truchas": "🐟",
-      "vegetarianos": "🥬",
-      "postres": "🍰",
-      "vinos": "🍷",
-      "bebidas": "🥤"
-    };
+</div>
 
-    const PLACEHOLDER_IMAGE =
-      "https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=500&q=75";
+<div class="intro-content">
 
-    let supabaseClient = null;
-    let currentUser = null;
-    let currentProfile = null;
+<div class="section-label">
+Nuestra historia
+</div>
 
-    let menuCategories = [];
-    let menuItems = [];
-    let myOrders = [];
+<h2>
+El fuego como punto de encuentro.
+</h2>
 
-    // El carrito guarda una copia local de los artículos seleccionados.
-    let cart = [];
-    let editingOrderId = null;
-    let openCategoryId = null;
-    let authMode = "login";
-    let authBusy = false;
-    let checkoutBusy = false;
-    let toastTimeout = null;
-    let authSubscription = null;
-    let authEventTimer = null;
+<p>
+Fogón del Valle nació de una idea simple:
+cocinar con identidad, respetando el producto
+y dejando que cada estación cuente su propia historia.
+</p>
 
-    const $ = (selector) => document.querySelector(selector);
+<p>
+Trabajamos con ingredientes de la región,
+carnes, vegetales, hongos, trucha y productos
+de pequeños productores del Valle 16 de Octubre.
+</p>
 
-    function escapeHtml(value) {
-      return String(value ?? "").replace(/[&<>"']/g, (character) => ({
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#39;"
-      })[character]);
-    }
+<p>
+Nuestra cocina busca unir tradición y creatividad
+en un espacio donde comer sea también parte
+de la experiencia de viajar por Patagonia.
+</p>
 
-    function safeImageUrl(value) {
-      if (!value) return "";
-      try {
-        const parsed = new URL(value);
-        if (parsed.protocol === "https:" || parsed.protocol === "http:") {
-          return parsed.href;
-        }
-      } catch (_) {}
-      return "";
-    }
+<div class="signature">
+Cocina con identidad.
+</div>
 
-    function formatMoney(value) {
-      return money.format(Number(value) || 0);
-    }
+</div>
 
-    function normalizeText(value) {
-      return String(value || "")
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "")
-        .trim()
-        .toLowerCase();
-    }
+</div>
 
-    function showToast(message) {
-      const toast = $("#toast");
-      toast.textContent = message;
-      toast.classList.add("visible");
-      clearTimeout(toastTimeout);
-      toastTimeout = setTimeout(() => toast.classList.remove("visible"), 3500);
-    }
+</section>
 
-    function setButtonLoading(button, loading, loadingText = "Procesando...") {
-      if (!button) return;
-      if (loading) {
-        button.dataset.originalText = button.textContent;
-        button.disabled = true;
-        button.textContent = loadingText;
-      } else {
-        button.disabled = false;
-        if (button.dataset.originalText) {
-          button.textContent = button.dataset.originalText;
-          delete button.dataset.originalText;
-        }
-      }
-    }
+<!-- =========================================================
+MENU DINÁMICO
+========================================================= -->
 
-    function friendlyError(error, fallback = "Ocurrió un error. Intentá nuevamente.") {
-      const message = String(error?.message || "");
-      if (/Invalid login credentials/i.test(message)) {
-        return "El correo o la contraseña no son correctos.";
-      }
-      if (/Email not confirmed/i.test(message)) {
-        return "Tenés que confirmar tu correo antes de ingresar.";
-      }
-      if (/duplicate key/i.test(message)) {
-        return "Ese registro ya existe.";
-      }
-      if (/row-level security|permission denied|not allowed/i.test(message)) {
-        return "La base de datos bloqueó esta operación por sus permisos. Revisá las políticas RLS.";
-      }
-      return message || fallback;
-    }
+<section class="section menu" id="menu">
 
-    function requireSupabase() {
-      if (supabaseClient) return true;
-      showToast("Primero configurá la clave pública de Supabase en el código.");
-      return false;
-    }
+<div class="container">
 
-    function initializeSupabase() {
-      if (!window.supabase?.createClient) {
-        showFatalError("No se pudo cargar Supabase. Revisá tu conexión e intentá recargar la página.");
-        return;
-      }
+<div class="section-header">
 
-      if (
-        !SUPABASE_URL.startsWith("https://") ||
-        !SUPABASE_ANON_KEY ||
-        SUPABASE_ANON_KEY === "PEGAR_AQUI_TU_PUBLISHABLE_KEY"
-      ) {
-        $("#menuStatus").textContent = "Falta configurar la clave pública de Supabase.";
-        $("#menuGrid").innerHTML = `
-          <div class="error-note">
-            <strong>La página ya está preparada, pero falta un dato.</strong>
-            <p>En el código, buscá <code>SUPABASE_ANON_KEY</code> y pegá la clave pública publishable de tu proyecto. Después recargá la página.</p>
-          </div>`;
-        $("#ordersContent").innerHTML = `
-          <div class="empty-state">
-            Configurá Supabase para activar el inicio de sesión y los pedidos.
-          </div>`;
-        return;
-      }
+<div class="section-label">
+Nuestra carta
+</div>
 
-      supabaseClient = window.supabase.createClient(
+<h2 class="section-title">
+Sabores del valle.
+</h2>
+
+<p class="section-text">
+Elegí una categoría para descubrir sus platos.
+</p>
+
+</div>
+
+<div class="menu-grid" id="menuContainer">
+
+<div class="menu-loading">
+Cargando menú...
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- =========================================================
+PLATOS DESTACADOS
+========================================================= -->
+
+<section class="section featured">
+
+<div class="container">
+
+<div class="section-header">
+
+<div class="section-label">
+Recomendados
+</div>
+
+<h2 class="section-title">
+Del fuego a la mesa.
+</h2>
+
+<p class="section-text">
+Algunos de nuestros platos favoritos.
+</p>
+
+</div>
+
+<div class="dishes">
+
+<article class="dish">
+
+<div class="dish-image">
+<img
+src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1000&q=85"
+alt="Cordero"
+>
+</div>
+
+<div class="dish-content">
+
+<h3>
+Cordero al fuego
+</h3>
+
+<p>
+Cocción lenta, vegetales de estación
+y el aroma inconfundible de nuestro fogón.
+</p>
+
+</div>
+
+</article>
+
+<article class="dish">
+
+<div class="dish-image">
+<img
+src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1000&q=85"
+alt="Cocina"
+>
+</div>
+
+<div class="dish-content">
+
+<h3>
+Sabores de estación
+</h3>
+
+<p>
+Ingredientes locales trabajados
+con una mirada contemporánea.
+</p>
+
+</div>
+
+</article>
+
+<article class="dish">
+
+<div class="dish-image">
+<img
+src="https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?auto=format&fit=crop&w=1000&q=85"
+alt="Trucha"
+>
+</div>
+
+<div class="dish-content">
+
+<h3>
+Trucha del valle
+</h3>
+
+<p>
+Producto patagónico protagonista
+de una de nuestras especialidades.
+</p>
+
+</div>
+
+</article>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- =========================================================
+MIS PEDIDOS
+========================================================= -->
+
+<section class="section orders-section" id="mis-pedidos">
+
+<div class="container">
+
+<div class="orders-header">
+
+<div class="section-label">
+Tu cuenta
+</div>
+
+<h2 class="section-title">
+Mis pedidos.
+</h2>
+
+<p class="section-text">
+Acá solamente vas a ver tus propios pedidos.
+Podés editar un pedido mientras todavía no haya sido aceptado.
+</p>
+
+</div>
+
+<div id="ordersContainer">
+
+<div class="orders-login">
+
+<div class="orders-empty-icon">
+🍷
+</div>
+
+<h3>
+Ingresá para ver tus pedidos
+</h3>
+
+<p>
+Una vez que hayas iniciado sesión vas a poder
+consultar todo lo que compraste.
+</p>
+
+<button class="btn btn-primary" id="ordersLoginBtn" type="button">
+Iniciar sesión
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- =========================================================
+EXPERIENCIA
+========================================================= -->
+
+<section class="section experience" id="experiencia">
+
+<div class="container">
+
+<div class="section-header">
+
+<div class="section-label">
+Mucho más que una cena
+</div>
+
+<h2 class="section-title">
+Una experiencia patagónica.
+</h2>
+
+<p class="section-text">
+Venir a Fogón del Valle es sentarse a disfrutar
+de la comida, el vino y el paisaje.
+</p>
+
+</div>
+
+<div class="experience-grid">
+
+<div class="experience-card">
+
+<div class="experience-number">
+01
+</div>
+
+<h3>
+Producto local
+</h3>
+
+<p>
+Trabajamos con ingredientes de la región
+y buscamos poner en valor a productores locales.
+</p>
+
+</div>
+
+<div class="experience-card">
+
+<div class="experience-number">
+02
+</div>
+
+<h3>
+Vinos de la cordillera
+</h3>
+
+<p>
+Una selección de etiquetas patagónicas
+pensada para acompañar nuestra cocina.
+</p>
+
+</div>
+
+<div class="experience-card">
+
+<div class="experience-number">
+03
+</div>
+
+<h3>
+El ritual del fuego
+</h3>
+
+<p>
+El fuego forma parte de nuestra identidad:
+cocina lenta, aromas y encuentros alrededor de la mesa.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- =========================================================
+GALERÍA
+========================================================= -->
+
+<section class="section" id="galeria">
+
+<div class="container">
+
+<div class="section-header">
+
+<div class="section-label">
+Galería
+</div>
+
+<h2 class="section-title">
+Así se vive Fogón.
+</h2>
+
+</div>
+
+<div class="gallery">
+
+<div class="gallery-item">
+<img
+src="https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=1200&q=85"
+alt="Restaurante"
+>
+</div>
+
+<div class="gallery-item">
+<img
+src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=900&q=85"
+alt="Mesa"
+>
+</div>
+
+<div class="gallery-item">
+<img
+src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=900&q=85"
+alt="Carne"
+>
+</div>
+
+<div class="gallery-item">
+<img
+src="https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?auto=format&fit=crop&w=900&q=85"
+alt="Pescado"
+>
+</div>
+
+<div class="gallery-item">
+<img
+src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=900&q=85"
+alt="Cena"
+>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- =========================================================
+FAQ
+========================================================= -->
+
+<section class="section faq">
+
+<div class="container">
+
+<div class="section-header">
+
+<div class="section-label">
+Preguntas frecuentes
+</div>
+
+<h2 class="section-title">
+Antes de venir.
+</h2>
+
+</div>
+
+<div class="faq-list">
+
+<div class="faq-item">
+
+<button class="faq-question" type="button">
+¿Necesito reservar?
+<span>+</span>
+</button>
+
+<div class="faq-answer">
+<p>
+Recomendamos reservar especialmente durante
+fines de semana y temporada alta.
+</p>
+</div>
+
+</div>
+
+<div class="faq-item">
+
+<button class="faq-question" type="button">
+¿Tienen opciones vegetarianas?
+<span>+</span>
+</button>
+
+<div class="faq-answer">
+<p>
+Sí. Contamos con opciones vegetarianas
+y podemos adaptar algunos platos.
+</p>
+</div>
+
+</div>
+
+<div class="faq-item">
+
+<button class="faq-question" type="button">
+¿Aceptan familias con niños?
+<span>+</span>
+</button>
+
+<div class="faq-answer">
+<p>
+Sí. Nuestro restaurante recibe familias.
+</p>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- =========================================================
+RESERVA / PEDIDO
+========================================================= -->
+
+<section class="reservation">
+
+<div class="reservation-content">
+
+<div class="eyebrow">
+Tu mesa te espera
+</div>
+
+<h2>
+Una noche para recordar.
+</h2>
+
+<p>
+Elegí tus platos y enviá tu pedido
+directamente desde nuestra carta.
+</p>
+
+<button
+class="btn btn-primary"
+id="reservationLogin"
+type="button">
+
+Realizar pedido
+
+</button>
+
+</div>
+
+</section>
+
+<!-- =========================================================
+FOOTER
+========================================================= -->
+
+<footer>
+
+<div class="footer-inner">
+
+<div>
+
+<div class="footer-brand">
+FOGÓN DEL VALLE
+</div>
+
+<div class="footer-demo">
+Demo ficticia · Desarrollada por WEBS PATAGONIA
+</div>
+
+</div>
+
+<div>
+© 2026 Fogón del Valle · Trevelin, Patagonia
+</div>
+
+</div>
+
+</footer>
+
+<!-- =========================================================
+CARRITO
+========================================================= -->
+
+<div class="cart-overlay" id="cartOverlay">
+
+<div class="cart-panel">
+
+<div class="cart-header">
+
+<div>
+
+<h2>
+Tu pedido
+</h2>
+
+<div class="cart-editing-label" id="cartEditingLabel" style="display:none">
+Editando pedido
+</div>
+
+</div>
+
+<button class="close-cart" id="closeCart" type="button">
+×
+</button>
+
+</div>
+
+<div class="cart-items" id="cartItems">
+
+<div class="empty-cart">
+Tu carrito está vacío.
+</div>
+
+</div>
+
+<div class="cart-footer">
+
+<div class="cart-total">
+
+<span>
+Total
+</span>
+
+<span id="cartTotal">
+$0
+</span>
+
+</div>
+
+<button
+class="btn btn-primary checkout-btn"
+id="checkoutBtn"
+type="button">
+
+Confirmar pedido
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- =========================================================
+LOGIN / REGISTRO
+========================================================= -->
+
+<div class="modal-overlay" id="authModal">
+
+<div class="modal">
+
+<button class="modal-close" id="closeAuth" type="button">
+×
+</button>
+
+<h2 id="authTitle">
+Ingresar
+</h2>
+
+<p id="authDescription">
+Ingresá para confirmar tu pedido.
+</p>
+
+<form id="authForm">
+
+<div class="form-group" id="nameGroup" style="display:none">
+
+<label for="authName">
+Nombre
+</label>
+
+<input
+type="text"
+id="authName"
+placeholder="Tu nombre"
+autocomplete="name"
+
+>
+
+</div>
+
+<div class="form-group">
+
+<label for="authEmail">
+Email
+</label>
+
+<input
+type="email"
+id="authEmail"
+placeholder="[tu@email.com](mailto:tu@email.com)"
+autocomplete="email"
+required
+
+>
+
+</div>
+
+<div class="form-group">
+
+<label for="authPassword">
+Contraseña
+</label>
+
+<input
+type="password"
+id="authPassword"
+placeholder="Mínimo 6 caracteres"
+autocomplete="current-password"
+required
+
+>
+
+</div>
+
+<button
+type="submit"
+class="btn btn-primary"
+style="width:100%"
+id="authSubmit">
+
+Ingresar
+
+</button>
+
+</form>
+
+<div class="auth-switch">
+
+<span id="authSwitchText">
+¿No tenés cuenta?
+</span>
+
+<button id="authSwitch" type="button">
+Crear cuenta
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- =========================================================
+USUARIO LOGUEADO
+========================================================= -->
+
+<div class="user-bar" id="userBar">
+
+<span id="userName">
+Usuario
+</span>
+
+<button class="logout-btn" id="logoutBtn" type="button">
+Salir
+</button>
+
+</div>
+
+<!-- =========================================================
+TOAST
+========================================================= -->
+
+<div class="toast" id="toast"></div>
+
+<script>
+
+/* =========================================================
+SUPABASE
+========================================================= */
+
+const SUPABASE_URL =
+    "https://gyjxkcrseotwahclwupu.supabase.co";
+
+const SUPABASE_KEY =
+    "sb_publishable_zY7b84xLNWlpLWbxTHpV6Q_Ai1JvaeK";
+
+const supabaseClient =
+    window.supabase.createClient(
         SUPABASE_URL,
-        SUPABASE_ANON_KEY,
+        SUPABASE_KEY
+    );
+
+
+/* =========================================================
+ELEMENTOS
+========================================================= */
+
+const menuContainer =
+    document.getElementById("menuContainer");
+
+const cartOverlay =
+    document.getElementById("cartOverlay");
+
+const cartItems =
+    document.getElementById("cartItems");
+
+const cartCount =
+    document.getElementById("cartCount");
+
+const cartTotal =
+    document.getElementById("cartTotal");
+
+const cartEditingLabel =
+    document.getElementById("cartEditingLabel");
+
+const authModal =
+    document.getElementById("authModal");
+
+const authForm =
+    document.getElementById("authForm");
+
+const authTitle =
+    document.getElementById("authTitle");
+
+const authDescription =
+    document.getElementById("authDescription");
+
+const authSubmit =
+    document.getElementById("authSubmit");
+
+const authSwitch =
+    document.getElementById("authSwitch");
+
+const authSwitchText =
+    document.getElementById("authSwitchText");
+
+const nameGroup =
+    document.getElementById("nameGroup");
+
+const authName =
+    document.getElementById("authName");
+
+const userBar =
+    document.getElementById("userBar");
+
+const userName =
+    document.getElementById("userName");
+
+const ordersContainer =
+    document.getElementById("ordersContainer");
+
+const toast =
+    document.getElementById("toast");
+
+const checkoutButton =
+    document.getElementById("checkoutBtn");
+
+
+/* =========================================================
+ESTADO
+========================================================= */
+
+let cart = [];
+
+let authMode = "login";
+
+let currentUser = null;
+
+let menuItems = [];
+
+let myOrders = [];
+
+let editingOrderId = null;
+
+let isSubmittingOrder = false;
+
+let toastTimeout = null;
+
+
+/* =========================================================
+TOAST
+========================================================= */
+
+function showToast(message) {
+
+    toast.textContent = message;
+
+    toast.classList.add("show");
+
+    clearTimeout(toastTimeout);
+
+    toastTimeout =
+        setTimeout(() => {
+
+            toast.classList.remove("show");
+
+        }, 3200);
+
+}
+
+
+/* =========================================================
+FORMATO PRECIO
+========================================================= */
+
+function formatPrice(value) {
+
+    return new Intl.NumberFormat(
+        "es-AR",
         {
-          auth: {
-            persistSession: true,
-            autoRefreshToken: true,
-            detectSessionInUrl: true
-          }
+            style:"currency",
+            currency:"ARS",
+            maximumFractionDigits:0
         }
-      );
+    ).format(
+        Number(value) || 0
+    );
 
-      connectAuth();
-      loadMenu();
+}
+
+
+/* =========================================================
+ESCAPE HTML
+========================================================= */
+
+function escapeHtml(text) {
+
+    const div =
+        document.createElement("div");
+
+    div.textContent =
+        text ?? "";
+
+    return div.innerHTML;
+
+}
+
+
+/* =========================================================
+ICONO DE CATEGORÍA
+========================================================= */
+
+function getCategoryIcon(name) {
+
+    const value =
+        String(name || "")
+        .toLowerCase();
+
+
+    if (
+        value.includes("empan")
+    ) {
+        return "🥟";
     }
 
-    function showFatalError(message) {
-      $("#menuStatus").textContent = "No se pudo iniciar la aplicación.";
-      $("#menuGrid").innerHTML = `<div class="error-note">${escapeHtml(message)}</div>`;
+    if (
+        value.includes("carne") ||
+        value.includes("cordero") ||
+        value.includes("bife")
+    ) {
+        return "🥩";
     }
 
-    // ==========================================================
-    // MENÚ: CATEGORÍAS ACORDEÓN
-    // ==========================================================
+    if (
+        value.includes("pesc") ||
+        value.includes("trucha") ||
+        value.includes("mar")
+    ) {
+        return "🐟";
+    }
 
-    async function loadMenu() {
-      if (!requireSupabase()) return;
+    if (
+        value.includes("pasta") ||
+        value.includes("risotto")
+    ) {
+        return "🍝";
+    }
 
-      $("#menuStatus").textContent = "Cargando carta...";
-      $("#menuGrid").innerHTML = '<div class="loading-note">Cargando platos...</div>';
+    if (
+        value.includes("postre") ||
+        value.includes("dulce")
+    ) {
+        return "🍰";
+    }
 
-      try {
-        const { data: categories, error: categoriesError } = await supabaseClient
-          .from("menu_categories")
-          .select("id, name, description, sort_order, active")
-          .eq("active", true)
-          .order("sort_order", { ascending: true })
-          .order("name", { ascending: true });
+    if (
+        value.includes("vino") ||
+        value.includes("bebida")
+    ) {
+        return "🍷";
+    }
 
-        if (categoriesError) throw categoriesError;
+    if (
+        value.includes("entrada") ||
+        value.includes("comenzar")
+    ) {
+        return "🥗";
+    }
 
-        const { data: items, error: itemsError } = await supabaseClient
-          .from("menu_items")
-          .select("id, category_id, name, description, price, image_url, available, sort_order")
-          .eq("available", true)
-          .order("sort_order", { ascending: true })
-          .order("name", { ascending: true });
+    return "🍽️";
 
-        if (itemsError) throw itemsError;
+}
 
-        menuCategories = categories || [];
-        menuItems = items || [];
 
-        // Evita repetir un producto si la tabla contiene nombres duplicados.
-        const seenNames = new Set();
-        menuItems = menuItems.filter((item) => {
-          const normalizedName = normalizeText(item.name);
-          if (!normalizedName || seenNames.has(normalizedName)) return false;
-          seenNames.add(normalizedName);
-          return true;
-        });
+/* =========================================================
+ESTADO DEL PEDIDO
+========================================================= */
 
-        // Si la categoría abierta ya no existe, abrir la primera.
-        if (!menuCategories.some((category) => String(category.id) === String(openCategoryId))) {
-          openCategoryId = menuCategories.length ? String(menuCategories[0].id) : null;
+function getOrderStatus(status) {
+
+    const statuses = {
+
+        received: {
+            icon:"📥",
+            name:"Pedido recibido"
+        },
+
+        accepted: {
+            icon:"✅",
+            name:"Pedido aceptado"
+        },
+
+        preparing: {
+            icon:"👨‍🍳",
+            name:"Preparando tu pedido"
+        },
+
+        ready: {
+            icon:"🔥",
+            name:"Pedido listo"
+        },
+
+        delivered: {
+            icon:"🎉",
+            name:"Pedido entregado"
+        },
+
+        cancelled: {
+            icon:"❌",
+            name:"Pedido cancelado"
         }
 
-        renderMenu();
-      } catch (error) {
-        console.error("Error al cargar menú:", error);
-        $("#menuStatus").textContent = "No se pudo cargar la carta.";
-        $("#menuGrid").innerHTML = `
-          <div class="error-note">
-            No pudimos cargar el menú desde Supabase.
-            <p>${escapeHtml(friendlyError(error, "Revisá la conexión y las políticas de lectura de la carta."))}</p>
-            <button class="btn btn-primary btn-small" type="button" onclick="loadMenu()">Intentar de nuevo</button>
-          </div>`;
-      }
-    }
+    };
 
-    function renderMenu() {
-      const grid = $("#menuGrid");
-      const itemCount = menuItems.length;
+    return statuses[status] || {
 
-      $("#menuStatus").textContent =
-        `${menuCategories.length} categorías · ${itemCount} ${itemCount === 1 ? "plato disponible" : "platos disponibles"}`;
+        icon:"📋",
+        name:"Pedido"
 
-      if (!menuCategories.length) {
-        grid.innerHTML = `
-          <div class="empty-state">
-            <strong>La carta todavía está vacía.</strong>
-            <p>Agregá categorías activas en Supabase y después cargá sus platos.</p>
-          </div>`;
-        return;
-      }
+    };
 
-      grid.innerHTML = menuCategories.map((category) => {
-        const categoryItems = menuItems.filter(
-          (item) => String(item.category_id) === String(category.id)
+}
+
+
+/* =========================================================
+PEDIDO EDITABLE
+========================================================= */
+
+function isOrderEditable(order) {
+
+    return (
+        order &&
+        order.status === "received"
+    );
+
+}
+
+
+/* =========================================================
+CARGAR MENÚ
+========================================================= */
+
+async function loadMenu() {
+
+    menuContainer.innerHTML = `
+        <div class="menu-loading">
+            Cargando menú...
+        </div>
+    `;
+
+
+    const {
+        data,
+        error
+    } =
+        await supabaseClient
+
+        .from("menu_categories")
+
+        .select(`
+            id,
+            name,
+            description,
+            sort_order,
+            menu_items (
+                id,
+                name,
+                description,
+                price,
+                image_url,
+                available,
+                sort_order
+            )
+        `)
+
+        .eq(
+            "active",
+            true
+        )
+
+        .order(
+            "sort_order"
         );
-        const isOpen = String(category.id) === String(openCategoryId);
-        const categoryName = normalizeText(category.name);
-        const emoji = CATEGORY_EMOJI[categoryName] || "✦";
-        const description = category.description || `${categoryItems.length} ${categoryItems.length === 1 ? "opción disponible" : "opciones disponibles"}`;
 
-        return `
-          <section class="menu-category ${isOpen ? "is-open" : ""}" data-category-id="${escapeHtml(category.id)}">
-            <button
-              class="menu-category-toggle"
-              type="button"
-              aria-expanded="${isOpen}"
-              aria-controls="category-content-${escapeHtml(category.id)}"
-              data-category-toggle="${escapeHtml(category.id)}"
-            >
-              <span>
-                <span class="category-title">${emoji} ${escapeHtml(category.name)}</span>
-                <span class="category-description">${escapeHtml(description)}</span>
-              </span>
-              <span class="category-icon" aria-hidden="true">+</span>
-            </button>
 
-            <div
-              class="menu-category-content"
-              id="category-content-${escapeHtml(category.id)}"
-              aria-hidden="${!isOpen}"
-            >
-              <div class="menu-category-inner">
-                <div class="menu-items">
-                  ${categoryItems.length
-                    ? categoryItems.map(renderMenuItem).join("")
-                    : '<div class="empty-state">Todavía no hay platos disponibles en esta categoría.</div>'}
-                </div>
-              </div>
+    if (error) {
+
+        console.error(
+            "Error cargando menú:",
+            error
+        );
+
+        menuContainer.innerHTML = `
+
+            <div class="menu-error">
+
+                No pudimos cargar el menú.
+
+                <br><br>
+
+                Revisá la conexión con Supabase.
+
             </div>
-          </section>`;
-      }).join("");
-    }
 
-    function renderMenuItem(item) {
-      const image = safeImageUrl(item.image_url);
-      const imageMarkup = image
-        ? `<img class="menu-item-image" src="${escapeHtml(image)}" alt="${escapeHtml(item.name)}" loading="lazy" onerror="this.onerror=null;this.src='${PLACEHOLDER_IMAGE}'">`
-        : `<div class="menu-item-image placeholder" aria-hidden="true">✦</div>`;
+        `;
 
-      return `
-        <article class="menu-item">
-          ${imageMarkup}
-          <div>
-            <h4>${escapeHtml(item.name)}</h4>
-            <p>${escapeHtml(item.description || "Una propuesta de nuestra cocina.")}</p>
-            <div class="menu-item-bottom">
-              <span class="menu-price">${formatMoney(item.price)}</span>
-              <button
-                class="btn btn-primary btn-small"
-                type="button"
-                data-add-item="${escapeHtml(item.id)}"
-              >Agregar +</button>
-            </div>
-          </div>
-        </article>`;
-    }
-
-    function toggleCategory(categoryId) {
-      const key = String(categoryId);
-      openCategoryId = openCategoryId === key ? null : key;
-      renderMenu();
-    }
-
-    // ==========================================================
-    // CARRITO
-    // ==========================================================
-
-    function findMenuItem(id) {
-      return menuItems.find((item) => String(item.id) === String(id));
-    }
-
-    function addToCart(itemId) {
-      const item = findMenuItem(itemId);
-
-      if (!item) {
-        showToast("Ese producto ya no está disponible en la carta.");
         return;
-      }
 
-      const existing = cart.find((line) => String(line.id) === String(item.id));
-
-      if (existing) {
-        existing.quantity += 1;
-      } else {
-        cart.push({
-          id: item.id,
-          name: item.name,
-          price: Number(item.price) || 0,
-          image_url: item.image_url || "",
-          quantity: 1
-        });
-      }
-
-      renderCart();
-      showToast(`${item.name}: agregado al pedido.`);
     }
 
-    function changeQuantity(itemId, delta) {
-      const line = cart.find((item) => String(item.id) === String(itemId));
-      if (!line) return;
 
-      line.quantity += delta;
+    const uniqueItems =
+        new Map();
 
-      if (line.quantity <= 0) {
-        cart = cart.filter((item) => String(item.id) !== String(itemId));
-      }
 
-      renderCart();
-    }
+    /*
+     * Cada producto queda una sola vez.
+     */
 
-    function removeFromCart(itemId) {
-      cart = cart.filter((item) => String(item.id) !== String(itemId));
-      renderCart();
-    }
+    (data || []).forEach(
+        category => {
 
-    function cartTotal() {
-      return cart.reduce((total, item) => total + item.price * item.quantity, 0);
-    }
+            const items =
+                Array.isArray(
+                    category.menu_items
+                )
+                ? category.menu_items
+                : [];
 
-    function cartQuantity() {
-      return cart.reduce((total, item) => total + item.quantity, 0);
-    }
 
-    function renderCart() {
-      $("#cartCount").textContent = String(cartQuantity());
-      $("#cartTitle").textContent = editingOrderId
-        ? `Editar pedido #${editingOrderId}`
-        : "Tu pedido";
+            items
 
-      const content = $("#cartContent");
-      const footer = $("#cartFooter");
+            .filter(
+                item => item.available
+            )
 
-      let banner = "";
-      if (editingOrderId) {
-        banner = `
-          <div class="cart-edit-banner">
-            <strong>Estás editando el pedido #${escapeHtml(editingOrderId)}.</strong>
-            <br>Los cambios reemplazarán sus productos actuales.
-            <button class="remove-link" type="button" id="cancelEditButton">Cancelar edición</button>
-          </div>`;
-      }
+            .sort(
+                (a,b) =>
+                    (a.sort_order || 0) -
+                    (b.sort_order || 0)
+            )
 
-      if (!cart.length) {
-        content.innerHTML = banner + `
-          <div class="empty-state">
-            <p>${editingOrderId ? "El pedido no tiene productos en el carrito." : "Todavía no agregaste nada."}</p>
-            <a class="btn btn-secondary btn-small" href="#menu" id="backToMenuButton">Volver al menú</a>
-          </div>`;
+            .forEach(
+                item => {
 
-        footer.innerHTML = editingOrderId
-          ? '<button class="btn btn-secondary btn-full" id="cancelEditFooterButton" type="button">Cancelar edición</button>'
-          : '<button class="btn btn-primary btn-full" id="cartEmptyCloseButton" type="button">Seguir mirando el menú</button>';
-        return;
-      }
+                    const normalizedName =
+                        String(
+                            item.name || ""
+                        )
+                        .trim()
+                        .toLowerCase();
 
-      content.innerHTML = banner + cart.map((item) => `
-        <div class="cart-line">
-          <div>
-            <h4>${escapeHtml(item.name)}</h4>
-            <p>${formatMoney(item.price)} por unidad</p>
-            <div class="quantity-control">
-              <button type="button" data-quantity-item="${escapeHtml(item.id)}" data-delta="-1" aria-label="Restar uno">−</button>
-              <strong>${item.quantity}</strong>
-              <button type="button" data-quantity-item="${escapeHtml(item.id)}" data-delta="1" aria-label="Agregar uno">+</button>
-            </div>
-            <button class="remove-link" type="button" data-remove-item="${escapeHtml(item.id)}">Eliminar</button>
-          </div>
-          <strong>${formatMoney(item.price * item.quantity)}</strong>
-        </div>
-      `).join("");
 
-      footer.innerHTML = `
-        <div class="cart-total-row">
-          <span>Total</span>
-          <span>${formatMoney(cartTotal())}</span>
-        </div>
-        <label for="orderNotes">Notas para el restaurante (opcional)</label>
-        <textarea id="orderNotes" maxlength="500" placeholder="Aclaraciones sobre tu pedido..."></textarea>
-        <button class="btn btn-primary btn-full" id="checkoutButton" type="button">
-          ${editingOrderId ? "Guardar cambios" : "Confirmar pedido"}
-        </button>
-        ${editingOrderId ? '<button class="btn btn-secondary btn-full" id="cancelEditFooterButton" type="button">Cancelar edición</button>' : ""}
-        <p class="auth-note">Revisá los productos y las cantidades antes de confirmar.</p>
-      `;
-    }
+                    if (!normalizedName) {
+                        return;
+                    }
 
-    function openCart() {
-      renderCart();
-      $("#cartDrawer").classList.add("visible");
-      $("#cartOverlay").classList.add("visible");
-      $("#cartDrawer").setAttribute("aria-hidden", "false");
-      document.body.classList.add("no-scroll");
-    }
 
-    function closeCart() {
-      $("#cartDrawer").classList.remove("visible");
-      $("#cartOverlay").classList.remove("visible");
-      $("#cartDrawer").setAttribute("aria-hidden", "true");
-      document.body.classList.remove("no-scroll");
-    }
+                    if (
+                        uniqueItems.has(
+                            normalizedName
+                        )
+                    ) {
+                        return;
+                    }
 
-    function cancelEditing() {
-      editingOrderId = null;
-      cart = [];
-      renderCart();
-      closeCart();
-      showToast("Edición cancelada.");
-    }
 
-    // ==========================================================
-    // REGISTRO E INICIO DE SESIÓN
-    // ==========================================================
+                    uniqueItems.set(
+                        normalizedName,
+                        {
+                            ...item,
+                            category_id:
+                                category.id,
+                            category_name:
+                                category.name
+                        }
+                    );
 
-    function openAuth(mode = "login") {
-      if (!requireSupabase()) return;
-      setAuthMode(mode);
-      $("#authModal").classList.add("visible");
-      document.body.classList.add("no-scroll");
-    }
+                }
+            );
 
-    function closeAuth() {
-      $("#authModal").classList.remove("visible");
-      document.body.classList.remove("no-scroll");
-    }
+        }
+    );
 
-    function setAuthMode(mode) {
-      authMode = mode === "register" ? "register" : "login";
 
-      $("#loginTab").classList.toggle("active", authMode === "login");
-      $("#registerTab").classList.toggle("active", authMode === "register");
-      $("#nameField").hidden = authMode !== "register";
-      $("#authName").required = authMode === "register";
-      $("#authPassword").autocomplete = authMode === "register" ? "new-password" : "current-password";
-      $("#authTitle").textContent = authMode === "register" ? "Creá tu cuenta." : "Tu mesa te espera.";
-      $("#authSubmitButton").textContent = authMode === "register" ? "Crear cuenta" : "Ingresar";
-      $("#authNote").textContent = authMode === "register"
-        ? "Usá un correo al que tengas acceso. Es posible que debas confirmarlo."
-        : "Si es tu primera vez, elegí “Registrarme”.";
-    }
+    menuItems =
+        Array.from(
+            uniqueItems.values()
+        );
 
-    async function submitAuth(event) {
-      event.preventDefault();
-      if (!requireSupabase() || authBusy) return;
 
-      const email = $("#authEmail").value.trim().toLowerCase();
-      const password = $("#authPassword").value;
-      const fullName = $("#authName").value.trim();
+    renderMenu(
+        data || []
+    );
 
-      if (!email || !password) {
-        showToast("Completá tu correo y contraseña.");
-        return;
-      }
+}
 
-      if (authMode === "register" && !fullName) {
-        showToast("Ingresá tu nombre y apellido.");
-        return;
-      }
 
-      const button = $("#authSubmitButton");
-      authBusy = true;
-      setButtonLoading(button, true, "Un momento...");
+/* =========================================================
+RENDER MENÚ ACORDEÓN
+========================================================= */
 
-      try {
-        if (authMode === "register") {
-          const { data, error } = await supabaseClient.auth.signUp({
-            email,
-            password,
-            options: {
-              data: { full_name: fullName }
+function renderMenu(categories) {
+
+    menuContainer.innerHTML = "";
+
+    const renderedNames =
+        new Set();
+
+
+    const usableCategories = [];
+
+
+    categories.forEach(
+        category => {
+
+            const items =
+                Array.isArray(
+                    category.menu_items
+                )
+                ? category.menu_items
+                : [];
+
+
+            const availableItems =
+                items
+
+                .filter(
+                    item => item.available
+                )
+
+                .sort(
+                    (a,b) =>
+                        (a.sort_order || 0) -
+                        (b.sort_order || 0)
+                )
+
+                .filter(
+                    item => {
+
+                        const normalized =
+                            String(
+                                item.name || ""
+                            )
+                            .trim()
+                            .toLowerCase();
+
+
+                        if (
+                            !normalized ||
+                            renderedNames.has(
+                                normalized
+                            )
+                        ) {
+
+                            return false;
+
+                        }
+
+
+                        const exists =
+                            menuItems.some(
+                                menuItem =>
+                                    menuItem.id ===
+                                    item.id
+                            );
+
+
+                        if (!exists) {
+                            return false;
+                        }
+
+
+                        renderedNames.add(
+                            normalized
+                        );
+
+
+                        return true;
+
+                    }
+                );
+
+
+            if (
+                availableItems.length
+            ) {
+
+                usableCategories.push({
+                    category,
+                    items:availableItems
+                });
+
             }
-          });
 
-          if (error) throw error;
+        }
+    );
 
-          if (data.session) {
-            currentUser = data.user;
-            await loadCurrentUser();
-            closeAuth();
-            $("#authForm").reset();
-            await loadMyOrders();
-            showToast("¡Tu cuenta está creada!");
-          } else {
-            closeAuth();
-            $("#authForm").reset();
-            showToast("Cuenta creada. Revisá tu correo para confirmarla y después ingresá.");
-          }
+
+    usableCategories.forEach(
+        ({
+            category,
+            items
+        }) => {
+
+            const categoryElement =
+                document.createElement(
+                    "div"
+                );
+
+
+            categoryElement.className =
+                "menu-category";
+
+
+            const icon =
+                getCategoryIcon(
+                    category.name
+                );
+
+
+            categoryElement.innerHTML = `
+
+                <button
+                    class="menu-category-header"
+                    type="button"
+                    aria-expanded="false"
+                >
+
+                    <div class="menu-category-title">
+
+                        <div class="menu-category-icon">
+                            ${icon}
+                        </div>
+
+                        <div>
+
+                            <div class="menu-category-name">
+                                ${escapeHtml(
+                                    category.name
+                                )}
+                            </div>
+
+                            ${
+                                category.description
+                                ?
+
+                                `<span class="menu-category-description">
+                                    ${escapeHtml(
+                                        category.description
+                                    )}
+                                </span>`
+
+                                :
+
+                                ""
+                            }
+
+                        </div>
+
+                    </div>
+
+
+                    <span class="menu-category-toggle">
+                        +
+                    </span>
+
+                </button>
+
+
+                <div class="menu-category-content">
+
+                    <div class="menu-category-inner">
+
+                        <div class="menu-category-items">
+
+                            ${items
+                                .map(
+                                    item => `
+
+                                        <div class="menu-item">
+
+                                            <div>
+
+                                                <h4>
+                                                    ${escapeHtml(
+                                                        item.name
+                                                    )}
+                                                </h4>
+
+                                                <p>
+                                                    ${escapeHtml(
+                                                        item.description || ""
+                                                    )}
+                                                </p>
+
+                                                <div class="menu-actions">
+
+                                                    <button
+                                                        class="add-btn"
+                                                        type="button"
+                                                        onclick="addToCart(${Number(item.id)})"
+                                                    >
+
+                                                        + Agregar al pedido
+
+                                                    </button>
+
+                                                </div>
+
+                                            </div>
+
+
+                                            <div class="menu-price">
+
+                                                ${formatPrice(
+                                                    item.price
+                                                )}
+
+                                            </div>
+
+                                        </div>
+
+                                    `
+                                )
+                                .join("")
+                            }
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            `;
+
+
+            const headerButton =
+                categoryElement.querySelector(
+                    ".menu-category-header"
+                );
+
+
+            headerButton.addEventListener(
+                "click",
+                () => {
+
+                    const isActive =
+                        categoryElement.classList.contains(
+                            "active"
+                        );
+
+
+                    /*
+                     * Cerramos todas las categorías.
+                     */
+
+                    document
+                        .querySelectorAll(
+                            ".menu-category.active"
+                        )
+                        .forEach(
+                            openCategory => {
+
+                                openCategory.classList.remove(
+                                    "active"
+                                );
+
+
+                                const openButton =
+                                    openCategory.querySelector(
+                                        ".menu-category-header"
+                                    );
+
+
+                                if (openButton) {
+
+                                    openButton.setAttribute(
+                                        "aria-expanded",
+                                        "false"
+                                    );
+
+                                }
+
+
+                                const toggle =
+                                    openCategory.querySelector(
+                                        ".menu-category-toggle"
+                                    );
+
+
+                                if (toggle) {
+
+                                    toggle.textContent =
+                                        "+";
+
+                                }
+
+                            }
+                        );
+
+
+                    /*
+                     * Si estaba cerrada,
+                     * abrimos solamente esta.
+                     *
+                     * Si estaba abierta,
+                     * queda cerrada.
+                     */
+
+                    if (!isActive) {
+
+                        categoryElement.classList.add(
+                            "active"
+                        );
+
+
+                        headerButton.setAttribute(
+                            "aria-expanded",
+                            "true"
+                        );
+
+
+                        const toggle =
+                            categoryElement.querySelector(
+                                ".menu-category-toggle"
+                            );
+
+
+                        if (toggle) {
+
+                            toggle.textContent =
+                                "−";
+
+                        }
+
+                    }
+
+                }
+            );
+
+
+            menuContainer.appendChild(
+                categoryElement
+            );
+
+        }
+    );
+
+
+    if (
+        !menuContainer.children.length
+    ) {
+
+        menuContainer.innerHTML = `
+
+            <div class="menu-error">
+
+                No hay productos disponibles
+                en este momento.
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* =========================================================
+AGREGAR AL CARRITO
+========================================================= */
+
+window.addToCart =
+function(itemId) {
+
+    const product =
+        menuItems.find(
+            item =>
+                Number(item.id) ===
+                Number(itemId)
+        );
+
+
+    if (!product) {
+
+        showToast(
+            "No encontramos ese producto."
+        );
+
+        return;
+
+    }
+
+
+    const existing =
+        cart.find(
+            item =>
+                Number(item.id) ===
+                Number(itemId)
+        );
+
+
+    if (existing) {
+
+        existing.quantity++;
+
+    } else {
+
+        cart.push({
+
+            id:
+                Number(product.id),
+
+            name:
+                product.name,
+
+            price:
+                Number(product.price),
+
+            quantity:
+                1
+
+        });
+
+    }
+
+
+    renderCart();
+
+    openCart();
+
+    showToast(
+        `${product.name} agregado al pedido`
+    );
+
+};
+
+
+/* =========================================================
+RENDER CARRITO
+========================================================= */
+
+function renderCart() {
+
+    if (!cart.length) {
+
+        cartItems.innerHTML = `
+
+            <div class="empty-cart">
+
+                Tu carrito está vacío.
+
+            </div>
+
+        `;
+
+        cartCount.textContent =
+            "0";
+
+        cartTotal.textContent =
+            formatPrice(0);
+
+        checkoutButton.disabled =
+            false;
+
+        checkoutButton.textContent =
+            editingOrderId
+            ? "Guardar cambios"
+            : "Confirmar pedido";
+
+        cartEditingLabel.style.display =
+            editingOrderId
+            ? "block"
+            : "none";
+
+        checkoutButton.classList.toggle(
+            "editing",
+            Boolean(editingOrderId)
+        );
+
+        return;
+
+    }
+
+
+    let total = 0;
+
+    let quantityTotal = 0;
+
+
+    cartItems.innerHTML = "";
+
+
+    cart.forEach(
+        item => {
+
+            const subtotal =
+                Number(item.price) *
+                Number(item.quantity);
+
+
+            total += subtotal;
+
+            quantityTotal +=
+                Number(item.quantity);
+
+
+            const element =
+                document.createElement(
+                    "div"
+                );
+
+
+            element.className =
+                "cart-item";
+
+
+            element.innerHTML = `
+
+                <div class="cart-item-top">
+
+                    <div>
+
+                        <div class="cart-item-name">
+
+                            ${escapeHtml(
+                                item.name
+                            )}
+
+                        </div>
+
+                        <small>
+
+                            ${formatPrice(
+                                item.price
+                            )}
+                            c/u
+
+                        </small>
+
+                    </div>
+
+                    <div class="cart-item-price">
+
+                        ${formatPrice(
+                            subtotal
+                        )}
+
+                    </div>
+
+                </div>
+
+
+                <div class="quantity-controls">
+
+                    <button
+                        type="button"
+                        aria-label="Restar una unidad"
+                        onclick="changeQuantity(${item.id}, -1)"
+                    >
+
+                        −
+
+                    </button>
+
+                    <strong>
+                        ${item.quantity}
+                    </strong>
+
+                    <button
+                        type="button"
+                        aria-label="Agregar una unidad"
+                        onclick="changeQuantity(${item.id}, 1)"
+                    >
+
+                        +
+
+                    </button>
+
+                    <button
+                        type="button"
+                        aria-label="Eliminar producto"
+                        onclick="removeFromCart(${item.id})"
+                        style="
+                            margin-left:auto;
+                            border-color:#999;
+                            color:#777;
+                        "
+                    >
+
+                        ×
+
+                    </button>
+
+                </div>
+
+            `;
+
+
+            cartItems.appendChild(
+                element
+            );
+
+        }
+    );
+
+
+    cartCount.textContent =
+        quantityTotal;
+
+
+    cartTotal.textContent =
+        formatPrice(total);
+
+
+    checkoutButton.textContent =
+        editingOrderId
+        ? "Guardar cambios"
+        : "Confirmar pedido";
+
+
+    checkoutButton.classList.toggle(
+        "editing",
+        Boolean(editingOrderId)
+    );
+
+
+    cartEditingLabel.style.display =
+        editingOrderId
+        ? "block"
+        : "none";
+
+}
+
+
+/* =========================================================
+CAMBIAR CANTIDAD
+========================================================= */
+
+window.changeQuantity =
+function(itemId, change) {
+
+    const item =
+        cart.find(
+            item =>
+                Number(item.id) ===
+                Number(itemId)
+        );
+
+
+    if (!item) {
+        return;
+    }
+
+
+    item.quantity +=
+        Number(change);
+
+
+    if (item.quantity <= 0) {
+
+        cart =
+            cart.filter(
+                item =>
+                    Number(item.id) !==
+                    Number(itemId)
+            );
+
+    }
+
+
+    renderCart();
+
+};
+
+
+/* =========================================================
+ELIMINAR PRODUCTO
+========================================================= */
+
+window.removeFromCart =
+function(itemId) {
+
+    cart =
+        cart.filter(
+            item =>
+                Number(item.id) !==
+                Number(itemId)
+        );
+
+
+    renderCart();
+
+};
+
+
+/* =========================================================
+ABRIR CARRITO
+========================================================= */
+
+function openCart() {
+
+    cartOverlay.classList.add(
+        "active"
+    );
+
+    document.body.classList.add(
+        "no-scroll"
+    );
+
+}
+
+
+/* =========================================================
+CERRAR CARRITO
+========================================================= */
+
+function closeCart() {
+
+    cartOverlay.classList.remove(
+        "active"
+    );
+
+    document.body.classList.remove(
+        "no-scroll"
+    );
+
+}
+
+
+document
+    .getElementById("openCart")
+    .addEventListener(
+        "click",
+        openCart
+    );
+
+
+document
+    .getElementById("heroCart")
+    .addEventListener(
+        "click",
+        openCart
+    );
+
+
+document
+    .getElementById("closeCart")
+    .addEventListener(
+        "click",
+        closeCart
+    );
+
+
+cartOverlay.addEventListener(
+    "click",
+    event => {
+
+        if (
+            event.target ===
+            cartOverlay
+        ) {
+
+            closeCart();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+CANCELAR EDICIÓN
+========================================================= */
+
+function cancelOrderEditing() {
+
+    editingOrderId =
+        null;
+
+    cart =
+        [];
+
+    renderCart();
+
+    closeCart();
+
+    showToast(
+        "Edición cancelada."
+    );
+
+}
+
+
+/* =========================================================
+EDITAR PEDIDO
+========================================================= */
+
+window.editOrder =
+function(orderId) {
+
+    if (!currentUser) {
+
+        prepareLogin();
+
+        openAuth();
+
+        return;
+
+    }
+
+
+    const order =
+        myOrders.find(
+            item =>
+                Number(item.id) ===
+                Number(orderId)
+        );
+
+
+    if (!order) {
+
+        showToast(
+            "No encontramos ese pedido."
+        );
+
+        return;
+
+    }
+
+
+    if (
+        Number(order.user_id) !==
+        Number(currentUser.id)
+    ) {
+
+        showToast(
+            "No podés editar este pedido."
+        );
+
+        return;
+
+    }
+
+
+    if (
+        !isOrderEditable(order)
+    ) {
+
+        showToast(
+            "Este pedido ya fue aceptado y no se puede editar."
+        );
+
+        return;
+
+    }
+
+
+    const products =
+        Array.isArray(
+            order.order_items
+        )
+        ? order.order_items
+        : [];
+
+
+    if (!products.length) {
+
+        showToast(
+            "Este pedido no tiene productos para editar."
+        );
+
+        return;
+
+    }
+
+
+    editingOrderId =
+        Number(order.id);
+
+
+    cart =
+        products
+        .map(
+            product => ({
+
+                id:
+                    Number(
+                        product.menu_item_id
+                    ),
+
+                name:
+                    product.product_name,
+
+                price:
+                    Number(
+                        product.unit_price
+                    ),
+
+                quantity:
+                    Number(
+                        product.quantity
+                    )
+
+            })
+        )
+        .filter(
+            item =>
+                item.id &&
+                item.quantity > 0
+        );
+
+
+    renderCart();
+
+    openCart();
+
+    showToast(
+        `Editando pedido #${order.id}`
+    );
+
+};
+
+
+/* =========================================================
+AUTH
+========================================================= */
+
+function openAuth() {
+
+    authModal.classList.add(
+        "active"
+    );
+
+    document.body.classList.add(
+        "no-scroll"
+    );
+
+}
+
+
+function closeAuth() {
+
+    authModal.classList.remove(
+        "active"
+    );
+
+    document.body.classList.remove(
+        "no-scroll"
+    );
+
+}
+
+
+document
+    .getElementById("closeAuth")
+    .addEventListener(
+        "click",
+        closeAuth
+    );
+
+
+/* =========================================================
+PREPARAR LOGIN
+========================================================= */
+
+function prepareLogin() {
+
+    authMode =
+        "login";
+
+
+    authTitle.textContent =
+        "Ingresar";
+
+
+    authDescription.textContent =
+        "Ingresá para confirmar tu pedido.";
+
+
+    authSubmit.textContent =
+        "Ingresar";
+
+
+    authSwitchText.textContent =
+        "¿No tenés cuenta?";
+
+
+    authSwitch.textContent =
+        "Crear cuenta";
+
+
+    nameGroup.style.display =
+        "none";
+
+
+    authName.required =
+        false;
+
+}
+
+
+/* =========================================================
+PREPARAR REGISTRO
+========================================================= */
+
+function prepareRegister() {
+
+    authMode =
+        "register";
+
+
+    authTitle.textContent =
+        "Crear cuenta";
+
+
+    authDescription.textContent =
+        "Creá tu cuenta para realizar pedidos.";
+
+
+    authSubmit.textContent =
+        "Crear cuenta";
+
+
+    authSwitchText.textContent =
+        "¿Ya tenés cuenta?";
+
+
+    authSwitch.textContent =
+        "Ingresar";
+
+
+    nameGroup.style.display =
+        "block";
+
+
+    authName.required =
+        true;
+
+}
+
+
+/* =========================================================
+CAMBIAR LOGIN / REGISTRO
+========================================================= */
+
+authSwitch.addEventListener(
+    "click",
+    () => {
+
+        if (
+            authMode === "login"
+        ) {
+
+            prepareRegister();
+
         } else {
-          const { data, error } = await supabaseClient.auth.signInWithPassword({
-            email,
-            password
-          });
 
-          if (error) throw error;
+            prepareLogin();
 
-          currentUser = data.user;
-          await loadCurrentUser();
-          closeAuth();
-          $("#authForm").reset();
-          await loadMyOrders();
-          showToast("¡Bienvenido/a a Fogón del Valle!");
         }
-      } catch (error) {
-        console.error("Error de autenticación:", error);
-        showToast(friendlyError(error, "No pudimos completar el acceso."));
-      } finally {
-        authBusy = false;
-        setButtonLoading(button, false);
-        setAuthMode(authMode);
-      }
-    }
 
-    async function loadCurrentUser() {
-      if (!currentUser || !supabaseClient) {
-        currentProfile = null;
-        updateUserUI();
+    }
+);
+
+
+/* =========================================================
+REGISTRO / LOGIN
+========================================================= */
+
+authForm.addEventListener(
+    "submit",
+    async event => {
+
+        event.preventDefault();
+
+
+        const name =
+            authName.value.trim();
+
+
+        const email =
+            document
+                .getElementById("authEmail")
+                .value
+                .trim();
+
+
+        const password =
+            document
+                .getElementById("authPassword")
+                .value;
+
+
+        authSubmit.disabled =
+            true;
+
+
+        authSubmit.textContent =
+            "Procesando...";
+
+
+        try {
+
+            if (
+                authMode === "register"
+            ) {
+
+                if (
+                    name.length < 2
+                ) {
+
+                    throw new Error(
+                        "Ingresá tu nombre."
+                    );
+
+                }
+
+
+                if (
+                    password.length < 6
+                ) {
+
+                    throw new Error(
+                        "La contraseña debe tener al menos 6 caracteres."
+                    );
+
+                }
+
+
+                const {
+                    data,
+                    error
+                } =
+                    await supabaseClient
+                        .auth
+                        .signUp({
+
+                            email,
+
+                            password,
+
+                            options: {
+
+                                data: {
+
+                                    full_name:
+                                        name
+
+                                }
+
+                            }
+
+                        });
+
+
+                if (error) {
+                    throw error;
+                }
+
+
+                if (!data.session) {
+
+                    alert(
+                        "Cuenta creada correctamente.\n\n" +
+                        "Revisá tu email para confirmar " +
+                        "la cuenta antes de ingresar."
+                    );
+
+                    authForm.reset();
+
+                    prepareLogin();
+
+                    closeAuth();
+
+                } else {
+
+                    currentUser =
+                        data.user;
+
+                    await loadCurrentUser();
+
+                    await loadMyOrders();
+
+                    authForm.reset();
+
+                    closeAuth();
+
+                }
+
+            } else {
+
+                const {
+                    data,
+                    error
+                } =
+                    await supabaseClient
+                        .auth
+                        .signInWithPassword({
+
+                            email,
+
+                            password
+
+                        });
+
+
+                if (error) {
+                    throw error;
+                }
+
+
+                currentUser =
+                    data.user;
+
+
+                await loadCurrentUser();
+
+                await loadMyOrders();
+
+                authForm.reset();
+
+                closeAuth();
+
+            }
+
+        } catch(error) {
+
+            console.error(
+                "Error de autenticación:",
+                error
+            );
+
+
+            alert(
+                "No pudimos completar la operación:\n\n" +
+                error.message
+            );
+
+        } finally {
+
+            authSubmit.disabled =
+                false;
+
+
+            authSubmit.textContent =
+                authMode === "login"
+                ? "Ingresar"
+                : "Crear cuenta";
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+CARGAR USUARIO
+========================================================= */
+
+async function loadCurrentUser() {
+
+    const {
+        data,
+        error
+    } =
+        await supabaseClient.auth.getUser();
+
+
+    if (
+        error ||
+        !data.user
+    ) {
+
+        currentUser =
+            null;
+
+
+        userBar.style.display =
+            "none";
+
+
         return;
-      }
 
-      try {
-        const { data, error } = await supabaseClient
-          .from("profiles")
-          .select("id, full_name, email, role")
-          .eq("id", currentUser.id)
-          .maybeSingle();
-
-        if (error) throw error;
-
-        currentProfile = data || {
-          id: currentUser.id,
-          full_name: currentUser.user_metadata?.full_name || "",
-          email: currentUser.email || "",
-          role: "customer"
-        };
-      } catch (error) {
-        console.error("No se pudo leer el perfil:", error);
-        currentProfile = {
-          id: currentUser.id,
-          full_name: currentUser.user_metadata?.full_name || "",
-          email: currentUser.email || "",
-          role: "customer"
-        };
-      }
-
-      updateUserUI();
     }
 
-    function updateUserUI() {
-      const loggedIn = Boolean(currentUser);
 
-      $("#loginNavButton").textContent = loggedIn
-        ? (currentProfile?.full_name || "Mi cuenta")
-        : "Ingresar";
+    currentUser =
+        data.user;
 
-      $("#userBar").hidden = !loggedIn;
 
-      if (loggedIn) {
-        const name = currentProfile?.full_name || currentUser.email || "Cliente";
-        $("#userGreeting").textContent = `¡Hola, ${name}!`;
-      } else {
-        $("#userGreeting").textContent = "¡Hola!";
-      }
+    const {
+        data: profile,
+        error: profileError
+    } =
+        await supabaseClient
 
-      if (!loggedIn) {
-        $("#ordersContent").innerHTML = `
-          <div class="empty-state">
-            <p>Ingresá a tu cuenta para consultar tus pedidos.</p>
-            <button class="btn btn-primary" type="button" data-open-auth>Ingresar o registrarme</button>
-          </div>`;
-      }
+        .from("profiles")
+
+        .select(
+            "full_name, role"
+        )
+
+        .eq(
+            "id",
+            currentUser.id
+        )
+
+        .maybeSingle();
+
+
+    if (profileError) {
+
+        console.warn(
+            "No se pudo cargar el perfil:",
+            profileError
+        );
+
     }
 
-    async function signOut() {
-      if (!supabaseClient) return;
 
-      try {
-        const { error } = await supabaseClient.auth.signOut({ scope: "local" });
-        if (error) throw error;
+    let displayName =
+        profile?.full_name
+        ||
+        currentUser.user_metadata?.full_name
+        ||
+        currentUser.email;
 
-        currentUser = null;
-        currentProfile = null;
-        myOrders = [];
-        cart = [];
-        editingOrderId = null;
 
-        updateUserUI();
-        renderCart();
-        showToast("Cerraste sesión.");
-      } catch (error) {
-        console.error("Error al cerrar sesión:", error);
-        showToast(friendlyError(error, "No pudimos cerrar la sesión."));
-      }
+    if (
+        profile?.role === "restaurant"
+    ) {
+
+        displayName +=
+            " · Restaurante";
+
     }
 
-    function connectAuth() {
-      supabaseClient.auth.getSession().then(async ({ data, error }) => {
-        if (error) {
-          console.error("No se pudo recuperar la sesión:", error);
-          return;
-        }
 
-        currentUser = data.session?.user || null;
-        await loadCurrentUser();
+    userName.textContent =
+        displayName;
 
-        if (currentUser) {
-          await loadMyOrders();
-        }
-      });
 
-      const { data } = supabaseClient.auth.onAuthStateChange((event, session) => {
-        // Diferimos las consultas para evitar ejecutar llamadas de Supabase
-        // dentro del callback síncrono de auth.
-        clearTimeout(authEventTimer);
-        authEventTimer = setTimeout(async () => {
-          currentUser = session?.user || null;
+    userBar.style.display =
+        "flex";
 
-          if (currentUser) {
-            await loadCurrentUser();
-            await loadMyOrders();
-          } else {
-            currentProfile = null;
-            myOrders = [];
-            cart = [];
-            editingOrderId = null;
-            updateUserUI();
+}
+
+
+/* =========================================================
+CERRAR SESIÓN
+========================================================= */
+
+document
+    .getElementById("logoutBtn")
+    .addEventListener(
+        "click",
+        async () => {
+
+            const {
+                error
+            } =
+                await supabaseClient.auth.signOut({
+                    scope:"local"
+                });
+
+
+            if (error) {
+
+                console.error(
+                    "Error cerrando sesión:",
+                    error
+                );
+
+                showToast(
+                    "No se pudo cerrar la sesión."
+                );
+
+                return;
+
+            }
+
+
+            currentUser =
+                null;
+
+            myOrders =
+                [];
+
+            editingOrderId =
+                null;
+
+            cart =
+                [];
+
+
+            userBar.style.display =
+                "none";
+
+
             renderCart();
-          }
-        }, 0);
-      });
 
-      authSubscription = data.subscription;
+            renderLoggedOutOrders();
+
+
+            showToast(
+                "Sesión cerrada correctamente"
+            );
+
+        }
+    );
+
+
+/* =========================================================
+MIS PEDIDOS
+========================================================= */
+
+async function loadMyOrders() {
+
+    if (!currentUser) {
+
+        renderLoggedOutOrders();
+
+        return;
+
     }
 
-    // ==========================================================
-    // MIS PEDIDOS: SOLO EL CLIENTE ACTUAL
-    // ==========================================================
 
-    async function loadMyOrders() {
-      if (!supabaseClient || !currentUser) {
-        myOrders = [];
-        updateUserUI();
-        return;
-      }
+    ordersContainer.innerHTML = `
 
-      $("#ordersContent").innerHTML = '<div class="loading-note">Cargando tus pedidos...</div>';
+        <div class="orders-empty">
 
-      try {
-        // El filtro se suma a RLS: solo solicitamos pedidos del usuario actual.
-        const { data, error } = await supabaseClient
-          .from("orders")
-          .select(`
+            <div class="orders-empty-icon">
+                ⏳
+            </div>
+
+            <h3>
+                Cargando tus pedidos...
+            </h3>
+
+        </div>
+
+    `;
+
+
+    const {
+        data: orders,
+        error
+    } =
+        await supabaseClient
+
+        .from("orders")
+
+        .select(`
             id,
             user_id,
             customer_name,
             customer_email,
-            arrival_time,
-            status,
             total,
+            status,
             notes,
             created_at,
             updated_at,
             order_items (
-              id,
-              menu_item_id,
-              product_name,
-              quantity,
-              unit_price,
-              subtotal
+                id,
+                menu_item_id,
+                product_name,
+                quantity,
+                unit_price,
+                subtotal,
+                created_at
             )
-          `)
-          .eq("user_id", currentUser.id)
-          .order("created_at", { ascending: false });
+        `)
 
-        if (error) throw error;
+        .eq(
+            "user_id",
+            currentUser.id
+        )
 
-        myOrders = data || [];
-        renderMyOrders();
-      } catch (error) {
-        console.error("Error al cargar pedidos:", error);
-        $("#ordersContent").innerHTML = `
-          <div class="error-note">
-            No pudimos cargar tus pedidos.
-            <p>${escapeHtml(friendlyError(error, "Revisá las políticas de lectura de orders y order_items."))}</p>
-            <button class="btn btn-primary btn-small" id="retryOrdersButton" type="button">Intentar de nuevo</button>
-          </div>`;
-      }
+        .order(
+            "created_at",
+            {
+                ascending:false
+            }
+        );
+
+
+    if (error) {
+
+        console.error(
+            "Error cargando pedidos:",
+            error
+        );
+
+
+        ordersContainer.innerHTML = `
+
+            <div class="orders-empty">
+
+                <div class="orders-empty-icon">
+                    ⚠️
+                </div>
+
+                <h3>
+                    No pudimos cargar tus pedidos
+                </h3>
+
+                <p>
+                    ${escapeHtml(
+                        error.message
+                    )}
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
     }
 
-    function renderMyOrders() {
-      if (!currentUser) {
-        updateUserUI();
-        return;
-      }
 
-      if (!myOrders.length) {
-        $("#ordersContent").innerHTML = `
-          <div class="empty-state">
-            <strong>Todavía no hiciste pedidos.</strong>
-            <p>Cuando confirmes uno, vas a poder consultarlo desde esta sección.</p>
-            <a href="#menu" class="btn btn-primary btn-small">Explorar el menú</a>
-          </div>`;
-        return;
-      }
+    /*
+     * Aunque la consulta ya filtra por user_id,
+     * filtramos nuevamente en memoria como
+     * defensa adicional de interfaz.
+     */
 
-      $("#ordersContent").innerHTML = `
+    myOrders =
+        (orders || []).filter(
+            order =>
+                order.user_id ===
+                currentUser.id
+        );
+
+
+    if (
+        myOrders.length === 0
+    ) {
+
+        ordersContainer.innerHTML = `
+
+            <div class="orders-empty">
+
+                <div class="orders-empty-icon">
+                    🍽️
+                </div>
+
+                <h3>
+                    Todavía no hiciste ningún pedido
+                </h3>
+
+                <p>
+                    Cuando hagas tu primera compra,
+                    aparecerá acá.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    renderMyOrders(
+        myOrders
+    );
+
+}
+
+
+/* =========================================================
+RENDER MIS PEDIDOS
+========================================================= */
+
+function renderMyOrders(
+    orders
+) {
+
+    ordersContainer.innerHTML = `
+
         <div class="orders-list">
-          ${myOrders.map(renderOrderCard).join("")}
-        </div>`;
-    }
 
-    function renderOrderCard(order) {
-      const status = String(order.status || "received");
-      const statusLabel = STATUS_LABELS[status] || status;
-      const items = Array.isArray(order.order_items) ? order.order_items : [];
-      const canEdit = status === "received";
+            ${orders
+                .map(
+                    renderOrderCard
+                )
+                .join("")
+            }
 
-      const date = order.created_at
-        ? new Date(order.created_at).toLocaleString("es-AR", {
-            dateStyle: "medium",
-            timeStyle: "short"
-          })
-        : "Fecha no disponible";
+        </div>
 
-      const itemMarkup = items.length
-        ? items.map((item) => `
-            <div class="order-item-line">
-              <span>${Number(item.quantity) || 0} × ${escapeHtml(item.product_name || "Producto")}</span>
-              <span>${formatMoney(item.subtotal ?? ((Number(item.quantity) || 0) * (Number(item.unit_price) || 0)))}</span>
-            </div>
-          `).join("")
-        : '<p>Este pedido no tiene artículos registrados.</p>';
+    `;
 
-      return `
-        <article class="order-card">
-          <div class="order-header">
-            <div>
-              <h3>Pedido #${escapeHtml(order.id)}</h3>
-              <div class="order-meta">${escapeHtml(date)}</div>
-            </div>
-            <span class="status ${escapeHtml(status)}">${escapeHtml(statusLabel)}</span>
-          </div>
+}
 
-          <div class="order-items-list">
-            ${itemMarkup}
-          </div>
 
-          ${order.notes ? `<p><strong>Nota:</strong> ${escapeHtml(order.notes)}</p>` : ""}
+/* =========================================================
+CARD DE PEDIDO
+========================================================= */
 
-          <div class="order-footer">
-            <span class="order-total">Total: ${formatMoney(order.total)}</span>
-            <div class="order-actions">
-              ${canEdit
-                ? `<button class="btn btn-primary btn-small" type="button" data-edit-order="${escapeHtml(order.id)}">Editar pedido</button>`
-                : `<span class="order-meta">La edición está cerrada para este estado.</span>`}
-            </div>
-          </div>
-        </article>`;
-    }
+function renderOrderCard(
+    order
+) {
 
-    // ==========================================================
-    // EDITAR UN PEDIDO EXISTENTE
-    // ==========================================================
-
-    async function beginEditOrder(orderId) {
-      if (!currentUser) {
-        openAuth("login");
-        return;
-      }
-
-      const order = myOrders.find((item) => String(item.id) === String(orderId));
-
-      if (!order) {
-        showToast("No encontramos ese pedido en tu cuenta.");
-        return;
-      }
-
-      if (String(order.user_id) !== String(currentUser.id)) {
-        showToast("No podés editar un pedido de otra cuenta.");
-        return;
-      }
-
-      if (order.status !== "received") {
-        showToast("Este pedido ya no se puede editar porque el restaurante lo está gestionando.");
-        return;
-      }
-
-      const existingItems = Array.isArray(order.order_items) ? order.order_items : [];
-
-      if (!existingItems.length) {
-        showToast("Este pedido no tiene productos para editar.");
-        return;
-      }
-
-      const nextCart = [];
-
-      for (const item of existingItems) {
-        const menuItem = menuItems.find(
-          (menu) => String(menu.id) === String(item.menu_item_id)
+    const status =
+        getOrderStatus(
+            order.status
         );
 
-        if (!menuItem) {
-          showToast(`El producto "${item.product_name}" ya no está disponible en la carta. No iniciamos la edición para evitar perderlo.`);
-          return;
-        }
 
-        nextCart.push({
-          id: menuItem.id,
-          name: menuItem.name,
-          price: Number(menuItem.price) || 0,
-          image_url: menuItem.image_url || "",
-          quantity: Number(item.quantity) || 1
-        });
-      }
-
-      editingOrderId = order.id;
-      cart = nextCart;
-      openCart();
-      showToast(`Editando el pedido #${order.id}.`);
-    }
-
-    async function saveOrderChanges() {
-      if (!requireSupabase() || checkoutBusy) return;
-
-      if (!currentUser || !editingOrderId) {
-        showToast("No hay ningún pedido abierto para editar.");
-        return;
-      }
-
-      if (!cart.length) {
-        showToast("Agregá al menos un producto antes de guardar.");
-        return;
-      }
-
-      const originalOrder = myOrders.find(
-        (order) => String(order.id) === String(editingOrderId)
-      );
-
-      if (
-        !originalOrder ||
-        String(originalOrder.user_id) !== String(currentUser.id) ||
-        originalOrder.status !== "received"
-      ) {
-        showToast("Este pedido ya no se puede editar.");
-        await loadMyOrders();
-        return;
-      }
-
-      const button = $("#checkoutButton");
-      checkoutBusy = true;
-      setButtonLoading(button, true, "Guardando cambios...");
-
-      try {
-        const notes = ($("#orderNotes")?.value || originalOrder.notes || "").trim();
-        const total = cartTotal();
-
-        // Volvemos a comprobar estado y dueño al actualizar la orden.
-        // La política RLS también debe exigir user_id = auth.uid() y status = received.
-        const { data: updatedOrder, error: updateError } = await supabaseClient
-          .from("orders")
-          .update({
-            total,
-            notes,
-            updated_at: new Date().toISOString()
-          })
-          .eq("id", editingOrderId)
-          .eq("user_id", currentUser.id)
-          .eq("status", "received")
-          .select("id")
-          .maybeSingle();
-
-        if (updateError) throw updateError;
-        if (!updatedOrder) {
-          throw new Error("El pedido ya no está en estado Recibido o no tenés permiso para editarlo.");
-        }
-
-        // Reemplazamos los renglones del pedido.
-        // Las políticas SQL del final habilitan estas operaciones solo
-        // cuando la orden pertenece al usuario y sigue recibida.
-        const { error: deleteError } = await supabaseClient
-          .from("order_items")
-          .delete()
-          .eq("order_id", editingOrderId);
-
-        if (deleteError) throw deleteError;
-
-        const rows = cart.map((item) => ({
-          order_id: editingOrderId,
-          menu_item_id: item.id,
-          product_name: item.name,
-          quantity: item.quantity,
-          unit_price: item.price,
-          subtotal: item.price * item.quantity
-        }));
-
-        const { error: insertError } = await supabaseClient
-          .from("order_items")
-          .insert(rows);
-
-        if (insertError) {
-          console.error("No se pudieron guardar los productos actualizados:", insertError);
-          throw new Error("El total se actualizó, pero no se pudieron guardar todos los productos. Contactá al restaurante antes de volver a editar el pedido.");
-        }
-
-        const savedId = editingOrderId;
-        editingOrderId = null;
-        cart = [];
-        renderCart();
-        closeCart();
-
-        await loadMyOrders();
-        showToast(`¡Pedido #${savedId} actualizado!`);
-      } catch (error) {
-        console.error("Error al editar pedido:", error);
-        showToast(friendlyError(error, "No pudimos guardar los cambios."));
-      } finally {
-        checkoutBusy = false;
-        const currentButton = $("#checkoutButton");
-        if (currentButton) setButtonLoading(currentButton, false);
-      }
-    }
-
-    // ==========================================================
-    // CONFIRMAR UN PEDIDO NUEVO
-    // ==========================================================
-
-    async function checkout() {
-      if (!requireSupabase() || checkoutBusy) return;
-
-      if (editingOrderId) {
-        await saveOrderChanges();
-        return;
-      }
-
-      if (!currentUser) {
-        closeCart();
-        openAuth("login");
-        showToast("Ingresá a tu cuenta para confirmar el pedido.");
-        return;
-      }
-
-      if (!cart.length) {
-        showToast("Agregá al menos un producto.");
-        return;
-      }
-
-      // Releer precios actuales desde la carta publicada.
-      const refreshedCart = [];
-
-      for (const line of cart) {
-        const currentItem = findMenuItem(line.id);
-
-        if (!currentItem) {
-          showToast(`"${line.name}" ya no está disponible. Revisá tu carrito.`);
-          return;
-        }
-
-        refreshedCart.push({
-          id: currentItem.id,
-          name: currentItem.name,
-          price: Number(currentItem.price) || 0,
-          quantity: Number(line.quantity) || 1
-        });
-      }
-
-      const button = $("#checkoutButton");
-      checkoutBusy = true;
-      setButtonLoading(button, true, "Confirmando...");
-
-      try {
-        // El precio enviado desde el navegador no debe considerarse
-        // una validación definitiva para producción. Más adelante conviene
-        // calcular los importes en una función SQL del servidor.
-        const total = refreshedCart.reduce(
-          (sum, item) => sum + item.price * item.quantity, 0
+    const date =
+        new Date(
+            order.created_at
         );
 
-        const customerName =
-          currentProfile?.full_name ||
-          currentUser.user_metadata?.full_name ||
-          currentUser.email ||
-          "Cliente";
 
-        const notes = ($("#orderNotes")?.value || "").trim();
+    const dateText =
+        date.toLocaleDateString(
+            "es-AR",
+            {
+                day:"2-digit",
+                month:"2-digit",
+                year:"numeric"
+            }
+        );
 
-        const { data: order, error: orderError } = await supabaseClient
-          .from("orders")
-          .insert({
-            user_id: currentUser.id,
-            customer_name: customerName,
-            customer_email: currentUser.email || "",
-            status: "received",
-            total,
-            notes
-          })
-          .select("id")
-          .single();
 
-        if (orderError) throw orderError;
+    const timeText =
+        date.toLocaleTimeString(
+            "es-AR",
+            {
+                hour:"2-digit",
+                minute:"2-digit"
+            }
+        );
 
-        const rows = refreshedCart.map((item) => ({
-          order_id: order.id,
-          menu_item_id: item.id,
-          product_name: item.name,
-          quantity: item.quantity,
-          unit_price: item.price,
-          subtotal: item.price * item.quantity
-        }));
 
-        const { error: itemsError } = await supabaseClient
-          .from("order_items")
-          .insert(rows);
+    const products =
+        Array.isArray(
+            order.order_items
+        )
+        ? order.order_items
+        : [];
 
-        if (itemsError) {
-          console.error("Error guardando los renglones:", itemsError);
 
-          // Intento de limpieza si no se pudieron guardar los artículos.
-          // La política de DELETE de orders debe permitir este caso o un RPC
-          // transaccional debería sustituir este flujo para producción.
-          showToast("El pedido se creó, pero hubo un problema al guardar sus productos. Contactá al restaurante con el número #" + order.id + ".");
-          throw itemsError;
-        }
+    const editable =
+        isOrderEditable(
+            order
+        );
 
-        cart = [];
-        editingOrderId = null;
-        renderCart();
-        closeCart();
 
-        await loadMyOrders();
-        showToast(`¡Pedido #${order.id} confirmado!`);
-        document.querySelector("#pedidos").scrollIntoView({ behavior: "smooth" });
-      } catch (error) {
-        console.error("Error al confirmar pedido:", error);
-        showToast(friendlyError(error, "No pudimos confirmar el pedido."));
-      } finally {
-        checkoutBusy = false;
-        const currentButton = $("#checkoutButton");
-        if (currentButton) setButtonLoading(currentButton, false);
-      }
+    return `
+
+        <article
+            class="order-card"
+            data-order-id="${Number(order.id)}"
+        >
+
+            <div class="order-card-header">
+
+                <div>
+
+                    <div class="order-number">
+
+                        Pedido #${Number(order.id)}
+
+                    </div>
+
+                    <div class="order-date">
+
+                        ${dateText}
+                        ·
+                        ${timeText}
+
+                    </div>
+
+                </div>
+
+
+                <div class="order-status">
+
+                    ${status.icon}
+
+                    ${escapeHtml(
+                        status.name
+                    )}
+
+                </div>
+
+            </div>
+
+
+            <div class="order-products">
+
+                ${
+                    products.length
+                    ?
+
+                    products
+                        .map(
+                            product => `
+
+                                <div class="order-product">
+
+                                    <div>
+
+                                        <div class="order-product-name">
+
+                                            ${escapeHtml(
+                                                product.product_name
+                                            )}
+
+                                        </div>
+
+                                        <div class="order-product-detail">
+
+                                            ${Number(
+                                                product.quantity
+                                            )}
+                                            ×
+                                            ${formatPrice(
+                                                product.unit_price
+                                            )}
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="order-product-subtotal">
+
+                                        ${formatPrice(
+                                            product.subtotal
+                                        )}
+
+                                    </div>
+
+                                </div>
+
+                            `
+                        )
+                        .join("")
+
+                    :
+
+                    `
+
+                        <div class="orders-empty">
+
+                            No se encontraron
+                            productos en este pedido.
+
+                        </div>
+
+                    `
+                }
+
+            </div>
+
+
+            ${
+                order.notes
+                ?
+
+                `
+
+                    <div style="
+                        padding:0 25px 20px;
+                        color:var(--muted);
+                        font-size:13px;
+                    ">
+
+                        <strong>
+                            Nota:
+                        </strong>
+
+                        ${escapeHtml(
+                            order.notes
+                        )}
+
+                    </div>
+
+                `
+
+                :
+
+                ""
+            }
+
+
+            <div class="order-card-footer">
+
+                <div>
+
+                    <span class="order-total-label">
+
+                        Total del pedido
+
+                    </span>
+
+                    <br>
+
+                    <strong class="order-total">
+
+                        ${formatPrice(
+                            order.total
+                        )}
+
+                    </strong>
+
+                </div>
+
+
+                <div class="order-actions">
+
+                    ${
+                        editable
+
+                        ?
+
+                        `
+
+                            <button
+                                class="order-edit-btn"
+                                type="button"
+                                onclick="editOrder(${Number(order.id)})"
+                            >
+
+                                ✏️ Editar pedido
+
+                            </button>
+
+                        `
+
+                        :
+
+                        `
+
+                            <span class="order-edit-locked">
+
+                                ${
+                                    order.status === "cancelled"
+
+                                    ? "Pedido cancelado"
+
+                                    : "Edición bloqueada porque el restaurante ya lo está gestionando."
+
+                                }
+
+                            </span>
+
+                        `
+                    }
+
+                </div>
+
+            </div>
+
+        </article>
+
+    `;
+
+}
+
+
+/* =========================================================
+PEDIDOS PARA USUARIO DESLOGUEADO
+========================================================= */
+
+function renderLoggedOutOrders() {
+
+    ordersContainer.innerHTML = `
+
+        <div class="orders-login">
+
+            <div class="orders-empty-icon">
+                🍷
+            </div>
+
+            <h3>
+                Ingresá para ver tus pedidos
+            </h3>
+
+            <p>
+                Una vez que hayas iniciado sesión
+                vas a poder consultar todo lo que compraste.
+            </p>
+
+            <button
+                class="btn btn-primary"
+                id="ordersLoginBtn"
+                type="button">
+
+                Iniciar sesión
+
+            </button>
+
+        </div>
+
+    `;
+
+
+    const button =
+        document.getElementById(
+            "ordersLoginBtn"
+        );
+
+
+    if (button) {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                prepareLogin();
+
+                openAuth();
+
+            }
+        );
+
     }
 
-    // ==========================================================
-    // EVENTOS DE LA INTERFAZ
-    // ==========================================================
+}
 
-    document.addEventListener("click", (event) => {
-      const categoryButton = event.target.closest("[data-category-toggle]");
-      if (categoryButton) {
-        toggleCategory(categoryButton.dataset.categoryToggle);
-        return;
-      }
 
-      const addButton = event.target.closest("[data-add-item]");
-      if (addButton) {
-        addToCart(addButton.dataset.addItem);
-        return;
-      }
+/* =========================================================
+GUARDAR CAMBIOS DE PEDIDO
+========================================================= */
 
-      const quantityButton = event.target.closest("[data-quantity-item]");
-      if (quantityButton) {
-        changeQuantity(
-          quantityButton.dataset.quantityItem,
-          Number(quantityButton.dataset.delta)
+async function updateExistingOrder() {
+
+    if (!editingOrderId) {
+
+        throw new Error(
+            "No hay ningún pedido en edición."
         );
-        return;
-      }
 
-      const removeButton = event.target.closest("[data-remove-item]");
-      if (removeButton) {
-        removeFromCart(removeButton.dataset.removeItem);
-        return;
-      }
+    }
 
-      const editButton = event.target.closest("[data-edit-order]");
-      if (editButton) {
-        beginEditOrder(editButton.dataset.editOrder);
-        return;
-      }
 
-      if (event.target.closest("[data-open-auth]")) {
-        openAuth("login");
-      }
-    });
+    const order =
+        myOrders.find(
+            item =>
+                Number(item.id) ===
+                Number(editingOrderId)
+        );
 
-    $("#cartOpenButton").addEventListener("click", openCart);
-    $("#cartCloseButton").addEventListener("click", closeCart);
-    $("#cartOverlay").addEventListener("click", closeCart);
-    $("#loginNavButton").addEventListener("click", () => {
-      if (currentUser) {
-        document.querySelector("#pedidos").scrollIntoView({ behavior: "smooth" });
-      } else {
-        openAuth("login");
-      }
-    });
 
-    $("#refreshMenuButton").addEventListener("click", loadMenu);
-    $("#loginTab").addEventListener("click", () => setAuthMode("login"));
-    $("#registerTab").addEventListener("click", () => setAuthMode("register"));
-    $("#authCloseButton").addEventListener("click", closeAuth);
-    $("#authModal").addEventListener("click", (event) => {
-      if (event.target === $("#authModal")) closeAuth();
-    });
-    $("#authForm").addEventListener("submit", submitAuth);
-    $("#signOutButton").addEventListener("click", signOut);
+    if (!order) {
 
-    $("#cartContent").addEventListener("click", (event) => {
-      if (event.target.closest("#cancelEditButton")) cancelEditing();
+        throw new Error(
+            "No encontramos el pedido que querés editar."
+        );
 
-      if (event.target.closest("#backToMenuButton")) {
-        closeCart();
-      }
-    });
+    }
 
-    $("#cartFooter").addEventListener("click", (event) => {
-      if (event.target.closest("#checkoutButton")) checkout();
 
-      if (event.target.closest("#cancelEditFooterButton")) cancelEditing();
+    if (
+        order.user_id !==
+        currentUser.id
+    ) {
 
-      if (event.target.closest("#cartEmptyCloseButton")) closeCart();
-    });
+        throw new Error(
+            "No podés editar este pedido."
+        );
 
-    $("#ordersContent").addEventListener("click", (event) => {
-      if (event.target.closest("#retryOrdersButton")) loadMyOrders();
-    });
+    }
 
-    document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") {
-        closeCart();
-        closeAuth();
-      }
-    });
 
-    $("#currentYear").textContent = String(new Date().getFullYear());
+    if (
+        !isOrderEditable(order)
+    ) {
+
+        throw new Error(
+            "El restaurante ya aceptó este pedido y ya no se puede editar."
+        );
+
+    }
+
+
+    if (!cart.length) {
+
+        throw new Error(
+            "El pedido no puede quedar vacío."
+        );
+
+    }
+
+
+    const total =
+        cart.reduce(
+            (
+                sum,
+                item
+            ) =>
+                sum +
+                (
+                    Number(item.price) *
+                    Number(item.quantity)
+                ),
+            0
+        );
+
+
+    /*
+     * Actualizamos el total del pedido.
+     */
+
+    const {
+        error: orderUpdateError
+    } =
+        await supabaseClient
+
+        .from("orders")
+
+        .update({
+
+            total:
+                total,
+
+            updated_at:
+                new Date().toISOString()
+
+        })
+
+        .eq(
+            "id",
+            Number(editingOrderId)
+        )
+
+        .eq(
+            "user_id",
+            currentUser.id
+        );
+
+
+    if (orderUpdateError) {
+
+        throw new Error(
+            "No pudimos actualizar el pedido: " +
+            orderUpdateError.message
+        );
+
+    }
+
+
+    /*
+     * Eliminamos los productos anteriores
+     * y volvemos a guardar los nuevos.
+     */
+
+    const {
+        error: deleteItemsError
+    } =
+        await supabaseClient
+
+        .from("order_items")
+
+        .delete()
+
+        .eq(
+            "order_id",
+            Number(editingOrderId)
+        );
+
+
+    if (deleteItemsError) {
+
+        throw new Error(
+            "No pudimos actualizar los productos del pedido: " +
+            deleteItemsError.message
+        );
+
+    }
+
+
+    const newOrderItems =
+        cart.map(
+            item => ({
+
+                order_id:
+                    Number(editingOrderId),
+
+                menu_item_id:
+                    Number(item.id),
+
+                product_name:
+                    item.name,
+
+                quantity:
+                    Number(item.quantity),
+
+                unit_price:
+                    Number(item.price),
+
+                subtotal:
+                    Number(item.price) *
+                    Number(item.quantity)
+
+            })
+        );
+
+
+    const {
+        error: insertItemsError
+    } =
+        await supabaseClient
+
+        .from("order_items")
+
+        .insert(
+            newOrderItems
+        );
+
+
+    if (insertItemsError) {
+
+        throw new Error(
+            "El total se actualizó, pero no pudimos guardar los nuevos productos: " +
+            insertItemsError.message
+        );
+
+    }
+
+
+    editingOrderId =
+        null;
+
+
+    cart =
+        [];
+
 
     renderCart();
-    initializeSupabase();
-  </script>
+
+    closeCart();
+
+
+    await loadMyOrders();
+
+
+    showToast(
+        "¡Pedido actualizado correctamente! 🍷"
+    );
+
+
+    setTimeout(
+        () => {
+
+            document
+                .getElementById(
+                    "mis-pedidos"
+                )
+                .scrollIntoView({
+                    behavior:"smooth",
+                    block:"start"
+                });
+
+        },
+        300
+    );
+
+}
+
+
+/* =========================================================
+CONFIRMAR / ACTUALIZAR PEDIDO
+========================================================= */
+
+checkoutButton.addEventListener(
+    "click",
+    async () => {
+
+        if (isSubmittingOrder) {
+            return;
+        }
+
+
+        if (!cart.length) {
+
+            alert(
+                "Agregá al menos un producto al pedido."
+            );
+
+            return;
+
+        }
+
+
+        if (!currentUser) {
+
+            closeCart();
+
+            prepareLogin();
+
+            openAuth();
+
+            return;
+
+        }
+
+
+        isSubmittingOrder =
+            true;
+
+
+        checkoutButton.disabled =
+            true;
+
+
+        checkoutButton.textContent =
+            editingOrderId
+            ? "Guardando cambios..."
+            : "Enviando pedido...";
+
+
+        try {
+
+            /*
+             * Si estamos editando un pedido existente,
+             * actualizamos ese pedido en lugar de crear
+             * uno nuevo.
+             */
+
+            if (editingOrderId) {
+
+                await updateExistingOrder();
+
+                return;
+
+            }
+
+
+            const total =
+                cart.reduce(
+                    (
+                        sum,
+                        item
+                    ) =>
+                        sum +
+                        (
+                            Number(item.price) *
+                            Number(item.quantity)
+                        ),
+                    0
+                );
+
+
+            const {
+                data: profile,
+                error: profileError
+            } =
+                await supabaseClient
+
+                .from("profiles")
+
+                .select(
+                    "full_name,email"
+                )
+
+                .eq(
+                    "id",
+                    currentUser.id
+                )
+
+                .maybeSingle();
+
+
+            if (profileError) {
+
+                console.warn(
+                    "No se pudo cargar el perfil:",
+                    profileError
+                );
+
+            }
+
+
+            const customerName =
+                profile?.full_name
+                ||
+                currentUser.user_metadata?.full_name
+                ||
+                currentUser.email
+                ||
+                "Cliente";
+
+
+            const customerEmail =
+                profile?.email
+                ||
+                currentUser.email
+                ||
+                "";
+
+
+            /*
+             * 1. CREAMOS EL PEDIDO
+             */
+
+            const {
+                data: order,
+                error: orderError
+            } =
+                await supabaseClient
+
+                .from("orders")
+
+                .insert({
+
+                    user_id:
+                        currentUser.id,
+
+                    customer_name:
+                        customerName,
+
+                    customer_email:
+                        customerEmail,
+
+                    status:
+                        "received",
+
+                    total:
+                        total
+
+                })
+
+                .select()
+
+                .single();
+
+
+            if (orderError) {
+
+                throw new Error(
+                    "No pudimos crear el pedido: " +
+                    orderError.message
+                );
+
+            }
+
+
+            /*
+             * 2. GUARDAMOS LOS PRODUCTOS
+             */
+
+            const orderItems =
+                cart.map(
+                    item => ({
+
+                        order_id:
+                            order.id,
+
+                        menu_item_id:
+                            Number(item.id),
+
+                        product_name:
+                            item.name,
+
+                        quantity:
+                            Number(item.quantity),
+
+                        unit_price:
+                            Number(item.price),
+
+                        subtotal:
+                            Number(item.price) *
+                            Number(item.quantity)
+
+                    })
+                );
+
+
+            const {
+                error: itemsError
+            } =
+                await supabaseClient
+
+                .from("order_items")
+
+                .insert(
+                    orderItems
+                );
+
+
+            if (itemsError) {
+
+                console.error(
+                    "Error guardando order_items:",
+                    itemsError
+                );
+
+
+                throw new Error(
+                    "El pedido #" +
+                    order.id +
+                    " fue creado, pero no pudimos guardar sus productos.\n\n" +
+                    itemsError.message
+                );
+
+            }
+
+
+            /*
+             * 3. TODO CORRECTO
+             */
+
+            cart = [];
+
+            renderCart();
+
+            closeCart();
+
+
+            /*
+             * 4. RECARGAMOS MIS PEDIDOS
+             */
+
+            await loadMyOrders();
+
+
+            showToast(
+                "¡Pedido enviado correctamente! 🍷"
+            );
+
+
+            /*
+             * 5. LLEVAMOS AL USUARIO
+             *    A MIS PEDIDOS
+             */
+
+            setTimeout(
+                () => {
+
+                    document
+                        .getElementById(
+                            "mis-pedidos"
+                        )
+                        .scrollIntoView({
+                            behavior:"smooth",
+                            block:"start"
+                        });
+
+                },
+                350
+            );
+
+
+        } catch(error) {
+
+            console.error(
+                "Error creando/actualizando pedido:",
+                error
+            );
+
+
+            alert(
+                error.message ||
+                "No pudimos guardar el pedido."
+            );
+
+
+        } finally {
+
+            isSubmittingOrder =
+                false;
+
+
+            checkoutButton.disabled =
+                false;
+
+
+            checkoutButton.textContent =
+                editingOrderId
+                ? "Guardar cambios"
+                : "Confirmar pedido";
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+BOTÓN RESERVA / PEDIDO
+========================================================= */
+
+document
+    .getElementById("reservationLogin")
+    .addEventListener(
+        "click",
+        () => {
+
+            if (cart.length) {
+
+                openCart();
+
+            } else {
+
+                document
+                    .getElementById("menu")
+                    .scrollIntoView({
+                        behavior:"smooth"
+                    });
+
+            }
+
+        }
+    );
+
+
+/* =========================================================
+FAQ
+========================================================= */
+
+document
+    .querySelectorAll(".faq-item")
+    .forEach(
+        item => {
+
+            const button =
+                item.querySelector(
+                    ".faq-question"
+                );
+
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    item.classList.toggle(
+                        "active"
+                    );
+
+
+                    const icon =
+                        button.querySelector(
+                            "span"
+                        );
+
+
+                    icon.textContent =
+                        item.classList.contains(
+                            "active"
+                        )
+                        ? "−"
+                        : "+";
+
+                }
+            );
+
+        }
+    );
+
+
+/* =========================================================
+HEADER SCROLL
+========================================================= */
+
+const header =
+    document.getElementById(
+        "header"
+    );
+
+
+window.addEventListener(
+    "scroll",
+    () => {
+
+        if (
+            window.scrollY > 60
+        ) {
+
+            header.classList.add(
+                "scrolled"
+            );
+
+        } else {
+
+            header.classList.remove(
+                "scrolled"
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+AUTH STATE
+========================================================= */
+
+supabaseClient.auth.onAuthStateChange(
+    (event, session) => {
+
+        setTimeout(
+            async () => {
+
+                currentUser =
+                    session?.user || null;
+
+
+                await loadCurrentUser();
+
+
+                if (currentUser) {
+
+                    await loadMyOrders();
+
+                } else {
+
+                    renderLoggedOutOrders();
+
+                }
+
+            },
+            0
+        );
+
+    }
+);
+
+
+/* =========================================================
+INICIO
+========================================================= */
+
+async function init() {
+
+    renderCart();
+
+    prepareLogin();
+
+    await loadMenu();
+
+    await loadCurrentUser();
+
+
+    if (currentUser) {
+
+        await loadMyOrders();
+
+    } else {
+
+        renderLoggedOutOrders();
+
+    }
+
+}
+
+
+/* =========================================================
+ARRANCAR
+========================================================= */
+
+init();
+
+</script>
+
 </body>
 </html>
