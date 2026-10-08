@@ -7,13 +7,18 @@
 
 <title>Fogón del Valle | Restaurante · Trevelin</title>
 
-<meta name="description"
-content="Fogón del Valle. Cocina patagónica, vinos de la cordillera y sabores de estación en Trevelin.">
+<meta
+    name="description"
+    content="Fogón del Valle. Cocina patagónica, vinos de la cordillera y sabores de estación en Trevelin."
+>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -682,6 +687,17 @@ MIS PEDIDOS
     color:var(--muted);
 }
 
+.orders-empty h3 {
+    font-family:"Cormorant Garamond",serif;
+    color:var(--wine);
+    font-size:30px;
+    margin-bottom:8px;
+}
+
+.orders-empty p {
+    color:var(--muted);
+}
+
 .orders-empty-icon {
     font-size:42px;
     margin-bottom:12px;
@@ -1272,7 +1288,7 @@ FOGÓN DEL VALLE
 <a href="#experiencia">Experiencia</a>
 <a href="#galeria">Galería</a>
 
-<button class="cart-button" id="openCart">
+<button class="cart-button" id="openCart" type="button">
 🛒 Carrito
 <span class="cart-count" id="cartCount">0</span>
 </button>
@@ -1313,7 +1329,7 @@ frente al paisaje de Trevelin.
 Descubrir el menú
 </a>
 
-<button class="btn btn-outline" id="heroCart">
+<button class="btn btn-outline" id="heroCart" type="button">
 Ver mi pedido
 </button>
 
@@ -1336,7 +1352,8 @@ HISTORIA
 
 <img
 src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1200&q=85"
-alt="Plato de cocina de estación">
+alt="Plato de cocina de estación"
+>
 
 <div class="image-note">
 
@@ -1459,7 +1476,8 @@ Algunos de nuestros platos favoritos.
 <div class="dish-image">
 <img
 src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1000&q=85"
-alt="Cordero">
+alt="Cordero"
+>
 </div>
 
 <div class="dish-content">
@@ -1483,7 +1501,8 @@ y el aroma inconfundible de nuestro fogón.
 <div class="dish-image">
 <img
 src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1000&q=85"
-alt="Cocina">
+alt="Cocina"
+>
 </div>
 
 <div class="dish-content">
@@ -1507,7 +1526,8 @@ con una mirada contemporánea.
 <div class="dish-image">
 <img
 src="https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?auto=format&fit=crop&w=1000&q=85"
-alt="Trucha">
+alt="Trucha"
+>
 </div>
 
 <div class="dish-content">
@@ -1574,7 +1594,7 @@ Una vez que hayas iniciado sesión vas a poder
 consultar todo lo que compraste.
 </p>
 
-<button class="btn btn-primary" id="ordersLoginBtn">
+<button class="btn btn-primary" id="ordersLoginBtn" type="button">
 Iniciar sesión
 </button>
 
@@ -1701,31 +1721,36 @@ Así se vive Fogón.
 <div class="gallery-item">
 <img
 src="https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=1200&q=85"
-alt="Restaurante">
+alt="Restaurante"
+>
 </div>
 
 <div class="gallery-item">
 <img
 src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=900&q=85"
-alt="Mesa">
+alt="Mesa"
+>
 </div>
 
 <div class="gallery-item">
 <img
 src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=900&q=85"
-alt="Carne">
+alt="Carne"
+>
 </div>
 
 <div class="gallery-item">
 <img
 src="https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?auto=format&fit=crop&w=900&q=85"
-alt="Pescado">
+alt="Pescado"
+>
 </div>
 
 <div class="gallery-item">
 <img
 src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=900&q=85"
-alt="Cena">
+alt="Cena"
+>
 </div>
 
 </div>
@@ -1760,7 +1785,7 @@ Antes de venir.
 
 <div class="faq-item">
 
-<button class="faq-question">
+<button class="faq-question" type="button">
 ¿Necesito reservar?
 <span>+</span>
 </button>
@@ -1777,7 +1802,7 @@ fines de semana y temporada alta.
 
 <div class="faq-item">
 
-<button class="faq-question">
+<button class="faq-question" type="button">
 ¿Tienen opciones vegetarianas?
 <span>+</span>
 </button>
@@ -1794,7 +1819,7 @@ y podemos adaptar algunos platos.
 
 <div class="faq-item">
 
-<button class="faq-question">
+<button class="faq-question" type="button">
 ¿Aceptan familias con niños?
 <span>+</span>
 </button>
@@ -1835,8 +1860,13 @@ Elegí tus platos y enviá tu pedido
 directamente desde nuestra carta.
 </p>
 
-<button class="btn btn-primary" id="reservationLogin">
+<button
+class="btn btn-primary"
+id="reservationLogin"
+type="button">
+
 Realizar pedido
+
 </button>
 
 </div>
@@ -1887,7 +1917,7 @@ CARRITO
 Tu pedido
 </h2>
 
-<button class="close-cart" id="closeCart">
+<button class="close-cart" id="closeCart" type="button">
 ×
 </button>
 
@@ -1919,7 +1949,8 @@ $0
 
 <button
 class="btn btn-primary checkout-btn"
-id="checkoutBtn">
+id="checkoutBtn"
+type="button">
 
 Confirmar pedido
 
@@ -1940,7 +1971,7 @@ LOGIN / REGISTRO
 
 <div class="modal">
 
-<button class="modal-close" id="closeAuth">
+<button class="modal-close" id="closeAuth" type="button">
 ×
 </button>
 
@@ -1957,21 +1988,23 @@ Ingresá para confirmar tu pedido.
 
 <div class="form-group" id="nameGroup" style="display:none">
 
-<label>
+<label for="authName">
 Nombre
 </label>
 
 <input
 type="text"
 id="authName"
-placeholder="Tu nombre">
+placeholder="Tu nombre"
+autocomplete="name"
+>
 
 </div>
 
 
 <div class="form-group">
 
-<label>
+<label for="authEmail">
 Email
 </label>
 
@@ -1979,14 +2012,16 @@ Email
 type="email"
 id="authEmail"
 placeholder="tu@email.com"
-required>
+autocomplete="email"
+required
+>
 
 </div>
 
 
 <div class="form-group">
 
-<label>
+<label for="authPassword">
 Contraseña
 </label>
 
@@ -1994,7 +2029,9 @@ Contraseña
 type="password"
 id="authPassword"
 placeholder="Mínimo 6 caracteres"
-required>
+autocomplete="current-password"
+required
+>
 
 </div>
 
@@ -2039,7 +2076,7 @@ USUARIO LOGUEADO
 Usuario
 </span>
 
-<button class="logout-btn" id="logoutBtn">
+<button class="logout-btn" id="logoutBtn" type="button">
 Salir
 </button>
 
@@ -2060,16 +2097,16 @@ SUPABASE
 ========================================================= */
 
 const SUPABASE_URL =
-"https://gyjxkcrseotwahclwupu.supabase.co";
+    "https://gyjxkcrseotwahclwupu.supabase.co";
 
 const SUPABASE_KEY =
-"sb_publishable_zY7b84xLNWlpLWbxTHpV6Q_Ai1JvaeK";
+    "sb_publishable_zY7b84xLNWlpLWbxTHpV6Q_Ai1JvaeK";
 
 const supabaseClient =
-window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-);
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
 
 
 /* =========================================================
@@ -2077,55 +2114,61 @@ ELEMENTOS
 ========================================================= */
 
 const menuContainer =
-document.getElementById("menuContainer");
+    document.getElementById("menuContainer");
 
 const cartOverlay =
-document.getElementById("cartOverlay");
+    document.getElementById("cartOverlay");
 
 const cartItems =
-document.getElementById("cartItems");
+    document.getElementById("cartItems");
 
 const cartCount =
-document.getElementById("cartCount");
+    document.getElementById("cartCount");
 
 const cartTotal =
-document.getElementById("cartTotal");
+    document.getElementById("cartTotal");
 
 const authModal =
-document.getElementById("authModal");
+    document.getElementById("authModal");
 
 const authForm =
-document.getElementById("authForm");
+    document.getElementById("authForm");
 
 const authTitle =
-document.getElementById("authTitle");
+    document.getElementById("authTitle");
 
 const authDescription =
-document.getElementById("authDescription");
+    document.getElementById("authDescription");
 
 const authSubmit =
-document.getElementById("authSubmit");
+    document.getElementById("authSubmit");
 
 const authSwitch =
-document.getElementById("authSwitch");
+    document.getElementById("authSwitch");
 
 const authSwitchText =
-document.getElementById("authSwitchText");
+    document.getElementById("authSwitchText");
 
 const nameGroup =
-document.getElementById("nameGroup");
+    document.getElementById("nameGroup");
+
+const authName =
+    document.getElementById("authName");
 
 const userBar =
-document.getElementById("userBar");
+    document.getElementById("userBar");
 
 const userName =
-document.getElementById("userName");
+    document.getElementById("userName");
 
 const ordersContainer =
-document.getElementById("ordersContainer");
+    document.getElementById("ordersContainer");
 
 const toast =
-document.getElementById("toast");
+    document.getElementById("toast");
+
+const checkoutButton =
+    document.getElementById("checkoutBtn");
 
 
 /* =========================================================
@@ -2140,6 +2183,10 @@ let currentUser = null;
 
 let menuItems = [];
 
+let isSubmittingOrder = false;
+
+let toastTimeout = null;
+
 
 /* =========================================================
 TOAST
@@ -2151,11 +2198,14 @@ function showToast(message) {
 
     toast.classList.add("show");
 
-    setTimeout(() => {
+    clearTimeout(toastTimeout);
 
-        toast.classList.remove("show");
+    toastTimeout =
+        setTimeout(() => {
 
-    }, 3000);
+            toast.classList.remove("show");
+
+        }, 3200);
 
 }
 
@@ -2166,15 +2216,16 @@ FORMATO PRECIO
 
 function formatPrice(value) {
 
-    return new Intl.NumberFormat("es-AR", {
-
-        style:"currency",
-
-        currency:"ARS",
-
-        maximumFractionDigits:0
-
-    }).format(Number(value) || 0);
+    return new Intl.NumberFormat(
+        "es-AR",
+        {
+            style:"currency",
+            currency:"ARS",
+            maximumFractionDigits:0
+        }
+    ).format(
+        Number(value) || 0
+    );
 
 }
 
@@ -2239,7 +2290,6 @@ function getOrderStatus(status) {
     return statuses[status] || {
 
         icon:"📋",
-
         name:"Pedido"
 
     };
@@ -2259,7 +2309,11 @@ async function loadMenu() {
         </div>
     `;
 
-    const { data, error } =
+
+    const {
+        data,
+        error
+    } =
         await supabaseClient
 
         .from("menu_categories")
@@ -2280,9 +2334,14 @@ async function loadMenu() {
             )
         `)
 
-        .eq("active", true)
+        .eq(
+            "active",
+            true
+        )
 
-        .order("sort_order");
+        .order(
+            "sort_order"
+        );
 
 
     if (error) {
@@ -2293,10 +2352,17 @@ async function loadMenu() {
         );
 
         menuContainer.innerHTML = `
+
             <div class="menu-error">
+
                 No pudimos cargar el menú.
+
+                <br><br>
+
                 Revisá la conexión con Supabase.
+
             </div>
+
         `;
 
         return;
@@ -2304,77 +2370,93 @@ async function loadMenu() {
     }
 
 
-    menuItems = [];
-
-    const usedIds =
-        new Set();
-
-    const usedNames =
-        new Set();
+    const uniqueItems =
+        new Map();
 
 
     /*
-     * IMPORTANTE:
+     * Eliminamos duplicados por nombre.
      *
-     * Acá eliminamos duplicados.
-     *
-     * Si por alguna razón existen dos
-     * registros con el mismo nombre,
-     * mostramos solamente uno.
+     * Esto evita que un mismo plato aparezca
+     * dos veces aunque existan registros
+     * duplicados en la base.
      */
 
-    data.forEach(category => {
+    (data || []).forEach(
+        category => {
 
-        const items =
-            category.menu_items || [];
-
-        items
-
-        .filter(item => item.available)
-
-        .sort((a,b) =>
-            (a.sort_order || 0) -
-            (b.sort_order || 0)
-        )
-
-        .forEach(item => {
-
-            const normalizedName =
-                item.name
-                .trim()
-                .toLowerCase();
-
-            if (
-                usedIds.has(item.id) ||
-                usedNames.has(normalizedName)
-            ) {
-
-                return;
-
-            }
-
-            usedIds.add(item.id);
-
-            usedNames.add(normalizedName);
-
-            menuItems.push({
-
-                ...item,
-
-                category_id:
-                    category.id,
-
-                category_name:
-                    category.name
-
-            });
-
-        });
-
-    });
+            const items =
+                Array.isArray(
+                    category.menu_items
+                )
+                ? category.menu_items
+                : [];
 
 
-    renderMenu(data);
+            items
+
+            .filter(
+                item => item.available
+            )
+
+            .sort(
+                (a,b) =>
+                    (a.sort_order || 0) -
+                    (b.sort_order || 0)
+            )
+
+            .forEach(
+                item => {
+
+                    const normalizedName =
+                        String(
+                            item.name || ""
+                        )
+                        .trim()
+                        .toLowerCase();
+
+
+                    if (!normalizedName) {
+                        return;
+                    }
+
+
+                    if (
+                        uniqueItems.has(
+                            normalizedName
+                        )
+                    ) {
+                        return;
+                    }
+
+
+                    uniqueItems.set(
+                        normalizedName,
+                        {
+                            ...item,
+                            category_id:
+                                category.id,
+                            category_name:
+                                category.name
+                        }
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+    menuItems =
+        Array.from(
+            uniqueItems.values()
+        );
+
+
+    renderMenu(
+        data || []
+    );
 
 }
 
@@ -2391,120 +2473,176 @@ function renderMenu(categories) {
         new Set();
 
 
-    categories.forEach(category => {
+    categories.forEach(
+        category => {
 
-        const availableItems =
-            (category.menu_items || [])
-
-            .filter(item => item.available)
-
-            .sort((a,b) =>
-                (a.sort_order || 0) -
-                (b.sort_order || 0)
-            )
-
-            .filter(item => {
-
-                const normalized =
-                    item.name
-                    .trim()
-                    .toLowerCase();
-
-                if (
-                    renderedNames.has(normalized)
-                ) {
-
-                    return false;
-
-                }
-
-                renderedNames.add(normalized);
-
-                return true;
-
-            });
+            const items =
+                Array.isArray(
+                    category.menu_items
+                )
+                ? category.menu_items
+                : [];
 
 
-        if (!availableItems.length) {
+            const availableItems =
+                items
 
-            return;
+                .filter(
+                    item => item.available
+                )
 
-        }
+                .sort(
+                    (a,b) =>
+                        (a.sort_order || 0) -
+                        (b.sort_order || 0)
+                )
+
+                .filter(
+                    item => {
+
+                        const normalized =
+                            String(
+                                item.name || ""
+                            )
+                            .trim()
+                            .toLowerCase();
 
 
-        const categoryElement =
-            document.createElement("div");
+                        if (
+                            !normalized ||
+                            renderedNames.has(
+                                normalized
+                            )
+                        ) {
 
-        categoryElement.className =
-            "menu-category";
+                            return false;
 
-
-        let html = `
-
-            <h3>
-                ${escapeHtml(category.name)}
-            </h3>
-
-        `;
+                        }
 
 
-        availableItems.forEach(item => {
+                        /*
+                         * Solamente renderizamos
+                         * productos que realmente
+                         * están en menuItems.
+                         */
 
-            html += `
+                        const exists =
+                            menuItems.some(
+                                menuItem =>
+                                    menuItem.id ===
+                                    item.id
+                            );
 
-                <div class="menu-item">
 
-                    <div>
+                        if (!exists) {
+                            return false;
+                        }
 
-                        <h4>
-                            ${escapeHtml(item.name)}
-                        </h4>
 
-                        <p>
-                            ${escapeHtml(
-                                item.description || ""
-                            )}
-                        </p>
+                        renderedNames.add(
+                            normalized
+                        );
 
-                        <div class="menu-actions">
 
-                            <button
-                                class="add-btn"
-                                onclick="addToCart(${item.id})">
+                        return true;
 
-                                + Agregar al pedido
+                    }
+                );
 
-                            </button>
 
-                        </div>
+            if (!availableItems.length) {
+                return;
+            }
 
-                    </div>
 
-                    <div class="menu-price">
+            const categoryElement =
+                document.createElement(
+                    "div"
+                );
 
-                        ${formatPrice(item.price)}
 
-                    </div>
+            categoryElement.className =
+                "menu-category";
 
-                </div>
+
+            let html = `
+
+                <h3>
+                    ${escapeHtml(
+                        category.name
+                    )}
+                </h3>
 
             `;
 
-        });
+
+            availableItems.forEach(
+                item => {
+
+                    html += `
+
+                        <div class="menu-item">
+
+                            <div>
+
+                                <h4>
+                                    ${escapeHtml(
+                                        item.name
+                                    )}
+                                </h4>
+
+                                <p>
+                                    ${escapeHtml(
+                                        item.description || ""
+                                    )}
+                                </p>
+
+                                <div class="menu-actions">
+
+                                    <button
+                                        class="add-btn"
+                                        type="button"
+                                        onclick="addToCart(${Number(item.id)})">
+
+                                        + Agregar al pedido
+
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                            <div class="menu-price">
+
+                                ${formatPrice(
+                                    item.price
+                                )}
+
+                            </div>
+
+                        </div>
+
+                    `;
+
+                }
+            );
 
 
-        categoryElement.innerHTML =
-            html;
+            categoryElement.innerHTML =
+                html;
 
 
-        menuContainer.appendChild(
-            categoryElement
-        );
+            menuContainer.appendChild(
+                categoryElement
+            );
 
-    });
+        }
+    );
 
 
-    if (!menuContainer.children.length) {
+    if (
+        !menuContainer.children.length
+    ) {
 
         menuContainer.innerHTML = `
 
@@ -2530,12 +2668,18 @@ window.addToCart =
 function(itemId) {
 
     const product =
-        menuItems.find(item =>
-            item.id === itemId
+        menuItems.find(
+            item =>
+                Number(item.id) ===
+                Number(itemId)
         );
 
 
     if (!product) {
+
+        showToast(
+            "No encontramos ese producto."
+        );
 
         return;
 
@@ -2543,8 +2687,10 @@ function(itemId) {
 
 
     const existing =
-        cart.find(item =>
-            item.id === itemId
+        cart.find(
+            item =>
+                Number(item.id) ===
+                Number(itemId)
         );
 
 
@@ -2557,7 +2703,7 @@ function(itemId) {
         cart.push({
 
             id:
-                product.id,
+                Number(product.id),
 
             name:
                 product.name,
@@ -2608,6 +2754,12 @@ function renderCart() {
         cartTotal.textContent =
             formatPrice(0);
 
+        checkoutButton.disabled =
+            false;
+
+        checkoutButton.textContent =
+            "Confirmar pedido";
+
         return;
 
     }
@@ -2621,101 +2773,112 @@ function renderCart() {
     cartItems.innerHTML = "";
 
 
-    cart.forEach(item => {
+    cart.forEach(
+        item => {
 
-        const subtotal =
-            item.price *
-            item.quantity;
-
-
-        total += subtotal;
-
-        quantityTotal +=
-            item.quantity;
+            const subtotal =
+                Number(item.price) *
+                Number(item.quantity);
 
 
-        const element =
-            document.createElement("div");
+            total += subtotal;
+
+            quantityTotal +=
+                Number(item.quantity);
 
 
-        element.className =
-            "cart-item";
+            const element =
+                document.createElement(
+                    "div"
+                );
 
 
-        element.innerHTML = `
+            element.className =
+                "cart-item";
 
-            <div class="cart-item-top">
 
-                <div>
+            element.innerHTML = `
 
-                    <div class="cart-item-name">
+                <div class="cart-item-top">
 
-                        ${escapeHtml(item.name)}
+                    <div>
+
+                        <div class="cart-item-name">
+
+                            ${escapeHtml(
+                                item.name
+                            )}
+
+                        </div>
+
+                        <small>
+
+                            ${formatPrice(
+                                item.price
+                            )}
+                            c/u
+
+                        </small>
 
                     </div>
 
-                    <small>
+                    <div class="cart-item-price">
 
-                        ${formatPrice(item.price)}
-                        c/u
+                        ${formatPrice(
+                            subtotal
+                        )}
 
-                    </small>
-
-                </div>
-
-                <div class="cart-item-price">
-
-                    ${formatPrice(subtotal)}
+                    </div>
 
                 </div>
 
-            </div>
+
+                <div class="quantity-controls">
+
+                    <button
+                        type="button"
+                        onclick="changeQuantity(${item.id}, -1)">
+
+                        −
+
+                    </button>
+
+                    <strong>
+                        ${item.quantity}
+                    </strong>
+
+                    <button
+                        type="button"
+                        onclick="changeQuantity(${item.id}, 1)">
+
+                        +
+
+                    </button>
+
+                    <button
+                        type="button"
+                        onclick="removeFromCart(${item.id})"
+                        style="
+                            margin-left:auto;
+                            border-color:#999;
+                            color:#777;
+                        ">
+
+                        ×
+
+                    </button>
+
+                </div>
+
+            `;
 
 
-            <div class="quantity-controls">
+            cartItems.appendChild(
+                element
+            );
 
-                <button
-                    onclick="changeQuantity(${item.id}, -1)">
-
-                    −
-
-                </button>
-
-                <strong>
-
-                    ${item.quantity}
-
-                </strong>
-
-                <button
-                    onclick="changeQuantity(${item.id}, 1)">
-
-                    +
-
-                </button>
-
-                <button
-                    onclick="removeFromCart(${item.id})"
-                    style="
-                        margin-left:auto;
-                        border-color:#999;
-                        color:#777;
-                    ">
-
-                    ×
-
-                </button>
-
-            </div>
-
-        `;
-
-
-        cartItems.appendChild(
-            element
-        );
-
-    });
+        }
+    );
 
 
     cartCount.textContent =
@@ -2736,26 +2899,29 @@ window.changeQuantity =
 function(itemId, change) {
 
     const item =
-        cart.find(item =>
-            item.id === itemId
+        cart.find(
+            item =>
+                Number(item.id) ===
+                Number(itemId)
         );
 
 
     if (!item) {
-
         return;
-
     }
 
 
-    item.quantity += change;
+    item.quantity +=
+        Number(change);
 
 
     if (item.quantity <= 0) {
 
         cart =
-            cart.filter(item =>
-                item.id !== itemId
+            cart.filter(
+                item =>
+                    Number(item.id) !==
+                    Number(itemId)
             );
 
     }
@@ -2774,8 +2940,10 @@ window.removeFromCart =
 function(itemId) {
 
     cart =
-        cart.filter(item =>
-            item.id !== itemId
+        cart.filter(
+            item =>
+                Number(item.id) !==
+                Number(itemId)
         );
 
 
@@ -2819,27 +2987,27 @@ function closeCart() {
 
 
 document
-.getElementById("openCart")
-.addEventListener(
-    "click",
-    openCart
-);
+    .getElementById("openCart")
+    .addEventListener(
+        "click",
+        openCart
+    );
 
 
 document
-.getElementById("heroCart")
-.addEventListener(
-    "click",
-    openCart
-);
+    .getElementById("heroCart")
+    .addEventListener(
+        "click",
+        openCart
+    );
 
 
 document
-.getElementById("closeCart")
-.addEventListener(
-    "click",
-    closeCart
-);
+    .getElementById("closeCart")
+    .addEventListener(
+        "click",
+        closeCart
+    );
 
 
 cartOverlay.addEventListener(
@@ -2847,7 +3015,8 @@ cartOverlay.addEventListener(
     event => {
 
         if (
-            event.target === cartOverlay
+            event.target ===
+            cartOverlay
         ) {
 
             closeCart();
@@ -2868,6 +3037,10 @@ function openAuth() {
         "active"
     );
 
+    document.body.classList.add(
+        "no-scroll"
+    );
+
 }
 
 
@@ -2877,15 +3050,19 @@ function closeAuth() {
         "active"
     );
 
+    document.body.classList.remove(
+        "no-scroll"
+    );
+
 }
 
 
 document
-.getElementById("closeAuth")
-.addEventListener(
-    "click",
-    closeAuth
-);
+    .getElementById("closeAuth")
+    .addEventListener(
+        "click",
+        closeAuth
+    );
 
 
 /* =========================================================
@@ -2922,9 +3099,8 @@ function prepareLogin() {
         "none";
 
 
-    document
-    .getElementById("authName")
-    .required = false;
+    authName.required =
+        false;
 
 }
 
@@ -2963,9 +3139,8 @@ function prepareRegister() {
         "block";
 
 
-    document
-    .getElementById("authName")
-    .required = true;
+    authName.required =
+        true;
 
 }
 
@@ -2999,163 +3174,189 @@ REGISTRO / LOGIN
 ========================================================= */
 
 authForm.addEventListener(
-"submit",
-async event => {
+    "submit",
+    async event => {
 
-    event.preventDefault();
-
-
-    const name =
-        document
-        .getElementById("authName")
-        .value
-        .trim();
+        event.preventDefault();
 
 
-    const email =
-        document
-        .getElementById("authEmail")
-        .value
-        .trim();
+        const name =
+            authName.value.trim();
 
 
-    const password =
-        document
-        .getElementById("authPassword")
-        .value;
+        const email =
+            document
+                .getElementById("authEmail")
+                .value
+                .trim();
 
 
-    authSubmit.disabled =
-        true;
+        const password =
+            document
+                .getElementById("authPassword")
+                .value;
 
 
-    authSubmit.textContent =
-        "Procesando...";
+        authSubmit.disabled =
+            true;
 
 
-    try {
-
-        if (
-            authMode === "register"
-        ) {
-
-            const {
-                data,
-                error
-            } =
-                await supabaseClient.auth.signUp({
-
-                    email,
-
-                    password,
-
-                    options: {
-
-                        data: {
-
-                            full_name:
-                                name
-
-                        }
-
-                    }
-
-                });
+        authSubmit.textContent =
+            "Procesando...";
 
 
-            if (error) {
+        try {
 
-                throw error;
+            if (
+                authMode === "register"
+            ) {
 
-            }
+                if (
+                    name.length < 2
+                ) {
+
+                    throw new Error(
+                        "Ingresá tu nombre."
+                    );
+
+                }
 
 
-            if (!data.session) {
+                if (
+                    password.length < 6
+                ) {
 
-                alert(
-                    "Cuenta creada correctamente.\n\n"
-                    + "Revisá tu email para confirmar "
-                    + "la cuenta antes de ingresar."
-                );
+                    throw new Error(
+                        "La contraseña debe tener al menos 6 caracteres."
+                    );
 
-                closeAuth();
+                }
+
+
+                const {
+                    data,
+                    error
+                } =
+                    await supabaseClient
+                        .auth
+                        .signUp({
+
+                            email,
+
+                            password,
+
+                            options: {
+
+                                data: {
+
+                                    full_name:
+                                        name
+
+                                }
+
+                            }
+
+                        });
+
+
+                if (error) {
+                    throw error;
+                }
+
+
+                if (!data.session) {
+
+                    alert(
+                        "Cuenta creada correctamente.\n\n" +
+                        "Revisá tu email para confirmar " +
+                        "la cuenta antes de ingresar."
+                    );
+
+                    authForm.reset();
+
+                    prepareLogin();
+
+                    closeAuth();
+
+                } else {
+
+                    currentUser =
+                        data.user;
+
+                    await loadCurrentUser();
+
+                    await loadMyOrders();
+
+                    authForm.reset();
+
+                    closeAuth();
+
+                }
 
             } else {
 
+                const {
+                    data,
+                    error
+                } =
+                    await supabaseClient
+                        .auth
+                        .signInWithPassword({
+
+                            email,
+
+                            password
+
+                        });
+
+
+                if (error) {
+                    throw error;
+                }
+
+
                 currentUser =
                     data.user;
+
 
                 await loadCurrentUser();
 
                 await loadMyOrders();
 
+                authForm.reset();
+
                 closeAuth();
 
             }
 
-        } else {
+        } catch(error) {
 
-            const {
-                data,
+            console.error(
+                "Error de autenticación:",
                 error
-            } =
-                await supabaseClient.auth
-                .signInWithPassword({
-
-                    email,
-
-                    password
-
-                });
+            );
 
 
-            if (error) {
+            alert(
+                "No pudimos completar la operación:\n\n" +
+                error.message
+            );
 
-                throw error;
+        } finally {
 
-            }
-
-
-            currentUser =
-                data.user;
-
-
-            await loadCurrentUser();
-
-            await loadMyOrders();
+            authSubmit.disabled =
+                false;
 
 
-            closeAuth();
+            authSubmit.textContent =
+                authMode === "login"
+                ? "Ingresar"
+                : "Crear cuenta";
 
         }
 
-    } catch(error) {
-
-        console.error(
-            "Error de autenticación:",
-            error
-        );
-
-
-        alert(
-            "No pudimos completar la operación:\n\n"
-            + error.message
-        );
-
-    } finally {
-
-        authSubmit.disabled =
-            false;
-
-
-        authSubmit.textContent =
-            authMode === "login"
-            ? "Ingresar"
-            : "Crear cuenta";
-
     }
-
-});
+);
 
 
 /* =========================================================
@@ -3194,7 +3395,7 @@ async function loadCurrentUser() {
 
 
     const {
-        data:profile
+        data: profile
     } =
         await supabaseClient
 
@@ -3212,7 +3413,7 @@ async function loadCurrentUser() {
         .maybeSingle();
 
 
-    userName.textContent =
+    let displayName =
         profile?.full_name
         ||
         currentUser.user_metadata?.full_name
@@ -3224,10 +3425,14 @@ async function loadCurrentUser() {
         profile?.role === "restaurant"
     ) {
 
-        userName.textContent +=
+        displayName +=
             " · Restaurante";
 
     }
+
+
+    userName.textContent =
+        displayName;
 
 
     userBar.style.display =
@@ -3241,30 +3446,52 @@ CERRAR SESIÓN
 ========================================================= */
 
 document
-.getElementById("logoutBtn")
-.addEventListener(
-"click",
-async () => {
+    .getElementById("logoutBtn")
+    .addEventListener(
+        "click",
+        async () => {
 
-    await supabaseClient.auth.signOut();
-
-
-    currentUser =
-        null;
-
-
-    userBar.style.display =
-        "none";
+            const {
+                error
+            } =
+                await supabaseClient.auth.signOut({
+                    scope:"local"
+                });
 
 
-    renderLoggedOutOrders();
+            if (error) {
+
+                console.error(
+                    "Error cerrando sesión:",
+                    error
+                );
+
+                showToast(
+                    "No se pudo cerrar la sesión."
+                );
+
+                return;
+
+            }
 
 
-    showToast(
-        "Sesión cerrada correctamente"
+            currentUser =
+                null;
+
+
+            userBar.style.display =
+                "none";
+
+
+            renderLoggedOutOrders();
+
+
+            showToast(
+                "Sesión cerrada correctamente"
+            );
+
+        }
     );
-
-});
 
 
 /* =========================================================
@@ -3286,7 +3513,13 @@ async function loadMyOrders() {
 
         <div class="orders-empty">
 
-            Cargando tus pedidos...
+            <div class="orders-empty-icon">
+                ⏳
+            </div>
+
+            <h3>
+                Cargando tus pedidos...
+            </h3>
 
         </div>
 
@@ -3294,7 +3527,7 @@ async function loadMyOrders() {
 
 
     const {
-        data:orders,
+        data: orders,
         error
     } =
         await supabaseClient
@@ -3345,15 +3578,19 @@ async function loadMyOrders() {
 
             <div class="orders-empty">
 
-                No pudimos cargar tus pedidos.
+                <div class="orders-empty-icon">
+                    ⚠️
+                </div>
 
-                <br><br>
+                <h3>
+                    No pudimos cargar tus pedidos
+                </h3>
 
-                <small>
+                <p>
                     ${escapeHtml(
                         error.message
                     )}
-                </small>
+                </p>
 
             </div>
 
@@ -3395,7 +3632,9 @@ async function loadMyOrders() {
     }
 
 
-    renderMyOrders(orders);
+    renderMyOrders(
+        orders
+    );
 
 }
 
@@ -3404,15 +3643,20 @@ async function loadMyOrders() {
 RENDER MIS PEDIDOS
 ========================================================= */
 
-function renderMyOrders(orders) {
+function renderMyOrders(
+    orders
+) {
 
     ordersContainer.innerHTML = `
 
         <div class="orders-list">
 
-            ${orders.map(
-                renderOrderCard
-            ).join("")}
+            ${orders
+                .map(
+                    renderOrderCard
+                )
+                .join("")
+            }
 
         </div>
 
@@ -3425,7 +3669,9 @@ function renderMyOrders(orders) {
 CARD DE PEDIDO
 ========================================================= */
 
-function renderOrderCard(order) {
+function renderOrderCard(
+    order
+) {
 
     const status =
         getOrderStatus(
@@ -3461,14 +3707,19 @@ function renderOrderCard(order) {
 
 
     const products =
-        order.order_items || [];
+        Array.isArray(
+            order.order_items
+        )
+        ? order.order_items
+        : [];
 
 
     return `
 
         <article
             class="order-card"
-            data-order-id="${order.id}">
+            data-order-id="${Number(order.id)}"
+        >
 
             <div class="order-card-header">
 
@@ -3476,7 +3727,7 @@ function renderOrderCard(order) {
 
                     <div class="order-number">
 
-                        Pedido #${order.id}
+                        Pedido #${Number(order.id)}
 
                     </div>
 
@@ -3495,7 +3746,9 @@ function renderOrderCard(order) {
 
                     ${status.icon}
 
-                    ${status.name}
+                    ${escapeHtml(
+                        status.name
+                    )}
 
                 </div>
 
@@ -3508,56 +3761,56 @@ function renderOrderCard(order) {
                     products.length
                     ?
 
-                    products.map(
-                        product => `
+                    products
+                        .map(
+                            product => `
 
-                            <div
-                                class="order-product">
+                                <div class="order-product">
 
-                                <div>
+                                    <div>
 
-                                    <div
-                                        class="order-product-name">
+                                        <div class="order-product-name">
 
-                                        ${escapeHtml(
-                                            product.product_name
-                                        )}
+                                            ${escapeHtml(
+                                                product.product_name
+                                            )}
+
+                                        </div>
+
+                                        <div class="order-product-detail">
+
+                                            ${Number(
+                                                product.quantity
+                                            )}
+                                            ×
+                                            ${formatPrice(
+                                                product.unit_price
+                                            )}
+
+                                        </div>
 
                                     </div>
 
-                                    <div
-                                        class="order-product-detail">
 
-                                        ${product.quantity}
-                                        ×
+                                    <div class="order-product-subtotal">
+
                                         ${formatPrice(
-                                            product.unit_price
+                                            product.subtotal
                                         )}
 
                                     </div>
 
                                 </div>
 
-
-                                <div
-                                    class="order-product-subtotal">
-
-                                    ${formatPrice(
-                                        product.subtotal
-                                    )}
-
-                                </div>
-
-                            </div>
-
-                        `
-                    ).join("")
+                            `
+                        )
+                        .join("")
 
                     :
 
                     `
 
-                        <div class="order-empty">
+                        <div class="orders-empty">
 
                             No se encontraron
                             productos en este pedido.
@@ -3565,10 +3818,39 @@ function renderOrderCard(order) {
                         </div>
 
                     `
-
                 }
 
             </div>
+
+
+            ${
+                order.notes
+                ?
+
+                `
+
+                    <div style="
+                        padding:0 25px 20px;
+                        color:var(--muted);
+                        font-size:13px;
+                    ">
+
+                        <strong>
+                            Nota:
+                        </strong>
+
+                        ${escapeHtml(
+                            order.notes
+                        )}
+
+                    </div>
+
+                `
+
+                :
+
+                ""
+            }
 
 
             <div class="order-card-footer">
@@ -3621,7 +3903,8 @@ function renderLoggedOutOrders() {
 
             <button
                 class="btn btn-primary"
-                id="ordersLoginBtn">
+                id="ordersLoginBtn"
+                type="button">
 
                 Iniciar sesión
 
@@ -3660,263 +3943,299 @@ function renderLoggedOutOrders() {
 CONFIRMAR PEDIDO
 ========================================================= */
 
-document
-.getElementById("checkoutBtn")
-.addEventListener(
-"click",
-async () => {
+checkoutButton.addEventListener(
+    "click",
+    async () => {
 
-    if (!cart.length) {
-
-        alert(
-            "Agregá al menos un producto al carrito."
-        );
-
-        return;
-
-    }
-
-
-    if (!currentUser) {
-
-        closeCart();
-
-        prepareLogin();
-
-        openAuth();
-
-        return;
-
-    }
-
-
-    const checkoutButton =
-        document.getElementById(
-            "checkoutBtn"
-        );
-
-
-    checkoutButton.disabled =
-        true;
-
-
-    checkoutButton.textContent =
-        "Enviando pedido...";
-
-
-    try {
-
-        const total =
-            cart.reduce(
-                (sum,item) =>
-                    sum +
-                    item.price *
-                    item.quantity,
-                0
-            );
-
-
-        const {
-            data:profile
-        } =
-            await supabaseClient
-
-            .from("profiles")
-
-            .select(
-                "full_name,email"
-            )
-
-            .eq(
-                "id",
-                currentUser.id
-            )
-
-            .maybeSingle();
-
-
-        const customerName =
-            profile?.full_name
-            ||
-            currentUser.user_metadata?.full_name
-            ||
-            currentUser.email;
-
-
-        const customerEmail =
-            profile?.email
-            ||
-            currentUser.email;
-
-
-        /*
-         * PRIMERO CREAMOS EL PEDIDO
-         */
-
-        const {
-            data:order,
-            error:orderError
-        } =
-            await supabaseClient
-
-            .from("orders")
-
-            .insert({
-
-                user_id:
-                    currentUser.id,
-
-                customer_name:
-                    customerName,
-
-                customer_email:
-                    customerEmail,
-
-                status:
-                    "received",
-
-                total:
-                    total
-
-            })
-
-            .select()
-
-            .single();
-
-
-        if (orderError) {
-
-            throw new Error(
-                "No pudimos crear el pedido: "
-                + orderError.message
-            );
-
+        if (isSubmittingOrder) {
+            return;
         }
 
 
-        /*
-         * DESPUÉS GUARDAMOS SUS PRODUCTOS
-         */
-
-        const orderItems =
-            cart.map(item => ({
-
-                order_id:
-                    order.id,
-
-                menu_item_id:
-                    item.id,
-
-                product_name:
-                    item.name,
-
-                quantity:
-                    item.quantity,
-
-                unit_price:
-                    item.price,
-
-                subtotal:
-                    item.price *
-                    item.quantity
-
-            }));
-
-
-        const {
-            error:itemsError
-        } =
-            await supabaseClient
-
-            .from("order_items")
-
-            .insert(
-                orderItems
-            );
-
-
-        if (itemsError) {
-
-            console.error(
-                "Error guardando order_items:",
-                itemsError
-            );
-
+        if (!cart.length) {
 
             alert(
-                "El pedido fue creado (#"
-                + order.id
-                + "), pero hubo un problema "
-                + "guardando sus productos.\n\n"
-                + itemsError.message
+                "Agregá al menos un producto al carrito."
             );
-
 
             return;
 
         }
 
 
-        /*
-         * TODO CORRECTO
-         */
+        if (!currentUser) {
 
-        cart = [];
+            closeCart();
 
+            prepareLogin();
 
-        renderCart();
+            openAuth();
 
+            return;
 
-        closeCart();
-
-
-        await loadMyOrders();
+        }
 
 
-        showToast(
-            "¡Pedido enviado correctamente! 🍷"
-        );
+        isSubmittingOrder =
+            true;
 
-
-        setTimeout(() => {
-
-            document
-            .getElementById(
-                "mis-pedidos"
-            )
-            .scrollIntoView({
-                behavior:"smooth"
-            });
-
-        }, 400);
-
-
-    } catch(error) {
-
-        console.error(
-            "Error creando pedido:",
-            error
-        );
-
-
-        alert(
-            error.message
-        );
-
-
-    } finally {
 
         checkoutButton.disabled =
-            false;
+            true;
 
 
         checkoutButton.textContent =
-            "Confirmar pedido";
+            "Enviando pedido...";
+
+
+        try {
+
+            const total =
+                cart.reduce(
+                    (
+                        sum,
+                        item
+                    ) =>
+                        sum +
+                        (
+                            Number(item.price) *
+                            Number(item.quantity)
+                        ),
+                    0
+                );
+
+
+            const {
+                data: profile,
+                error: profileError
+            } =
+                await supabaseClient
+
+                .from("profiles")
+
+                .select(
+                    "full_name,email"
+                )
+
+                .eq(
+                    "id",
+                    currentUser.id
+                )
+
+                .maybeSingle();
+
+
+            if (profileError) {
+
+                console.warn(
+                    "No se pudo cargar el perfil:",
+                    profileError
+                );
+
+            }
+
+
+            const customerName =
+                profile?.full_name
+                ||
+                currentUser.user_metadata?.full_name
+                ||
+                currentUser.email
+                ||
+                "Cliente";
+
+
+            const customerEmail =
+                profile?.email
+                ||
+                currentUser.email
+                ||
+                "";
+
+
+            /*
+             * 1. CREAMOS EL PEDIDO
+             */
+
+            const {
+                data: order,
+                error: orderError
+            } =
+                await supabaseClient
+
+                .from("orders")
+
+                .insert({
+
+                    user_id:
+                        currentUser.id,
+
+                    customer_name:
+                        customerName,
+
+                    customer_email:
+                        customerEmail,
+
+                    status:
+                        "received",
+
+                    total:
+                        total
+
+                })
+
+                .select()
+
+                .single();
+
+
+            if (orderError) {
+
+                throw new Error(
+                    "No pudimos crear el pedido: " +
+                    orderError.message
+                );
+
+            }
+
+
+            /*
+             * 2. GUARDAMOS LOS PRODUCTOS
+             */
+
+            const orderItems =
+                cart.map(
+                    item => ({
+
+                        order_id:
+                            order.id,
+
+                        menu_item_id:
+                            Number(item.id),
+
+                        product_name:
+                            item.name,
+
+                        quantity:
+                            Number(item.quantity),
+
+                        unit_price:
+                            Number(item.price),
+
+                        subtotal:
+                            Number(item.price) *
+                            Number(item.quantity)
+
+                    })
+                );
+
+
+            const {
+                error: itemsError
+            } =
+                await supabaseClient
+
+                .from("order_items")
+
+                .insert(
+                    orderItems
+                );
+
+
+            if (itemsError) {
+
+                console.error(
+                    "Error guardando order_items:",
+                    itemsError
+                );
+
+
+                throw new Error(
+                    "El pedido #" +
+                    order.id +
+                    " fue creado, pero no pudimos guardar sus productos.\n\n" +
+                    itemsError.message
+                );
+
+            }
+
+
+            /*
+             * 3. TODO CORRECTO
+             */
+
+            cart = [];
+
+            renderCart();
+
+            closeCart();
+
+
+            /*
+             * 4. RECARGAMOS MIS PEDIDOS
+             */
+
+            await loadMyOrders();
+
+
+            showToast(
+                "¡Pedido enviado correctamente! 🍷"
+            );
+
+
+            /*
+             * 5. LLEVAMOS AL USUARIO
+             *    A MIS PEDIDOS
+             */
+
+            setTimeout(
+                () => {
+
+                    document
+                        .getElementById(
+                            "mis-pedidos"
+                        )
+                        .scrollIntoView({
+                            behavior:"smooth",
+                            block:"start"
+                        });
+
+                },
+                350
+            );
+
+
+        } catch(error) {
+
+            console.error(
+                "Error creando pedido:",
+                error
+            );
+
+
+            alert(
+                error.message ||
+                "No pudimos enviar el pedido."
+            );
+
+
+        } finally {
+
+            isSubmittingOrder =
+                false;
+
+
+            checkoutButton.disabled =
+                false;
+
+
+            checkoutButton.textContent =
+                "Confirmar pedido";
+
+        }
 
     }
-
-});
+);
 
 
 /* =========================================================
@@ -3924,26 +4243,27 @@ BOTÓN RESERVA / PEDIDO
 ========================================================= */
 
 document
-.getElementById("reservationLogin")
-.addEventListener(
-"click",
-() => {
+    .getElementById("reservationLogin")
+    .addEventListener(
+        "click",
+        () => {
 
-    if (cart.length) {
+            if (cart.length) {
 
-        openCart();
+                openCart();
 
-    } else {
+            } else {
 
-        document
-        .getElementById("menu")
-        .scrollIntoView({
-            behavior:"smooth"
-        });
+                document
+                    .getElementById("menu")
+                    .scrollIntoView({
+                        behavior:"smooth"
+                    });
 
-    }
+            }
 
-});
+        }
+    );
 
 
 /* =========================================================
@@ -3951,41 +4271,43 @@ FAQ
 ========================================================= */
 
 document
-.querySelectorAll(".faq-item")
-.forEach(item => {
+    .querySelectorAll(".faq-item")
+    .forEach(
+        item => {
 
-    const button =
-        item.querySelector(
-            ".faq-question"
-        );
-
-
-    button.addEventListener(
-        "click",
-        () => {
-
-            item.classList.toggle(
-                "active"
-            );
-
-
-            const icon =
-                button.querySelector(
-                    "span"
+            const button =
+                item.querySelector(
+                    ".faq-question"
                 );
 
 
-            icon.textContent =
-                item.classList.contains(
-                    "active"
-                )
-                ? "−"
-                : "+";
+            button.addEventListener(
+                "click",
+                () => {
+
+                    item.classList.toggle(
+                        "active"
+                    );
+
+
+                    const icon =
+                        button.querySelector(
+                            "span"
+                        );
+
+
+                    icon.textContent =
+                        item.classList.contains(
+                            "active"
+                        )
+                        ? "−"
+                        : "+";
+
+                }
+            );
 
         }
     );
-
-});
 
 
 /* =========================================================
@@ -3993,9 +4315,9 @@ HEADER SCROLL
 ========================================================= */
 
 const header =
-document.getElementById(
-    "header"
-);
+    document.getElementById(
+        "header"
+    );
 
 
 window.addEventListener(
@@ -4027,26 +4349,42 @@ AUTH STATE
 ========================================================= */
 
 supabaseClient.auth.onAuthStateChange(
-async (event, session) => {
+    (event, session) => {
 
-    currentUser =
-        session?.user || null;
+        /*
+         * No hacemos consultas adicionales
+         * dentro del callback.
+         *
+         * Programamos la actualización
+         * para después del evento.
+         */
+
+        setTimeout(
+            async () => {
+
+                currentUser =
+                    session?.user || null;
 
 
-    await loadCurrentUser();
+                await loadCurrentUser();
 
 
-    if (currentUser) {
+                if (currentUser) {
 
-        await loadMyOrders();
+                    await loadMyOrders();
 
-    } else {
+                } else {
 
-        renderLoggedOutOrders();
+                    renderLoggedOutOrders();
+
+                }
+
+            },
+            0
+        );
 
     }
-
-});
+);
 
 
 /* =========================================================
@@ -4057,9 +4395,9 @@ async function init() {
 
     renderCart();
 
+    prepareLogin();
 
     await loadMenu();
-
 
     await loadCurrentUser();
 
