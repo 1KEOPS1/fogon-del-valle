@@ -1,0 +1,1857 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Fogón del Valle | Restaurante · Trevelin</title>
+
+<meta name="description" content="Fogón del Valle. Cocina patagónica, vinos de la cordillera y sabores de estación en Trevelin.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+/* =========================================================
+   FOGÓN DEL VALLE
+   DEMO FICTICIA — WEBS PATAGONIA
+========================================================= */
+
+:root {
+    --wine: #5A1F24;
+    --wine-dark: #351316;
+    --terracotta: #B65A3A;
+    --cream: #F4EBDD;
+    --cream-light: #FBF7F0;
+    --dark: #241B17;
+    --gold: #C79A55;
+    --muted: #756861;
+    --white: #ffffff;
+    --border: rgba(36,27,23,.14);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "DM Sans", sans-serif;
+    background: var(--cream-light);
+    color: var(--dark);
+    line-height: 1.6;
+}
+
+img {
+    width: 100%;
+    display: block;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button {
+    font-family: inherit;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    transition: .35s ease;
+    padding: 22px 6%;
+    color: white;
+}
+
+header.scrolled {
+    background: rgba(36,27,23,.97);
+    padding: 15px 6%;
+    box-shadow: 0 8px 30px rgba(0,0,0,.12);
+}
+
+.nav {
+    max-width: 1250px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.logo span {
+    display: block;
+    font-family: "DM Sans", sans-serif;
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #ead6b4;
+    margin-top: -6px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 28px;
+    align-items: center;
+}
+
+.nav-links a {
+    font-size: 14px;
+    color: rgba(255,255,255,.9);
+    transition: .25s;
+}
+
+.nav-links a:hover {
+    color: #e8bd7d;
+}
+
+.nav-button {
+    padding: 11px 18px;
+    border: 1px solid rgba(255,255,255,.5);
+    border-radius: 30px;
+}
+
+.nav-button:hover {
+    background: white;
+    color: var(--dark) !important;
+}
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero {
+    min-height: 100vh;
+    background:
+        linear-gradient(
+            rgba(31,19,15,.48),
+            rgba(31,19,15,.72)
+        ),
+        url("https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=2000&q=85")
+        center/cover;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.hero-content {
+    width: min(1250px, 88%);
+    margin: auto;
+    color: white;
+    padding-top: 80px;
+}
+
+.eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: #e9c98e;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 20px;
+}
+
+.eyebrow::before {
+    content: "";
+    width: 35px;
+    height: 1px;
+    background: #e9c98e;
+}
+
+.hero h1 {
+    max-width: 850px;
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(58px, 8vw, 105px);
+    line-height: .88;
+    font-weight: 500;
+    margin-bottom: 30px;
+}
+
+.hero h1 em {
+    color: #e3b86f;
+    font-style: italic;
+}
+
+.hero p {
+    max-width: 590px;
+    color: rgba(255,255,255,.85);
+    font-size: 18px;
+    margin-bottom: 38px;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px 25px;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 14px;
+    transition: .3s;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background: var(--terracotta);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #99472e;
+    transform: translateY(-2px);
+}
+
+.btn-outline {
+    border: 1px solid rgba(255,255,255,.55);
+    color: white;
+}
+
+.btn-outline:hover {
+    background: white;
+    color: var(--dark);
+}
+
+.hero-bottom {
+    position: absolute;
+    bottom: 30px;
+    left: 6%;
+    right: 6%;
+    display: flex;
+    justify-content: space-between;
+    color: rgba(255,255,255,.65);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* =========================================================
+   GENERAL
+========================================================= */
+
+.section {
+    padding: 110px 6%;
+}
+
+.container {
+    max-width: 1180px;
+    margin: auto;
+}
+
+.section-header {
+    max-width: 700px;
+    margin-bottom: 55px;
+}
+
+.section-label {
+    color: var(--terracotta);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-size: 11px;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.section-title {
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(43px, 5vw, 68px);
+    line-height: .95;
+    font-weight: 600;
+    color: var(--wine);
+}
+
+.section-text {
+    margin-top: 20px;
+    color: var(--muted);
+    font-size: 16px;
+}
+
+/* =========================================================
+   INTRO
+========================================================= */
+
+.intro {
+    background: var(--cream);
+}
+
+.intro-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 75px;
+    align-items: center;
+}
+
+.intro-image {
+    position: relative;
+}
+
+.intro-image img {
+    height: 620px;
+    object-fit: cover;
+}
+
+.image-note {
+    position: absolute;
+    right: -25px;
+    bottom: 35px;
+    background: var(--wine);
+    color: white;
+    padding: 25px 30px;
+    max-width: 210px;
+}
+
+.image-note strong {
+    display: block;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 27px;
+}
+
+.image-note span {
+    font-size: 11px;
+    color: #dfc5a0;
+}
+
+.intro-content h2 {
+    font-family: "Cormorant Garamond", serif;
+    color: var(--wine);
+    font-size: 58px;
+    line-height: 1;
+    margin-bottom: 25px;
+}
+
+.intro-content p {
+    color: var(--muted);
+    margin-bottom: 18px;
+}
+
+.signature {
+    margin-top: 30px;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 29px;
+    color: var(--wine);
+    font-style: italic;
+}
+
+/* =========================================================
+   MENU
+========================================================= */
+
+.menu {
+    background: var(--cream-light);
+}
+
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 65px;
+}
+
+.menu-category h3 {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 34px;
+    color: var(--wine);
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 5px;
+}
+
+.menu-item {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 20px;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.menu-item h4 {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 25px;
+    color: var(--dark);
+}
+
+.menu-item p {
+    color: var(--muted);
+    font-size: 13px;
+    margin-top: 4px;
+}
+
+.menu-price {
+    color: var(--terracotta);
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+/* =========================================================
+   FEATURED
+========================================================= */
+
+.featured {
+    background: var(--wine);
+    color: white;
+}
+
+.featured .section-label {
+    color: #e4bd7d;
+}
+
+.featured .section-title {
+    color: white;
+}
+
+.featured .section-text {
+    color: rgba(255,255,255,.65);
+}
+
+.dishes {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+}
+
+.dish {
+    background: #43191d;
+    overflow: hidden;
+}
+
+.dish-image {
+    height: 320px;
+    overflow: hidden;
+}
+
+.dish-image img {
+    height: 100%;
+    object-fit: cover;
+    transition: .5s;
+}
+
+.dish:hover img {
+    transform: scale(1.05);
+}
+
+.dish-content {
+    padding: 24px;
+}
+
+.dish-content h3 {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 30px;
+    margin-bottom: 7px;
+}
+
+.dish-content p {
+    color: rgba(255,255,255,.65);
+    font-size: 13px;
+}
+
+/* =========================================================
+   EXPERIENCE
+========================================================= */
+
+.experience {
+    background: var(--cream);
+}
+
+.experience-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.experience-card {
+    border: 1px solid var(--border);
+    padding: 35px;
+    background: rgba(255,255,255,.35);
+    transition: .3s;
+}
+
+.experience-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--gold);
+}
+
+.experience-number {
+    color: var(--gold);
+    font-family: "Cormorant Garamond", serif;
+    font-size: 22px;
+}
+
+.experience-card h3 {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 31px;
+    color: var(--wine);
+    margin: 18px 0 10px;
+}
+
+.experience-card p {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+/* =========================================================
+   GALLERY
+========================================================= */
+
+.gallery {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    grid-template-rows: 260px 260px;
+    gap: 8px;
+}
+
+.gallery-item {
+    overflow: hidden;
+}
+
+.gallery-item:first-child {
+    grid-row: span 2;
+}
+
+.gallery-item img {
+    height: 100%;
+    object-fit: cover;
+    transition: .5s;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.04);
+}
+
+/* =========================================================
+   TESTIMONIAL
+========================================================= */
+
+.testimonials {
+    background: var(--cream-light);
+}
+
+.quote {
+    max-width: 850px;
+    margin: auto;
+    text-align: center;
+}
+
+.quote-mark {
+    color: var(--gold);
+    font-family: "Cormorant Garamond", serif;
+    font-size: 90px;
+    line-height: .5;
+}
+
+.quote p {
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(29px, 4vw, 48px);
+    line-height: 1.1;
+    color: var(--wine);
+    margin: 35px 0;
+}
+
+.quote small {
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* =========================================================
+   FAQ
+========================================================= */
+
+.faq {
+    background: var(--cream);
+}
+
+.faq-list {
+    max-width: 850px;
+    margin: auto;
+}
+
+.faq-item {
+    border-bottom: 1px solid var(--border);
+}
+
+.faq-question {
+    width: 100%;
+    border: 0;
+    background: transparent;
+    padding: 24px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    text-align: left;
+    color: var(--wine);
+    font-family: "Cormorant Garamond", serif;
+    font-size: 27px;
+}
+
+.faq-icon {
+    font-family: "DM Sans", sans-serif;
+    color: var(--terracotta);
+    font-size: 24px;
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: .35s ease;
+    color: var(--muted);
+}
+
+.faq-answer p {
+    padding: 0 0 22px;
+    font-size: 14px;
+}
+
+.faq-item.active .faq-answer {
+    max-height: 200px;
+}
+
+/* =========================================================
+   RESERVATION CTA
+========================================================= */
+
+.reservation {
+    min-height: 600px;
+    background:
+        linear-gradient(
+            rgba(50,25,20,.78),
+            rgba(50,25,20,.78)
+        ),
+        url("https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=2000&q=85")
+        center/cover;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: white;
+}
+
+.reservation-content {
+    max-width: 760px;
+    margin: auto;
+}
+
+.reservation h2 {
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(48px, 6vw, 78px);
+    line-height: .95;
+    margin-bottom: 20px;
+}
+
+.reservation p {
+    color: rgba(255,255,255,.8);
+    margin-bottom: 32px;
+}
+
+/* =========================================================
+   CONTACT
+========================================================= */
+
+.contact {
+    background: var(--dark);
+    color: white;
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+}
+
+.contact .section-title {
+    color: white;
+}
+
+.contact .section-text {
+    color: rgba(255,255,255,.65);
+}
+
+.contact-info {
+    margin-top: 35px;
+}
+
+.contact-row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.contact-icon {
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(255,255,255,.18);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #d5ad70;
+}
+
+.contact-row strong {
+    display: block;
+    font-size: 14px;
+}
+
+.contact-row span {
+    display: block;
+    color: rgba(255,255,255,.55);
+    font-size: 13px;
+    margin-top: 2px;
+}
+
+.contact-form {
+    background: #30231e;
+    padding: 35px;
+}
+
+.contact-form h3 {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 34px;
+    margin-bottom: 25px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    border: 1px solid rgba(255,255,255,.15);
+    background: transparent;
+    padding: 14px;
+    color: white;
+    font-family: inherit;
+    outline: none;
+}
+
+.form-group textarea {
+    min-height: 130px;
+    resize: vertical;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: var(--gold);
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer {
+    background: #17110e;
+    color: rgba(255,255,255,.55);
+    padding: 30px 6%;
+}
+
+.footer-inner {
+    max-width: 1180px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    gap: 25px;
+    align-items: center;
+}
+
+.footer-brand {
+    color: white;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 25px;
+}
+
+.footer-demo {
+    margin-top: 5px;
+    font-size: 10px;
+    color: #a88351;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.footer-copy {
+    font-size: 12px;
+    text-align: right;
+}
+
+/* =========================================================
+   DEMO BADGE
+========================================================= */
+
+.demo-badge {
+    position: fixed;
+    bottom: 18px;
+    right: 18px;
+    z-index: 1500;
+    background: var(--terracotta);
+    color: white;
+    padding: 9px 14px;
+    border-radius: 30px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 8px 25px rgba(0,0,0,.2);
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width: 900px) {
+
+    .nav-links {
+        display: none;
+    }
+
+    .intro-grid,
+    .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 45px;
+    }
+
+    .intro-image img {
+        height: 480px;
+    }
+
+    .image-note {
+        right: 15px;
+    }
+
+    .menu-grid {
+        grid-template-columns: 1fr;
+        gap: 45px;
+    }
+
+    .dishes,
+    .experience-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .dish-image {
+        height: 300px;
+    }
+
+    .gallery {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 240px 240px 240px;
+    }
+
+    .gallery-item:first-child {
+        grid-column: span 2;
+        grid-row: span 1;
+    }
+
+    .footer-inner {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .footer-copy {
+        text-align: left;
+    }
+}
+
+@media(max-width: 600px) {
+
+    header {
+        padding: 18px 5%;
+    }
+
+    header.scrolled {
+        padding: 13px 5%;
+    }
+
+    .logo {
+        font-size: 26px;
+    }
+
+    .hero {
+        min-height: 92vh;
+    }
+
+    .hero-content {
+        width: 90%;
+        padding-top: 70px;
+    }
+
+    .hero h1 {
+        font-size: 59px;
+    }
+
+    .hero p {
+        font-size: 16px;
+    }
+
+    .hero-bottom {
+        display: none;
+    }
+
+    .section {
+        padding: 80px 6%;
+    }
+
+    .section-title {
+        font-size: 48px;
+    }
+
+    .intro-content h2 {
+        font-size: 48px;
+    }
+
+    .gallery {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(5, 250px);
+    }
+
+    .gallery-item:first-child {
+        grid-column: auto;
+    }
+
+    .contact-form {
+        padding: 25px;
+    }
+
+    .demo-badge {
+        bottom: 12px;
+        right: 12px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- ======================================================
+     HEADER
+====================================================== -->
+
+<header id="header">
+
+    <div class="nav">
+
+        <a href="#inicio" class="logo">
+            FOGÓN DEL VALLE
+            <span>Restaurante · Trevelin</span>
+        </a>
+
+        <nav class="nav-links">
+            <a href="#historia">Nuestra historia</a>
+            <a href="#menu">Menú</a>
+            <a href="#experiencia">Experiencia</a>
+            <a href="#galeria">Galería</a>
+            <a href="#contacto" class="nav-button">Reservar mesa</a>
+        </nav>
+
+    </div>
+
+</header>
+
+
+<!-- ======================================================
+     HERO
+====================================================== -->
+
+<section class="hero" id="inicio">
+
+    <div class="hero-content">
+
+        <div class="eyebrow">
+            Trevelin · Patagonia
+        </div>
+
+        <h1>
+            Sabores que nacen
+            <em>del valle.</em>
+        </h1>
+
+        <p>
+            Cocina patagónica de estación, productos locales
+            y vinos de la cordillera en un ambiente cálido
+            frente al paisaje de Trevelin.
+        </p>
+
+        <div class="hero-buttons">
+
+            <a href="#menu" class="btn btn-primary">
+                Descubrir el menú
+            </a>
+
+            <a href="#contacto" class="btn btn-outline">
+                Reservar una mesa
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="hero-bottom">
+        <span>Trevelin · Chubut</span>
+        <span>Cocina · Vino · Patagonia</span>
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     HISTORIA
+====================================================== -->
+
+<section class="section intro" id="historia">
+
+    <div class="container intro-grid">
+
+        <div class="intro-image">
+
+            <img
+                src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1200&q=85"
+                alt="Plato de cocina de estación">
+
+            <div class="image-note">
+                <strong>Producto local.</strong>
+                <span>Cocina de estación · Patagonia</span>
+            </div>
+
+        </div>
+
+        <div class="intro-content">
+
+            <div class="section-label">
+                Nuestra historia
+            </div>
+
+            <h2>
+                El fuego como punto de encuentro.
+            </h2>
+
+            <p>
+                Fogón del Valle nació de una idea simple:
+                cocinar con identidad, respetando el producto
+                y dejando que cada estación cuente su propia historia.
+            </p>
+
+            <p>
+                Trabajamos con ingredientes de la región,
+                carnes, vegetales, hongos, trucha y productos
+                de pequeños productores del Valle 16 de Octubre.
+            </p>
+
+            <p>
+                Nuestra cocina busca unir tradición y creatividad
+                en un espacio donde comer sea también parte
+                de la experiencia de viajar por Patagonia.
+            </p>
+
+            <div class="signature">
+                Cocina con identidad.
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     MENU
+====================================================== -->
+
+<section class="section menu" id="menu">
+
+    <div class="container">
+
+        <div class="section-header">
+
+            <div class="section-label">
+                Nuestra carta
+            </div>
+
+            <h2 class="section-title">
+                Sabores del valle.
+            </h2>
+
+            <p class="section-text">
+                Una carta inspirada en la Patagonia, sus productos
+                y el ritmo de las estaciones.
+            </p>
+
+        </div>
+
+
+        <div class="menu-grid">
+
+            <div class="menu-category">
+
+                <h3>Para comenzar</h3>
+
+                <div class="menu-item">
+                    <div>
+                        <h4>Empanadas del Fogón</h4>
+                        <p>Cordero patagónico, cebolla caramelizada y especias.</p>
+                    </div>
+                    <div class="menu-price">$8.500</div>
+                </div>
+
+                <div class="menu-item">
+                    <div>
+                        <h4>Hongos de estación</h4>
+                        <p>Hongos salteados, manteca de hierbas y pan de campo.</p>
+                    </div>
+                    <div class="menu-price">$9.200</div>
+                </div>
+
+                <div class="menu-item">
+                    <div>
+                        <h4>Trucha ahumada</h4>
+                        <p>Trucha, crema ácida, verdes y crocante de semillas.</p>
+                    </div>
+                    <div class="menu-price">$11.500</div>
+                </div>
+
+            </div>
+
+
+            <div class="menu-category">
+
+                <h3>Principales</h3>
+
+                <div class="menu-item">
+                    <div>
+                        <h4>Cordero al fuego</h4>
+                        <p>Cocción lenta, papas rústicas y vegetales de estación.</p>
+                    </div>
+                    <div class="menu-price">$19.800</div>
+                </div>
+
+                <div class="menu-item">
+                    <div>
+                        <h4>Trucha del valle</h4>
+                        <p>Trucha grillada, puré de raíces y manteca de hierbas.</p>
+                    </div>
+                    <div class="menu-price">$18.500</div>
+                </div>
+
+                <div class="menu-item">
+                    <div>
+                        <h4>Risotto de hongos</h4>
+                        <p>Arroz cremoso, hongos de estación y queso patagónico.</p>
+                    </div>
+                    <div class="menu-price">$15.900</div>
+                </div>
+
+            </div>
+
+
+            <div class="menu-category">
+
+                <h3>Postres</h3>
+
+                <div class="menu-item">
+                    <div>
+                        <h4>Torta negra patagónica</h4>
+                        <p>Receta inspirada en la tradición galesa del valle.</p>
+                    </div>
+                    <div class="menu-price">$7.500</div>
+                </div>
+
+                <div class="menu-item">
+                    <div>
+                        <h4>Peras al Malbec</h4>
+                        <p>Peras especiadas, reducción de vino y crema.</p>
+                    </div>
+                    <div class="menu-price">$7.900</div>
+                </div>
+
+            </div>
+
+
+            <div class="menu-category">
+
+                <h3>Vinos</h3>
+
+                <div class="menu-item">
+                    <div>
+                        <h4>Selección de la cordillera</h4>
+                        <p>Etiquetas seleccionadas de productores patagónicos.</p>
+                    </div>
+                    <div class="menu-price">Consultar</div>
+                </div>
+
+                <div class="menu-item">
+                    <div>
+                        <h4>Copa de la casa</h4>
+                        <p>Consultar variedad disponible.</p>
+                    </div>
+                    <div class="menu-price">$5.500</div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     PLATOS DESTACADOS
+====================================================== -->
+
+<section class="section featured">
+
+    <div class="container">
+
+        <div class="section-header">
+
+            <div class="section-label">
+                Recomendados
+            </div>
+
+            <h2 class="section-title">
+                Del fuego a la mesa.
+            </h2>
+
+            <p class="section-text">
+                Algunos de nuestros platos favoritos para descubrir
+                la identidad de la casa.
+            </p>
+
+        </div>
+
+
+        <div class="dishes">
+
+            <article class="dish">
+
+                <div class="dish-image">
+                    <img
+                        src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1000&q=85"
+                        alt="Carne a la parrilla">
+                </div>
+
+                <div class="dish-content">
+                    <h3>Cordero al fuego</h3>
+                    <p>
+                        Cocción lenta, vegetales de estación
+                        y el aroma inconfundible de nuestro fogón.
+                    </p>
+                </div>
+
+            </article>
+
+
+            <article class="dish">
+
+                <div class="dish-image">
+                    <img
+                        src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1000&q=85"
+                        alt="Plato de cocina gourmet">
+                </div>
+
+                <div class="dish-content">
+                    <h3>Sabores de estación</h3>
+                    <p>
+                        Ingredientes locales trabajados con
+                        una mirada contemporánea.
+                    </p>
+                </div>
+
+            </article>
+
+
+            <article class="dish">
+
+                <div class="dish-image">
+                    <img
+                        src="https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?auto=format&fit=crop&w=1000&q=85"
+                        alt="Plato de pescado">
+                </div>
+
+                <div class="dish-content">
+                    <h3>Trucha del valle</h3>
+                    <p>
+                        Producto patagónico protagonista
+                        de una de nuestras especialidades.
+                    </p>
+                </div>
+
+            </article>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     EXPERIENCIA
+====================================================== -->
+
+<section class="section experience" id="experiencia">
+
+    <div class="container">
+
+        <div class="section-header">
+
+            <div class="section-label">
+                Mucho más que una cena
+            </div>
+
+            <h2 class="section-title">
+                Una experiencia patagónica.
+            </h2>
+
+            <p class="section-text">
+                Venir a Fogón del Valle es sentarse a disfrutar
+                de la comida, el vino y el paisaje.
+            </p>
+
+        </div>
+
+
+        <div class="experience-grid">
+
+            <div class="experience-card">
+
+                <div class="experience-number">01</div>
+
+                <h3>Producto local</h3>
+
+                <p>
+                    Trabajamos con ingredientes de la región
+                    y buscamos poner en valor a productores locales.
+                </p>
+
+            </div>
+
+
+            <div class="experience-card">
+
+                <div class="experience-number">02</div>
+
+                <h3>Vinos de la cordillera</h3>
+
+                <p>
+                    Una selección de etiquetas patagónicas
+                    pensada para acompañar nuestra cocina.
+                </p>
+
+            </div>
+
+
+            <div class="experience-card">
+
+                <div class="experience-number">03</div>
+
+                <h3>El ritual del fuego</h3>
+
+                <p>
+                    El fuego forma parte de nuestra identidad:
+                    cocina lenta, aromas y encuentros alrededor de la mesa.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     GALERÍA
+====================================================== -->
+
+<section class="section" id="galeria">
+
+    <div class="container">
+
+        <div class="section-header">
+
+            <div class="section-label">
+                Galería
+            </div>
+
+            <h2 class="section-title">
+                Así se vive Fogón.
+            </h2>
+
+        </div>
+
+
+        <div class="gallery">
+
+            <div class="gallery-item">
+                <img
+                    src="https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=1200&q=85"
+                    alt="Restaurante">
+            </div>
+
+            <div class="gallery-item">
+                <img
+                    src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=900&q=85"
+                    alt="Mesa de restaurante">
+            </div>
+
+            <div class="gallery-item">
+                <img
+                    src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=900&q=85"
+                    alt="Carne">
+            </div>
+
+            <div class="gallery-item">
+                <img
+                    src="https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?auto=format&fit=crop&w=900&q=85"
+                    alt="Pescado">
+            </div>
+
+            <div class="gallery-item">
+                <img
+                    src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=900&q=85"
+                    alt="Cena">
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     TESTIMONIO
+====================================================== -->
+
+<section class="section testimonials">
+
+    <div class="container">
+
+        <div class="quote">
+
+            <div class="quote-mark">“</div>
+
+            <p>
+                Una mesa, una copa de vino y el paisaje del valle.
+                A veces Patagonia también se disfruta así.
+            </p>
+
+            <small>
+                Experiencia Fogón del Valle
+            </small>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     FAQ
+====================================================== -->
+
+<section class="section faq">
+
+    <div class="container">
+
+        <div class="section-header">
+
+            <div class="section-label">
+                Preguntas frecuentes
+            </div>
+
+            <h2 class="section-title">
+                Antes de venir.
+            </h2>
+
+        </div>
+
+
+        <div class="faq-list">
+
+
+            <div class="faq-item">
+
+                <button class="faq-question">
+                    ¿Necesito reservar?
+                    <span class="faq-icon">+</span>
+                </button>
+
+                <div class="faq-answer">
+                    <p>
+                        Recomendamos reservar especialmente durante
+                        fines de semana y temporada alta.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="faq-item">
+
+                <button class="faq-question">
+                    ¿Tienen opciones vegetarianas?
+                    <span class="faq-icon">+</span>
+                </button>
+
+                <div class="faq-answer">
+                    <p>
+                        Sí. Contamos con opciones vegetarianas
+                        y podemos adaptar algunos platos.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="faq-item">
+
+                <button class="faq-question">
+                    ¿Aceptan familias con niños?
+                    <span class="faq-icon">+</span>
+                </button>
+
+                <div class="faq-answer">
+                    <p>
+                        Sí. Nuestro restaurante recibe familias
+                        y contamos con opciones para los más chicos.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="faq-item">
+
+                <button class="faq-question">
+                    ¿Tienen estacionamiento?
+                    <span class="faq-icon">+</span>
+                </button>
+
+                <div class="faq-answer">
+                    <p>
+                        Sí. Disponemos de estacionamiento para
+                        nuestros visitantes.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="faq-item">
+
+                <button class="faq-question">
+                    ¿Puedo reservar por WhatsApp?
+                    <span class="faq-icon">+</span>
+                </button>
+
+                <div class="faq-answer">
+                    <p>
+                        Sí. Podés comunicarte con nosotros
+                        para consultar disponibilidad y horarios.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     RESERVA
+====================================================== -->
+
+<section class="reservation">
+
+    <div class="reservation-content">
+
+        <div class="eyebrow">
+            Tu mesa te espera
+        </div>
+
+        <h2>
+            Una noche para recordar.
+        </h2>
+
+        <p>
+            Reservá tu mesa y vení a descubrir una cocina
+            nacida en el corazón de Patagonia.
+        </p>
+
+        <a href="#contacto" class="btn btn-primary">
+            Consultar disponibilidad
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     CONTACTO
+====================================================== -->
+
+<section class="section contact" id="contacto">
+
+    <div class="container contact-grid">
+
+        <div>
+
+            <div class="section-label">
+                Contacto
+            </div>
+
+            <h2 class="section-title">
+                Vení a conocernos.
+            </h2>
+
+            <p class="section-text">
+                Estamos en Trevelin, en el corazón del Valle 16 de Octubre.
+                Escribinos para reservar una mesa o consultar nuestra carta.
+            </p>
+
+
+            <div class="contact-info">
+
+                <div class="contact-row">
+
+                    <div class="contact-icon">⌖</div>
+
+                    <div>
+                        <strong>Ubicación</strong>
+                        <span>Trevelin · Chubut · Patagonia Argentina</span>
+                    </div>
+
+                </div>
+
+
+                <div class="contact-row">
+
+                    <div class="contact-icon">◷</div>
+
+                    <div>
+                        <strong>Horarios</strong>
+                        <span>Miércoles a domingo · 19:30 a 00:30</span>
+                    </div>
+
+                </div>
+
+
+                <div class="contact-row">
+
+                    <div class="contact-icon">✉</div>
+
+                    <div>
+                        <strong>Email</strong>
+                        <span>reservas@fogondelvalle.com</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="contact-form">
+
+            <h3>
+                Consultá disponibilidad
+            </h3>
+
+            <form id="reservationForm">
+
+                <div class="form-group">
+                    <input
+                        type="text"
+                        placeholder="Tu nombre"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <input
+                        type="email"
+                        placeholder="Tu email"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <input
+                        type="tel"
+                        placeholder="Teléfono / WhatsApp"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <textarea
+                        placeholder="Contanos qué día te gustaría venir y cuántas personas serían..."
+                        required></textarea>
+                </div>
+
+                <button
+                    type="submit"
+                    class="btn btn-primary">
+                    Enviar consulta
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     FOOTER
+====================================================== -->
+
+<footer>
+
+    <div class="footer-inner">
+
+        <div>
+
+            <div class="footer-brand">
+                FOGÓN DEL VALLE
+            </div>
+
+            <div class="footer-demo">
+                Demo ficticia · Desarrollada por WEBS PATAGONIA
+            </div>
+
+        </div>
+
+        <div class="footer-copy">
+            © 2026 Fogón del Valle · Trevelin, Patagonia
+        </div>
+
+    </div>
+
+</footer>
+
+
+<!-- ======================================================
+     DEMO BADGE
+====================================================== -->
+
+<div class="demo-badge">
+    Demo ficticia
+</div>
+
+
+<script>
+
+/* =========================================================
+   HEADER AL HACER SCROLL
+========================================================= */
+
+const header = document.getElementById("header");
+
+window.addEventListener("scroll", () => {
+
+    if (window.scrollY > 60) {
+        header.classList.add("scrolled");
+    } else {
+        header.classList.remove("scrolled");
+    }
+
+});
+
+
+/* =========================================================
+   FAQ
+========================================================= */
+
+const faqItems = document.querySelectorAll(".faq-item");
+
+faqItems.forEach(item => {
+
+    const button = item.querySelector(".faq-question");
+    const icon = item.querySelector(".faq-icon");
+
+    button.addEventListener("click", () => {
+
+        const wasActive = item.classList.contains("active");
+
+        faqItems.forEach(other => {
+
+            other.classList.remove("active");
+
+            const otherIcon =
+                other.querySelector(".faq-icon");
+
+            otherIcon.textContent = "+";
+
+        });
+
+        if (!wasActive) {
+
+            item.classList.add("active");
+
+            icon.textContent = "−";
+
+        }
+
+    });
+
+});
+
+
+/* =========================================================
+   FORMULARIO DEMO
+========================================================= */
+
+const form = document.getElementById("reservationForm");
+
+form.addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+    alert(
+        "¡Gracias por tu consulta! Esta es una demostración de Fogón del Valle."
+    );
+
+    form.reset();
+
+});
+
+</script>
+
+</body>
+</html>
