@@ -1,233 +1,209 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Fogón del Valle | Restaurante · Trevelin</title>
-<meta name="description" content="Fogón del Valle. Cocina patagónica, vinos de la cordillera y sabores de estación en Trevelin.">
+<meta name="description" content="Cocina patagónica, vinos de la cordillera y sabores de estación en Trevelin.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-:root{--wine:#5A1F24;--wine-dark:#351316;--terracotta:#B65A3A;--cream:#F4EBDD;--cream-light:#FBF7F0;--dark:#241B17;--gold:#C79A55;--muted:#756861;--white:#fff;--border:rgba(36,27,23,.14);--green:#58734d;--red:#9b3c32}
-*{margin:0;padding:0;box-sizing:border-box}
+:root{--wine:#5A1F24;--wine-dark:#351316;--terracotta:#B65A3A;--cream:#F4EBDD;--light:#FBF7F0;--dark:#241B17;--gold:#C79A55;--muted:#756861;--border:rgba(36,27,23,.14);--red:#9b3c32}
+*{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{font-family:"DM Sans",sans-serif;background:var(--cream-light);color:var(--dark);line-height:1.6}
+body{font-family:"DM Sans",sans-serif;background:var(--light);color:var(--dark);line-height:1.6}
 body.no-scroll{overflow:hidden}
-img{width:100%;display:block}
 a{color:inherit;text-decoration:none}
-button,input,textarea{font-family:inherit}
-header{position:fixed;top:0;left:0;width:100%;z-index:1000;transition:.35s;padding:22px 6%;color:white}
-header.scrolled{background:rgba(36,27,23,.97);padding:15px 6%;box-shadow:0 8px 30px rgba(0,0,0,.12)}
-.nav{max-width:1250px;margin:auto;display:flex;justify-content:space-between;align-items:center}
-.logo{font-family:"Cormorant Garamond",serif;font-size:30px;font-weight:700;letter-spacing:1px}
-.logo span{display:block;font-family:"DM Sans",sans-serif;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:#ead6b4;margin-top:-6px}
-.nav-links{display:flex;gap:20px;align-items:center}
-.nav-links a{font-size:14px;color:rgba(255,255,255,.9)}
-.nav-button{padding:10px 18px;border:1px solid rgba(255,255,255,.5);border-radius:30px}
-.cart-button{border:1px solid rgba(255,255,255,.5);background:transparent;color:white;padding:10px 16px;border-radius:30px;cursor:pointer;display:flex;gap:8px;align-items:center}
-.cart-count{background:var(--terracotta);border-radius:50%;width:21px;height:21px;display:flex;align-items:center;justify-content:center;font-size:11px}
-.hero{min-height:100vh;background:linear-gradient(rgba(31,19,15,.48),rgba(31,19,15,.72)),url("https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=2000&q=85") center/cover;display:flex;align-items:center}
+button,input{font:inherit}
+button{cursor:pointer}
+img{display:block;width:100%}
+header{position:fixed;z-index:1000;top:0;width:100%;padding:22px 6%;color:white;transition:.3s}
+header.scrolled{background:rgba(36,27,23,.97);padding:14px 6%}
+.nav{max-width:1250px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:20px}
+.logo{font:700 30px "Cormorant Garamond",serif;letter-spacing:1px;white-space:nowrap}
+.logo span{display:block;font:9px "DM Sans",sans-serif;letter-spacing:3px;color:#ead6b4;margin-top:-6px}
+.nav-links{display:flex;gap:18px;align-items:center}
+.nav-links a{font-size:13px;color:#fff}
+.nav-button,.cart-button{border:1px solid #ffffff80;border-radius:30px;background:transparent;color:white;padding:10px 14px;font-size:12px;white-space:nowrap}
+.cart-button{display:flex;align-items:center;gap:8px}
+.cart-count{background:var(--terracotta);border-radius:50%;width:21px;height:21px;display:inline-flex;justify-content:center;align-items:center}
+.hero{min-height:100vh;background:linear-gradient(#1f130f80,#1f130fb8),url("https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=2000&q=85") center/cover;display:flex;align-items:center}
 .hero-content{width:min(1250px,88%);margin:auto;color:white;padding-top:80px}
-.eyebrow{display:inline-flex;align-items:center;gap:10px;color:#e9c98e;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:3px;margin-bottom:20px}
-.eyebrow::before{content:"";width:35px;height:1px;background:#e9c98e}
-.hero h1{max-width:850px;font-family:"Cormorant Garamond",serif;font-size:clamp(58px,8vw,105px);line-height:.88;font-weight:500;margin-bottom:30px}
+.eyebrow{color:#e9c98e;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:3px;margin-bottom:20px}
+.hero h1{max-width:850px;font:500 clamp(58px,8vw,105px)/.9 "Cormorant Garamond",serif;margin-bottom:28px}
 .hero h1 em{color:#e3b86f}
-.hero p{max-width:590px;color:rgba(255,255,255,.85);font-size:18px;margin-bottom:38px}
-.hero-buttons{display:flex;gap:14px;flex-wrap:wrap}
-.btn{display:inline-flex;justify-content:center;align-items:center;padding:15px 25px;border-radius:4px;font-weight:600;font-size:14px;transition:.3s;cursor:pointer;border:0}
+.hero p{max-width:590px;color:#ffffffdc;font-size:18px;margin-bottom:35px}
+.hero-buttons{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-flex;justify-content:center;align-items:center;padding:13px 23px;border-radius:4px;font-size:14px;font-weight:600;border:0;transition:.2s}
 .btn-primary{background:var(--terracotta);color:white}
 .btn-primary:hover{background:#99472e;transform:translateY(-2px)}
-.btn-outline{border:1px solid rgba(255,255,255,.55);color:white;background:transparent}
-.section{padding:110px 6%}
+.btn-outline{border:1px solid #ffffff90;color:white;background:transparent}
+.section{padding:100px 6%}
 .container{max-width:1180px;margin:auto}
-.section-header{max-width:700px;margin-bottom:55px}
+.section-header{max-width:700px;margin-bottom:45px}
 .section-label{color:var(--terracotta);text-transform:uppercase;letter-spacing:3px;font-size:11px;font-weight:700;margin-bottom:12px}
-.section-title{font-family:"Cormorant Garamond",serif;font-size:clamp(43px,5vw,68px);line-height:.95;font-weight:600;color:var(--wine)}
-.section-text{margin-top:20px;color:var(--muted)}
+.section-title{font:600 clamp(43px,5vw,68px)/.98 "Cormorant Garamond",serif;color:var(--wine)}
+.section-text{margin-top:18px;color:var(--muted)}
 .intro,.experience,.faq{background:var(--cream)}
-.intro-grid{display:grid;grid-template-columns:1fr 1fr;gap:75px;align-items:center}
+.intro-grid{display:grid;grid-template-columns:1fr 1fr;gap:65px;align-items:center}
 .intro-image{position:relative}
-.intro-image img{height:620px;object-fit:cover}
-.image-note{position:absolute;right:-25px;bottom:35px;background:var(--wine);color:white;padding:25px 30px;max-width:210px}
-.image-note strong{display:block;font-family:"Cormorant Garamond",serif;font-size:27px}
+.intro-image img{height:580px;object-fit:cover}
+.image-note{position:absolute;right:-15px;bottom:30px;background:var(--wine);color:white;padding:22px}
+.image-note strong{display:block;font:27px "Cormorant Garamond",serif}
 .image-note span{font-size:11px;color:#dfc5a0}
-.intro-content h2{font-family:"Cormorant Garamond",serif;color:var(--wine);font-size:58px;line-height:1;margin-bottom:25px}
-.intro-content p{color:var(--muted);margin-bottom:18px}
-.signature{margin-top:30px;font-family:"Cormorant Garamond",serif;font-size:29px;color:var(--wine);font-style:italic}
-.menu-grid{display:grid;grid-template-columns:1fr;gap:14px}
-.menu-category{background:white;border:1px solid var(--border);overflow:hidden}
-.menu-category-header{width:100%;border:0;background:white;color:var(--wine);padding:22px 25px;display:flex;justify-content:space-between;align-items:center;gap:20px;cursor:pointer;text-align:left;transition:.25s}
-.menu-category-header:hover{background:var(--cream)}
+.intro-content h2{font:600 55px/1 "Cormorant Garamond",serif;color:var(--wine);margin-bottom:25px}
+.intro-content p{color:var(--muted);margin-bottom:16px}
+.signature{margin-top:25px;font:italic 29px "Cormorant Garamond",serif;color:var(--wine)}
+.menu-grid{display:grid;gap:14px}
+.menu-category{background:white;border:1px solid var(--border)}
+.menu-category-header{width:100%;border:0;background:white;color:var(--wine);padding:20px;display:flex;justify-content:space-between;align-items:center;text-align:left}
 .menu-category-title{display:flex;align-items:center;gap:14px}
-.menu-category-icon{width:40px;height:40px;border-radius:50%;background:var(--cream);display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
-.menu-category-name{font-family:"Cormorant Garamond",serif;font-size:34px;line-height:1}
-.menu-category-description{display:block;color:var(--muted);font-family:"DM Sans",sans-serif;font-size:11px;margin-top:5px}
-.menu-category-toggle{width:36px;height:36px;border-radius:50%;border:1px solid var(--border);display:flex;justify-content:center;align-items:center;font-size:22px;color:var(--terracotta);flex-shrink:0;transition:.3s}
-.menu-category.active .menu-category-toggle{background:var(--terracotta);color:white;border-color:var(--terracotta);transform:rotate(180deg)}
-.menu-category-content{display:grid;grid-template-rows:0fr;transition:grid-template-rows .35s ease}
-.menu-category.active .menu-category-content{grid-template-rows:1fr}
-.menu-category-inner{min-height:0;overflow:hidden}
-.menu-category-items{padding:0 25px 10px}
-.menu-item{display:grid;grid-template-columns:1fr auto;gap:20px;padding:22px 0;border-top:1px solid var(--border)}
-.menu-item h4{font-family:"Cormorant Garamond",serif;font-size:25px}
-.menu-item p{color:var(--muted);font-size:13px;margin-top:4px;max-width:700px}
+.menu-category-icon{width:40px;height:40px;border-radius:50%;background:var(--cream);display:grid;place-items:center}
+.menu-category-name{font:32px "Cormorant Garamond",serif}
+.menu-category-description{display:block;color:var(--muted);font-size:11px}
+.menu-category-toggle{width:34px;height:34px;border:1px solid var(--border);border-radius:50%;display:grid;place-items:center;color:var(--terracotta)}
+.menu-category-content{display:none}
+.menu-category.active .menu-category-content{display:block}
+.menu-category.active .menu-category-toggle{background:var(--terracotta);color:white}
+.menu-category-items{padding:0 24px 10px}
+.menu-item{display:grid;grid-template-columns:1fr auto;gap:20px;padding:20px 0;border-top:1px solid var(--border)}
+.menu-item h4{font:25px "Cormorant Garamond",serif}
+.menu-item p{color:var(--muted);font-size:13px;margin-top:4px}
 .menu-price{color:var(--terracotta);font-weight:700;white-space:nowrap}
-.menu-actions{margin-top:12px}
-.add-btn{border:1px solid var(--terracotta);color:var(--terracotta);background:transparent;padding:8px 13px;border-radius:20px;cursor:pointer;font-size:12px;font-weight:700;transition:.2s}
-.add-btn:hover{background:var(--terracotta);color:white}
-.menu-loading{color:var(--muted);padding:20px 0}
-.menu-error{color:var(--red);background:#fff3f1;padding:18px;border:1px solid rgba(155,60,50,.2)}
+.menu-actions{margin-top:10px}
+.add-btn{border:1px solid var(--terracotta);color:var(--terracotta);background:transparent;padding:7px 12px;border-radius:20px;font-size:12px;font-weight:700}
+.menu-loading,.menu-error{padding:20px;color:var(--muted)}
+.menu-error{color:var(--red);background:#fff3f1}
 .featured{background:var(--wine);color:white}
-.featured .section-label{color:#e4bd7d}
 .featured .section-title{color:white}
-.featured .section-text{color:rgba(255,255,255,.65)}
-.dishes{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.featured .section-text{color:#ffffffa6}
+.featured .section-label{color:#e4bd7d}
+.dishes,.experience-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
 .dish{background:#43191d;overflow:hidden}
-.dish-image{height:320px;overflow:hidden}
-.dish-image img{height:100%;object-fit:cover;transition:.5s}
-.dish:hover img{transform:scale(1.05)}
-.dish-content{padding:24px}
-.dish-content h3{font-family:"Cormorant Garamond",serif;font-size:30px}
-.dish-content p{color:rgba(255,255,255,.65);font-size:13px}
-.experience-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.experience-card{border:1px solid var(--border);padding:35px;background:rgba(255,255,255,.35)}
-.experience-number{color:var(--gold);font-family:"Cormorant Garamond",serif;font-size:22px}
-.experience-card h3{font-family:"Cormorant Garamond",serif;font-size:31px;color:var(--wine);margin:18px 0 10px}
-.experience-card p{color:var(--muted);font-size:14px}
-.gallery{display:grid;grid-template-columns:1.4fr 1fr 1fr;grid-template-rows:260px 260px;gap:8px}
+.dish-image{height:280px}
+.dish-image img{height:100%;object-fit:cover;transition:.4s}
+.dish:hover img{transform:scale(1.04)}
+.dish-content{padding:22px}
+.dish-content h3{font:30px "Cormorant Garamond",serif}
+.dish-content p{font-size:13px;color:#ffffffa6}
+.experience-card{padding:30px;border:1px solid var(--border);background:#ffffff60}
+.experience-number{font:22px "Cormorant Garamond",serif;color:var(--gold)}
+.experience-card h3{font:30px "Cormorant Garamond",serif;color:var(--wine);margin:14px 0}
+.experience-card p{font-size:14px;color:var(--muted)}
+.gallery{display:grid;grid-template-columns:1.4fr 1fr 1fr;grid-template-rows:240px 240px;gap:8px}
 .gallery-item{overflow:hidden}
 .gallery-item:first-child{grid-row:span 2}
 .gallery-item img{height:100%;object-fit:cover}
 .faq-list{max-width:850px;margin:auto}
 .faq-item{border-bottom:1px solid var(--border)}
-.faq-question{width:100%;border:0;background:transparent;padding:24px 0;display:flex;justify-content:space-between;cursor:pointer;text-align:left;color:var(--wine);font-family:"Cormorant Garamond",serif;font-size:27px}
-.faq-answer{max-height:0;overflow:hidden;transition:.35s;color:var(--muted)}
-.faq-answer p{padding-bottom:22px}
-.faq-item.active .faq-answer{max-height:200px}
-.reservation{min-height:600px;background:linear-gradient(rgba(50,25,20,.78),rgba(50,25,20,.78)),url("https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=2000&q=85") center/cover;display:flex;align-items:center;text-align:center;color:white;padding:70px 6%}
+.faq-question{width:100%;border:0;background:transparent;padding:22px 0;display:flex;justify-content:space-between;text-align:left;color:var(--wine);font:27px "Cormorant Garamond",serif}
+.faq-answer{display:none;color:var(--muted);padding:0 0 20px}
+.faq-item.active .faq-answer{display:block}
+.reservation{background:linear-gradient(#321914c9,#321914c9),url("https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=2000&q=85") center/cover;text-align:center;color:white;padding:100px 6%}
 .reservation-content{max-width:760px;margin:auto}
-.reservation h2{font-family:"Cormorant Garamond",serif;font-size:clamp(48px,6vw,78px);line-height:.95;margin-bottom:20px}
-.reservation p{color:rgba(255,255,255,.8);margin-bottom:32px}
-.orders-section{background:var(--cream-light)}
-.orders-header{max-width:700px;margin-bottom:45px}
-.orders-login,.orders-empty{background:var(--cream);border:1px solid var(--border);padding:35px;text-align:center;max-width:700px;margin:auto}
-.orders-login h3,.orders-empty h3{font-family:"Cormorant Garamond",serif;font-size:32px;color:var(--wine);margin-bottom:8px}
-.orders-login p,.orders-empty p{color:var(--muted);margin-bottom:20px}
-.orders-empty-icon{font-size:42px;margin-bottom:12px}
-.orders-list{display:grid;gap:25px}
-.order-card{background:white;border:1px solid var(--border);box-shadow:0 10px 30px rgba(36,27,23,.05)}
-.order-card-header{padding:22px 25px;background:var(--wine);color:white;display:flex;justify-content:space-between;align-items:center;gap:20px}
-.order-number{font-family:"Cormorant Garamond",serif;font-size:27px}
-.order-date{font-size:12px;color:rgba(255,255,255,.65);margin-top:3px}
-.order-status{display:inline-flex;align-items:center;gap:6px;padding:8px 12px;border-radius:20px;background:rgba(255,255,255,.12);font-size:12px;white-space:nowrap}
-.order-products{padding:10px 25px}
-.order-product{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:17px 0;border-bottom:1px solid var(--border)}
-.order-product:last-child{border-bottom:0}
-.order-product-name{font-family:"Cormorant Garamond",serif;color:var(--wine);font-size:22px}
-.order-product-detail{color:var(--muted);font-size:12px;margin-top:2px}
-.order-product-subtotal{color:var(--terracotta);font-weight:700;white-space:nowrap}
-.order-card-footer{border-top:1px solid var(--border);padding:20px 25px;display:flex;justify-content:space-between;align-items:center;gap:15px;background:var(--cream-light)}
+.reservation h2{font:clamp(48px,6vw,78px)/.95 "Cormorant Garamond",serif;margin-bottom:20px}
+.reservation p{margin-bottom:25px;color:#ffffffc9}
+.orders-section{background:var(--light)}
+.orders-header{max-width:700px;margin-bottom:40px}
+.orders-login,.orders-empty{background:var(--cream);border:1px solid var(--border);padding:30px;text-align:center;max-width:700px;margin:auto}
+.orders-login h3,.orders-empty h3{font:32px "Cormorant Garamond",serif;color:var(--wine);margin-bottom:8px}
+.orders-login p,.orders-empty p{color:var(--muted);margin-bottom:18px}
+.orders-empty-icon{font-size:40px;margin-bottom:10px}
+.orders-list{display:grid;gap:22px}
+.order-card{background:white;border:1px solid var(--border)}
+.order-card-header{padding:20px 24px;background:var(--wine);color:white;display:flex;justify-content:space-between;gap:15px}
+.order-number{font:27px "Cormorant Garamond",serif}
+.order-date{font-size:12px;color:#ffffffa6}
+.order-status{font-size:12px}
+.order-products{padding:10px 24px}
+.order-product{display:flex;justify-content:space-between;gap:15px;padding:14px 0;border-bottom:1px solid var(--border)}
+.order-product-name{font:22px "Cormorant Garamond",serif;color:var(--wine)}
+.order-product-detail{font-size:12px;color:var(--muted)}
+.order-product-subtotal{color:var(--terracotta);font-weight:700}
+.order-card-footer{padding:18px 24px;display:flex;justify-content:space-between;align-items:center;gap:15px;background:var(--light)}
 .order-total-label{color:var(--muted)}
-.order-total{color:var(--wine);font-size:21px;font-weight:700}
-.order-actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
-.order-edit-btn,.order-cancel-edit-btn,.order-delete-btn{border:1px solid var(--terracotta);background:transparent;color:var(--terracotta);padding:9px 14px;border-radius:20px;font-size:12px;font-weight:700;cursor:pointer;transition:.2s}
-.order-edit-btn:hover{background:var(--terracotta);color:white}
+.order-total{font-size:21px;color:var(--wine)}
+.order-actions{display:flex;gap:8px;flex-wrap:wrap}
+.order-edit-btn,.order-delete-btn{border:1px solid var(--terracotta);background:transparent;color:var(--terracotta);padding:8px 12px;border-radius:20px;font-size:12px}
 .order-delete-btn{border-color:var(--red);color:var(--red)}
-.order-delete-btn:hover{background:var(--red);color:white}
-.order-delete-btn:disabled,.order-edit-btn:disabled{opacity:.5;cursor:not-allowed}
-.order-edit-locked{font-size:11px;color:var(--muted);font-style:italic}
-.editing-banner{background:var(--wine);color:white;padding:14px 18px;margin-bottom:15px;display:flex;justify-content:space-between;align-items:center;gap:15px;font-size:13px}
-.editing-banner strong{color:#e9c98e}
-.editing-banner button{border:1px solid rgba(255,255,255,.4);background:transparent;color:white;padding:7px 12px;border-radius:18px;cursor:pointer;font-size:11px}
+.order-edit-locked{font-size:11px;color:var(--muted)}
 .contact{background:var(--dark);color:white}
-.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px}
 .contact .section-title{color:white}
-.contact .section-text{color:rgba(255,255,255,.65)}
-.contact-info{margin-top:35px}
-.contact-row{display:flex;gap:15px;margin-bottom:20px}
-.contact-icon{width:40px;height:40px;border:1px solid rgba(255,255,255,.18);display:flex;justify-content:center;align-items:center;color:#d5ad70}
+.contact .section-text{color:#ffffffa6}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px}
+.contact-row{margin-top:22px}
 .contact-row strong,.contact-row span{display:block}
-.contact-row strong{font-size:14px}
-.contact-row span{color:rgba(255,255,255,.55);font-size:13px}
-footer{background:#17110e;color:rgba(255,255,255,.55);padding:30px 6%}
-.footer-inner{max-width:1180px;margin:auto;display:flex;justify-content:space-between;align-items:center}
-.footer-brand{color:white;font-family:"Cormorant Garamond",serif;font-size:25px}
-.footer-demo{margin-top:5px;font-size:10px;color:#a88351;text-transform:uppercase;letter-spacing:2px}
-.cart-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:3000;opacity:0;pointer-events:none;transition:.3s}
+.contact-row span{font-size:13px;color:#ffffff9a}
+footer{background:#17110e;color:#ffffff90;padding:28px 6%}
+.footer-inner{max-width:1180px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:20px}
+.footer-brand{font:25px "Cormorant Garamond",serif;color:white}
+.footer-demo{font-size:10px;color:#a88351;letter-spacing:2px}
+.cart-overlay{position:fixed;inset:0;background:#0009;z-index:3000;opacity:0;pointer-events:none;transition:.3s}
 .cart-overlay.active{opacity:1;pointer-events:auto}
-.cart-panel{position:absolute;right:0;top:0;height:100%;width:min(440px,100%);background:var(--cream-light);transform:translateX(100%);transition:.35s;display:flex;flex-direction:column}
+.cart-panel{position:absolute;right:0;top:0;height:100%;width:min(440px,100%);background:var(--light);transform:translateX(100%);transition:.3s;display:flex;flex-direction:column}
 .cart-overlay.active .cart-panel{transform:translateX(0)}
-.cart-header{padding:25px;background:var(--wine);color:white;display:flex;justify-content:space-between;align-items:center}
-.cart-header h2{font-family:"Cormorant Garamond",serif;font-size:32px}
-.cart-editing-label{font-size:11px;color:#e9c98e;margin-top:3px}
-.close-cart{border:0;background:transparent;color:white;font-size:28px;cursor:pointer}
+.cart-header{padding:22px;background:var(--wine);color:white;display:flex;justify-content:space-between;align-items:center}
+.cart-header h2{font:32px "Cormorant Garamond",serif}
+.close-cart,.modal-close{border:0;background:transparent;font-size:28px}
+.close-cart{color:white}
 .cart-items{flex:1;overflow:auto;padding:20px}
-.empty-cart{text-align:center;color:var(--muted);padding:50px 20px}
+.empty-cart{text-align:center;padding:50px 20px;color:var(--muted)}
 .cart-item{border-bottom:1px solid var(--border);padding:16px 0}
-.cart-item-top{display:flex;justify-content:space-between;gap:15px}
-.cart-item-name{font-family:"Cormorant Garamond",serif;font-size:23px;color:var(--wine)}
+.cart-item-top,.quantity-controls{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.cart-item-name{font:23px "Cormorant Garamond",serif;color:var(--wine)}
 .cart-item-price{font-weight:700;color:var(--terracotta)}
-.quantity-controls{display:flex;align-items:center;gap:10px;margin-top:10px}
-.quantity-controls button{width:28px;height:28px;border-radius:50%;border:1px solid var(--terracotta);background:transparent;color:var(--terracotta);cursor:pointer}
-.cart-footer{padding:22px;border-top:1px solid var(--border);background:white}
-.cart-total{display:flex;justify-content:space-between;font-size:20px;font-weight:700;margin-bottom:16px}
+.quantity-controls{justify-content:flex-start;margin-top:10px}
+.quantity-controls button{width:28px;height:28px;border:1px solid var(--terracotta);border-radius:50%;background:transparent;color:var(--terracotta)}
+.cart-footer{padding:20px;border-top:1px solid var(--border);background:white}
+.cart-total{display:flex;justify-content:space-between;font-size:20px;font-weight:700;margin-bottom:14px}
 .checkout-btn{width:100%}
-.checkout-btn.editing{background:var(--wine)}
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:4000;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-overlay{position:fixed;inset:0;background:#000a;z-index:4000;display:none;align-items:center;justify-content:center;padding:18px}
 .modal-overlay.active{display:flex}
-.modal{background:var(--cream-light);width:min(440px,100%);padding:35px;position:relative}
-.modal h2{font-family:"Cormorant Garamond",serif;color:var(--wine);font-size:40px;margin-bottom:8px}
-.modal p{color:var(--muted);font-size:14px;margin-bottom:25px}
-.modal-close{position:absolute;right:18px;top:15px;border:0;background:transparent;font-size:25px;cursor:pointer}
-.form-group{margin-bottom:15px}
-.form-group label{display:block;font-size:12px;font-weight:700;margin-bottom:6px}
-.form-group input{width:100%;padding:13px;border:1px solid var(--border);background:white;outline:none}
-.form-group input:focus{border-color:var(--terracotta)}
-.auth-switch{margin-top:18px;text-align:center;font-size:13px}
-.auth-switch button{border:0;background:none;color:var(--terracotta);font-weight:700;cursor:pointer}
-.user-bar{position:fixed;bottom:18px;left:18px;z-index:5000;background:var(--wine);color:white;padding:10px 15px;border-radius:30px;font-size:12px;display:none;align-items:center;gap:10px;box-shadow:0 8px 25px rgba(0,0,0,.2)}
-.logout-btn{border:0;background:var(--terracotta);color:white;padding:5px 9px;border-radius:15px;cursor:pointer;font-size:10px}
-.toast{position:fixed;right:20px;bottom:20px;z-index:6000;background:var(--wine);color:white;padding:14px 18px;border-radius:6px;box-shadow:0 10px 35px rgba(0,0,0,.25);transform:translateY(30px);opacity:0;pointer-events:none;transition:.3s;max-width:340px;font-size:13px}
-.toast.show{transform:translateY(0);opacity:1}
-#ownerPanel{display:none;min-height:100vh;background:#F4EBDD;padding:110px 6% 70px;color:#241B17}
+.modal{background:var(--light);width:min(440px,100%);padding:32px;position:relative;max-height:90vh;overflow:auto}
+.modal h2{font:40px "Cormorant Garamond",serif;color:var(--wine);margin-bottom:6px}
+.modal p{color:var(--muted);font-size:14px;margin-bottom:20px}
+.modal-close{position:absolute;right:15px;top:10px}
+.form-group{margin-bottom:14px}
+.form-group label{display:block;font-size:12px;font-weight:700;margin-bottom:5px}
+.form-group input{width:100%;padding:12px;border:1px solid var(--border);background:white}
+.auth-switch{margin-top:16px;text-align:center;font-size:13px}
+.auth-switch button{border:0;background:none;color:var(--terracotta);font-weight:700}
+.user-bar{position:fixed;bottom:18px;left:18px;z-index:5000;background:var(--wine);color:white;padding:10px 14px;border-radius:30px;font-size:12px;display:none;align-items:center;gap:10px;box-shadow:0 8px 25px #0003}
+.logout-btn{border:0;background:var(--terracotta);color:white;padding:5px 9px;border-radius:15px;font-size:10px}
+.toast{position:fixed;right:20px;bottom:20px;z-index:6000;background:var(--wine);color:white;padding:14px 18px;border-radius:6px;opacity:0;pointer-events:none;transition:.3s;max-width:340px}
+.toast.show{opacity:1}
+#ownerPanel{display:none;min-height:100vh;background:var(--cream);padding:110px 6% 70px}
 #ownerPanel .owner-inner{max-width:1180px;margin:auto}
-.owner-top{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;margin-bottom:35px}
-.owner-eyebrow{color:#B65A3A;text-transform:uppercase;letter-spacing:3px;font-size:11px;font-weight:700}
-.owner-title{font-family:"Cormorant Garamond",serif;font-size:clamp(42px,6vw,66px);color:#5A1F24;line-height:1;margin-top:8px}
-.owner-subtitle{color:#756861;margin-top:12px}
-.owner-refresh{background:#5A1F24;color:white;border:0;padding:13px 20px;border-radius:4px;font-weight:700;cursor:pointer}
-.owner-refresh:disabled{opacity:.6;cursor:wait}
+.owner-top{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;margin-bottom:30px}
+.owner-eyebrow{color:var(--terracotta);text-transform:uppercase;letter-spacing:3px;font-size:11px}
+.owner-title{font:60px "Cormorant Garamond",serif;color:var(--wine)}
+.owner-subtitle{color:var(--muted)}
+.owner-refresh{background:var(--wine);color:white;border:0;padding:12px 18px}
 .owner-summary{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:25px}
-.owner-summary-card{background:white;border:1px solid rgba(36,27,23,.12);padding:15px 20px;min-width:145px;flex:1}
-.owner-summary-card span{display:block;font-size:12px;color:#756861}
-.owner-summary-card strong{font-size:25px;color:#5A1F24}
-.owner-order-card{background:#fff;border:1px solid rgba(36,27,23,.14);margin-bottom:20px;box-shadow:0 8px 25px rgba(36,27,23,.05)}
-.owner-order-head{background:#5A1F24;color:#fff;padding:20px 24px;display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}
-.owner-order-head h3{font-family:"Cormorant Garamond",serif;font-size:28px}
-.owner-order-date{font-size:12px;color:rgba(255,255,255,.7);margin-top:3px}
-.owner-order-status{padding:7px 12px;border-radius:20px;background:rgba(255,255,255,.13);font-size:12px}
-.owner-order-customer{padding:16px 24px;background:#FBF7F0;border-bottom:1px solid rgba(36,27,23,.12);font-size:13px;overflow-wrap:anywhere}
-.owner-order-products{padding:8px 24px}
-.owner-order-product{display:flex;justify-content:space-between;gap:15px;padding:14px 0;border-bottom:1px solid rgba(36,27,23,.12)}
-.owner-order-product:last-child{border-bottom:0}
-.owner-order-product strong{font-family:"Cormorant Garamond",serif;font-size:21px;color:#5A1F24}
-.owner-order-product small{display:block;color:#756861;font-size:12px}
-.owner-order-total{padding:17px 24px;border-top:1px solid rgba(36,27,23,.12);display:flex;justify-content:space-between;gap:15px;align-items:center;background:#FBF7F0}
-.owner-order-total strong{font-size:22px;color:#5A1F24}
-.owner-order-note{padding:0 24px 18px;font-size:13px;color:#756861;overflow-wrap:anywhere}
-.owner-empty{background:white;padding:35px;text-align:center;color:#756861;border:1px solid rgba(36,27,23,.12)}
-body.owner-mode{background:#F4EBDD}
+.owner-summary-card{background:white;padding:15px 20px;flex:1;min-width:140px}
+.owner-summary-card span,.owner-summary-card strong{display:block}
+.owner-summary-card span{font-size:12px;color:var(--muted)}
+.owner-summary-card strong{font-size:25px;color:var(--wine)}
+.owner-order-card{background:white;border:1px solid var(--border);margin-bottom:20px}
+.owner-order-head{background:var(--wine);color:white;padding:18px 22px;display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}
+.owner-order-head h3{font:27px "Cormorant Garamond",serif}
+.owner-order-date,.owner-order-customer,.owner-order-product small{font-size:12px}
+.owner-order-customer{padding:15px 22px;background:var(--light);overflow-wrap:anywhere}
+.owner-order-products{padding:8px 22px}
+.owner-order-product{display:flex;justify-content:space-between;gap:15px;padding:13px 0;border-bottom:1px solid var(--border)}
+.owner-order-product strong{font:21px "Cormorant Garamond",serif;color:var(--wine)}
+.owner-order-product small{display:block;color:var(--muted)}
+.owner-order-total{padding:16px 22px;display:flex;justify-content:space-between;background:var(--light)}
+.owner-order-total strong{font-size:22px;color:var(--wine)}
+.owner-order-note{padding:0 22px 16px;font-size:13px;color:var(--muted)}
+.owner-empty{background:white;padding:30px;text-align:center;color:var(--muted)}
+body.owner-mode{background:var(--cream)}
 body.owner-mode> :not(#ownerPanel):not(#userBar):not(#toast){display:none!important}
 body.owner-mode #ownerPanel{display:block!important}
 body.owner-mode #userBar{display:flex!important}
-@media(max-width:900px){.nav-links{display:none}.intro-grid,.contact-grid{grid-template-columns:1fr;gap:45px}.dishes,.experience-grid{grid-template-columns:1fr}.gallery{grid-template-columns:1fr 1fr;grid-template-rows:240px 240px 240px}.gallery-item:first-child{grid-column:span 2;grid-row:span 1}.footer-inner{flex-direction:column;align-items:flex-start;gap:15px}}
-@media(max-width:600px){
-header{padding:18px 5%}.logo{font-size:26px}.hero{min-height:92vh}.hero-content{width:90%}.hero h1{font-size:59px}.section{padding:80px 6%}.section-title{font-size:48px}.intro-content h2{font-size:48px}.intro-image img{height:480px}.gallery{grid-template-columns:1fr;grid-template-rows:repeat(5,250px)}.gallery-item:first-child{grid-column:auto}.menu-category-header{padding:18px}.menu-category-name{font-size:28px}.menu-category-description{max-width:190px}.menu-category-items{padding:0 18px 8px}.menu-item{grid-template-columns:1fr;gap:8px}.menu-price{order:-1;justify-self:start}.order-card-header{flex-direction:column;align-items:flex-start}.order-product{align-items:flex-start}.order-card-footer{flex-direction:column;align-items:flex-start}.order-actions{width:100%;justify-content:flex-start}.editing-banner{align-items:flex-start;flex-direction:column}
-#ownerPanel{padding:100px 5% 85px}.owner-order-head{align-items:flex-start;flex-direction:column}.owner-order-customer,.owner-order-products,.owner-order-total{padding-left:16px;padding-right:16px}.owner-order-note{padding-left:16px;padding-right:16px}.owner-order-product strong{font-size:19px}
-}
+@media(max-width:900px){.nav-links a{display:none}.intro-grid,.contact-grid{grid-template-columns:1fr;gap:35px}.dishes,.experience-grid{grid-template-columns:1fr}.gallery{grid-template-columns:1fr 1fr;grid-template-rows:repeat(3,220px)}.gallery-item:first-child{grid-column:span 2;grid-row:auto}.footer-inner{align-items:flex-start;flex-direction:column}}
+@media(max-width:600px){header{padding:15px 4%}.logo{font-size:24px}.nav-links{gap:6px}.nav-button,.cart-button{padding:8px;font-size:10px}.hero h1{font-size:58px}.section{padding:75px 6%}.intro-content h2{font-size:46px}.intro-image img{height:420px}.gallery{grid-template-columns:1fr;grid-template-rows:repeat(5,220px)}.gallery-item:first-child{grid-column:auto}.menu-category-name{font-size:27px}.menu-item{grid-template-columns:1fr;gap:7px}.menu-price{order:-1;justify-self:start}.order-card-header,.order-card-footer{flex-direction:column;align-items:flex-start}.order-actions{width:100%}.owner-title{font-size:43px}#ownerPanel{padding:100px 5% 70px}}
 </style>
 </head>
 <body>
@@ -236,71 +212,51 @@ header{padding:18px 5%}.logo{font-size:26px}.hero{min-height:92vh}.hero-content{
 <a href="#inicio" class="logo">FOGÓN DEL VALLE<span>Restaurante · Trevelin</span></a>
 <nav class="nav-links">
 <a href="#historia">Historia</a><a href="#menu">Menú</a><a href="#mis-pedidos">Mis pedidos</a><a href="#experiencia">Experiencia</a><a href="#galeria">Galería</a>
+<button class="nav-button" id="accountBtn" type="button">Ingresar / Crear cuenta</button>
 <button class="cart-button" id="openCart" type="button">🛒 Carrito <span class="cart-count" id="cartCount">0</span></button>
 </nav>
 </div>
 </header>
 
-<section class="hero" id="inicio">
-<div class="hero-content">
+<section class="hero" id="inicio"><div class="hero-content">
 <div class="eyebrow">Trevelin · Patagonia</div>
 <h1>Sabores que nacen <em>del valle.</em></h1>
 <p>Cocina patagónica de estación, productos locales y vinos de la cordillera en un ambiente cálido frente al paisaje de Trevelin.</p>
 <div class="hero-buttons"><a href="#menu" class="btn btn-primary">Descubrir el menú</a><button class="btn btn-outline" id="heroCart" type="button">Realizar pedido</button></div>
-</div>
-</section>
+</div></section>
 
-<section class="section intro" id="historia">
-<div class="container intro-grid">
-<div class="intro-image"><img src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1200&q=85" alt="Plato de cocina de estación"><div class="image-note"><strong>Producto local.</strong><span>Cocina de estación · Patagonia</span></div></div>
-<div class="intro-content">
-<div class="section-label">Nuestra historia</div><h2>El fuego como punto de encuentro.</h2>
-<p>Fogón del Valle nació de una idea simple: cocinar con identidad, respetando el producto y dejando que cada estación cuente su propia historia.</p>
-<p>Trabajamos con ingredientes de la región, carnes, vegetales, hongos, trucha y productos de pequeños productores del Valle 16 de Octubre.</p>
-<p>Nuestra cocina busca unir tradición y creatividad en un espacio donde comer sea también parte de la experiencia de viajar por Patagonia.</p>
-<div class="signature">Cocina con identidad.</div>
-</div>
-</div>
-</section>
+<section class="section intro" id="historia"><div class="container intro-grid">
+<div class="intro-image"><img src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1200&q=85" alt="Plato de cocina"><div class="image-note"><strong>Producto local.</strong><span>Cocina de estación · Patagonia</span></div></div>
+<div class="intro-content"><div class="section-label">Nuestra historia</div><h2>El fuego como punto de encuentro.</h2><p>Fogón del Valle nació de una idea simple: cocinar con identidad, respetando el producto y dejando que cada estación cuente su propia historia.</p><p>Trabajamos con ingredientes de la región, carnes, vegetales, hongos, trucha y productos de pequeños productores del Valle 16 de Octubre.</p><p>Nuestra cocina busca unir tradición y creatividad en un espacio donde comer sea también parte de la experiencia de viajar por Patagonia.</p><div class="signature">Cocina con identidad.</div></div>
+</div></section>
 
-<section class="section menu" id="menu">
-<div class="container">
+<section class="section" id="menu"><div class="container">
 <div class="section-header"><div class="section-label">Nuestra carta</div><h2 class="section-title">Sabores del valle.</h2><p class="section-text">Elegí una categoría para descubrir sus platos.</p></div>
 <div class="menu-grid" id="menuContainer"><div class="menu-loading">Cargando menú...</div></div>
-</div>
-</section>
+</div></section>
 
-<section class="section featured">
-<div class="container">
+<section class="section featured"><div class="container">
 <div class="section-header"><div class="section-label">Recomendados</div><h2 class="section-title">Del fuego a la mesa.</h2><p class="section-text">Algunos de nuestros platos favoritos.</p></div>
 <div class="dishes">
 <article class="dish"><div class="dish-image"><img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1000&q=85" alt="Cordero"></div><div class="dish-content"><h3>Cordero al fuego</h3><p>Cocción lenta, vegetales de estación y el aroma inconfundible de nuestro fogón.</p></div></article>
 <article class="dish"><div class="dish-image"><img src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1000&q=85" alt="Cocina"></div><div class="dish-content"><h3>Sabores de estación</h3><p>Ingredientes locales trabajados con una mirada contemporánea.</p></div></article>
 <article class="dish"><div class="dish-image"><img src="https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?auto=format&fit=crop&w=1000&q=85" alt="Trucha"></div><div class="dish-content"><h3>Trucha del valle</h3><p>Producto patagónico protagonista de una de nuestras especialidades.</p></div></article>
-</div>
-</div>
-</section>
+</div></div></section>
 
-<section class="section orders-section" id="mis-pedidos">
-<div class="container">
+<section class="section orders-section" id="mis-pedidos"><div class="container">
 <div class="orders-header"><div class="section-label">Tu cuenta</div><h2 class="section-title">Mis pedidos.</h2><p class="section-text">Acá solamente vas a ver tus propios pedidos. Podés editar un pedido mientras todavía no haya sido aceptado.</p></div>
-<div id="ordersContainer"><div class="orders-login"><div class="orders-empty-icon">🍷</div><h3>Ingresá para ver tus pedidos</h3><p>Una vez que hayas iniciado sesión vas a poder consultar todo lo que compraste.</p><button class="btn btn-primary" id="ordersLoginBtn" type="button">Iniciar sesión</button></div></div>
-</div>
-</section>
+<div id="ordersContainer"></div>
+</div></section>
 
-<section class="section experience" id="experiencia">
-<div class="container">
+<section class="section experience" id="experiencia"><div class="container">
 <div class="section-header"><div class="section-label">Mucho más que una cena</div><h2 class="section-title">Una experiencia patagónica.</h2><p class="section-text">Venir a Fogón del Valle es sentarse a disfrutar de la comida, el vino y el paisaje.</p></div>
 <div class="experience-grid">
 <div class="experience-card"><div class="experience-number">01</div><h3>Producto local</h3><p>Trabajamos con ingredientes de la región y buscamos poner en valor a productores locales.</p></div>
 <div class="experience-card"><div class="experience-number">02</div><h3>Vinos de la cordillera</h3><p>Una selección de etiquetas patagónicas pensada para acompañar nuestra cocina.</p></div>
 <div class="experience-card"><div class="experience-number">03</div><h3>El ritual del fuego</h3><p>El fuego forma parte de nuestra identidad: cocina lenta, aromas y encuentros alrededor de la mesa.</p></div>
-</div>
-</div>
-</section>
+</div></div></section>
 
-<section class="section" id="galeria">
-<div class="container">
+<section class="section" id="galeria"><div class="container">
 <div class="section-header"><div class="section-label">Galería</div><h2 class="section-title">Así se vive Fogón.</h2></div>
 <div class="gallery">
 <div class="gallery-item"><img src="https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=1200&q=85" alt="Restaurante"></div>
@@ -308,1106 +264,269 @@ header{padding:18px 5%}.logo{font-size:26px}.hero{min-height:92vh}.hero-content{
 <div class="gallery-item"><img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=900&q=85" alt="Carne"></div>
 <div class="gallery-item"><img src="https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?auto=format&fit=crop&w=900&q=85" alt="Pescado"></div>
 <div class="gallery-item"><img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=900&q=85" alt="Cena"></div>
-</div>
-</div>
-</section>
+</div></div></section>
 
-<section class="section faq">
-<div class="container">
+<section class="section faq"><div class="container">
 <div class="section-header"><div class="section-label">Preguntas frecuentes</div><h2 class="section-title">Antes de venir.</h2></div>
 <div class="faq-list">
-<div class="faq-item"><button class="faq-question" type="button">¿Necesito reservar?<span>+</span></button><div class="faq-answer"><p>Recomendamos reservar especialmente durante fines de semana y temporada alta.</p></div></div>
-<div class="faq-item"><button class="faq-question" type="button">¿Tienen opciones vegetarianas?<span>+</span></button><div class="faq-answer"><p>Sí. Contamos con opciones vegetarianas y podemos adaptar algunos platos.</p></div></div>
-<div class="faq-item"><button class="faq-question" type="button">¿Aceptan familias con niños?<span>+</span></button><div class="faq-answer"><p>Sí. Nuestro restaurante recibe familias.</p></div></div>
-</div>
-</div>
-</section>
+<div class="faq-item"><button class="faq-question" type="button">¿Necesito reservar?<span>+</span></button><div class="faq-answer">Recomendamos reservar especialmente durante fines de semana y temporada alta.</div></div>
+<div class="faq-item"><button class="faq-question" type="button">¿Tienen opciones vegetarianas?<span>+</span></button><div class="faq-answer">Sí. Contamos con opciones vegetarianas y podemos adaptar algunos platos.</div></div>
+<div class="faq-item"><button class="faq-question" type="button">¿Aceptan familias con niños?<span>+</span></button><div class="faq-answer">Sí. Nuestro restaurante recibe familias.</div></div>
+</div></div></section>
 
-<section class="reservation">
-<div class="reservation-content"><div class="eyebrow">Tu mesa te espera</div><h2>Una noche para recordar.</h2><p>Elegí tus platos y enviá tu pedido directamente desde nuestra carta.</p></div>
-</section>
+<section class="reservation"><div class="reservation-content"><div class="eyebrow">Tu mesa te espera</div><h2>Una noche para recordar.</h2><p>Elegí tus platos y enviá tu pedido directamente desde nuestra carta.</p><a class="btn btn-primary" href="#menu">Descubrir el menú</a></div></section>
 
-<footer>
-<div class="footer-inner"><div><div class="footer-brand">FOGÓN DEL VALLE</div><div class="footer-demo">Demo ficticia · Desarrollada por WEBS PATAGONIA</div></div><div>© 2026 Fogón del Valle · Trevelin, Patagonia</div></div>
-</footer>
+<footer><div class="footer-inner"><div><div class="footer-brand">FOGÓN DEL VALLE</div><div class="footer-demo">Demo ficticia · Desarrollada por WEBS PATAGONIA</div></div><div>© 2026 Fogón del Valle · Trevelin, Patagonia</div></div></footer>
 
-<div class="cart-overlay" id="cartOverlay">
-<div class="cart-panel">
-<div class="cart-header"><div><h2>Tu pedido</h2><div class="cart-editing-label" id="cartEditingLabel" style="display:none">Editando pedido</div></div><button class="close-cart" id="closeCart" type="button">×</button></div>
-<div class="cart-items" id="cartItems"><div class="empty-cart">Tu carrito está vacío.</div></div>
+<div class="cart-overlay" id="cartOverlay"><div class="cart-panel">
+<div class="cart-header"><div><h2>Tu pedido</h2><div id="cartEditingLabel" style="display:none;font-size:11px;color:#e9c98e">Editando pedido</div></div><button class="close-cart" id="closeCart" type="button">×</button></div>
+<div class="cart-items" id="cartItems"></div>
 <div class="cart-footer"><div class="cart-total"><span>Total</span><span id="cartTotal">$0</span></div><button class="btn btn-primary checkout-btn" id="checkoutBtn" type="button">Confirmar pedido</button></div>
-</div>
-</div>
+</div></div>
 
-<div class="modal-overlay" id="authModal">
-<div class="modal">
+<div class="modal-overlay" id="authModal"><div class="modal">
 <button class="modal-close" id="closeAuth" type="button">×</button>
 <h2 id="authTitle">Ingresar</h2><p id="authDescription">Ingresá para confirmar tu pedido.</p>
 <form id="authForm">
-<div class="form-group" id="nameGroup" style="display:none"><label for="authName">Nombre</label><input type="text" id="authName" placeholder="Tu nombre" autocomplete="name"></div>
-<div class="form-group"><label for="authEmail">Email</label><input type="email" id="authEmail" placeholder="tu@email.com" autocomplete="email" required></div>
-<div class="form-group"><label for="authPassword">Contraseña</label><input type="password" id="authPassword" placeholder="Mínimo 6 caracteres" autocomplete="current-password" required></div>
-<button type="submit" class="btn btn-primary" style="width:100%" id="authSubmit">Ingresar</button>
+<div class="form-group" id="nameGroup" style="display:none"><label for="authName">Nombre</label><input id="authName" type="text" placeholder="Tu nombre" autocomplete="name"></div>
+<div class="form-group"><label for="authEmail">Email</label><input id="authEmail" type="email" placeholder="tu@email.com" autocomplete="email" required></div>
+<div class="form-group"><label for="authPassword">Contraseña</label><input id="authPassword" type="password" placeholder="Mínimo 6 caracteres" autocomplete="current-password" minlength="6" required></div>
+<button class="btn btn-primary" id="authSubmit" type="submit" style="width:100%">Ingresar</button>
 </form>
 <div class="auth-switch"><span id="authSwitchText">¿No tenés cuenta?</span> <button id="authSwitch" type="button">Crear cuenta</button></div>
-</div>
-</div>
+</div></div>
 
 <div class="user-bar" id="userBar"><span id="userName">Usuario</span><button class="logout-btn" id="logoutBtn" type="button">Salir</button></div>
 <div class="toast" id="toast"></div>
 
 <script>
 "use strict";
-
 const SUPABASE_URL="https://gyjxkcrseotwahclwupu.supabase.co";
 const SUPABASE_KEY="sb_publishable_zY7b84xLNWlpLWbxTHpV6Q_Ai1JvaeK";
-
-if(!window.supabase){
- alert("No se pudo cargar Supabase. Revisá tu conexión a internet.");
- throw new Error("No se pudo cargar la biblioteca de Supabase.");
-}
-
-const supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
-
-const menuContainer=document.getElementById("menuContainer");
-const cartOverlay=document.getElementById("cartOverlay");
-const cartItems=document.getElementById("cartItems");
-const cartCount=document.getElementById("cartCount");
-const cartTotal=document.getElementById("cartTotal");
-const cartEditingLabel=document.getElementById("cartEditingLabel");
-const authModal=document.getElementById("authModal");
-const authForm=document.getElementById("authForm");
-const authTitle=document.getElementById("authTitle");
-const authDescription=document.getElementById("authDescription");
-const authSubmit=document.getElementById("authSubmit");
-const authSwitch=document.getElementById("authSwitch");
-const authSwitchText=document.getElementById("authSwitchText");
-const nameGroup=document.getElementById("nameGroup");
-const authName=document.getElementById("authName");
-const userBar=document.getElementById("userBar");
-const userName=document.getElementById("userName");
-const ordersContainer=document.getElementById("ordersContainer");
-const toast=document.getElementById("toast");
-const checkoutButton=document.getElementById("checkoutBtn");
-const header=document.getElementById("header");
-
-let cart=[];
-let authMode="login";
-let currentUser=null;
-let currentRole=null;
-let menuItems=[];
-let myOrders=[];
-let editingOrderId=null;
-let isSubmittingOrder=false;
-let toastTimeout=null;
-let authRequestInProgress=false;
-
+if(!window.supabase){alert("No se pudo cargar Supabase. Revisá tu conexión.");throw new Error("Supabase no disponible");}
+const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+const $=id=>document.getElementById(id);
+const menuContainer=$("menuContainer"),cartOverlay=$("cartOverlay"),cartItems=$("cartItems"),cartCount=$("cartCount"),cartTotal=$("cartTotal"),authModal=$("authModal"),authForm=$("authForm"),authTitle=$("authTitle"),authDescription=$("authDescription"),authSubmit=$("authSubmit"),authSwitch=$("authSwitch"),authSwitchText=$("authSwitchText"),nameGroup=$("nameGroup"),authName=$("authName"),userBar=$("userBar"),userName=$("userName"),ordersContainer=$("ordersContainer"),toast=$("toast"),checkoutButton=$("checkoutBtn"),header=$("header");
+let cart=[],authMode="login",currentUser=null,currentRole=null,menuItems=[],myOrders=[],editingOrderId=null,isSubmittingOrder=false,authRequestInProgress=false,toastTimeout;
 const ownerPanel=document.createElement("main");
 ownerPanel.id="ownerPanel";
-ownerPanel.innerHTML=`
-<div class="owner-inner">
- <div class="owner-top">
-  <div>
-   <div class="owner-eyebrow">Fogón del Valle · Trevelin</div>
-   <h1 class="owner-title">Panel de pedidos.</h1>
-   <p class="owner-subtitle">Pedidos de todos los clientes, del más reciente al más antiguo.</p>
-  </div>
-  <button id="refreshOwnerOrders" class="owner-refresh" type="button">↻ Actualizar pedidos</button>
- </div>
- <div id="ownerOrdersSummary" class="owner-summary"></div>
- <div id="ownerOrdersContainer"><div class="owner-empty">Cargando pedidos...</div></div>
-</div>`;
+ownerPanel.innerHTML=`<div class="owner-inner"><div class="owner-top"><div><div class="owner-eyebrow">Fogón del Valle · Trevelin</div><h1 class="owner-title">Panel de pedidos.</h1><p class="owner-subtitle">Pedidos de todos los clientes, del más reciente al más antiguo.</p></div><button id="refreshOwnerOrders" class="owner-refresh" type="button">↻ Actualizar pedidos</button></div><div id="ownerOrdersSummary" class="owner-summary"></div><div id="ownerOrdersContainer"><div class="owner-empty">Cargando pedidos...</div></div></div>`;
 document.body.insertBefore(ownerPanel,userBar);
+const ownerOrdersContainer=$("ownerOrdersContainer"),ownerOrdersSummary=$("ownerOrdersSummary"),refreshOwnerOrdersButton=$("refreshOwnerOrders");
 
-const ownerOrdersContainer=document.getElementById("ownerOrdersContainer");
-const ownerOrdersSummary=document.getElementById("ownerOrdersSummary");
-const refreshOwnerOrdersButton=document.getElementById("refreshOwnerOrders");
+function showToast(message){toast.textContent=String(message??"");toast.classList.add("show");clearTimeout(toastTimeout);toastTimeout=setTimeout(()=>toast.classList.remove("show"),3200);}
+function formatPrice(value){return new Intl.NumberFormat("es-AR",{style:"currency",currency:"ARS",maximumFractionDigits:0}).format(Number(value)||0);}
+function escapeHtml(text){const div=document.createElement("div");div.textContent=text??"";return div.innerHTML;}
+function getCategoryIcon(name){const v=String(name||"").toLowerCase();if(v.includes("empan"))return"🥟";if(/carne|cordero|bife/.test(v))return"🥩";if(/pesc|trucha|mar/.test(v))return"🐟";if(/pasta|risotto/.test(v))return"🍝";if(/postre|dulce/.test(v))return"🍰";if(/vino|bebida/.test(v))return"🍷";if(/entrada|comenzar/.test(v))return"🥗";return"🍽️";}
+function getOrderStatus(status){const s={received:{icon:"📥",name:"Pedido recibido"},accepted:{icon:"✅",name:"Pedido aceptado"},preparing:{icon:"👨‍🍳",name:"Preparando pedido"},ready:{icon:"🔥",name:"Pedido listo"},delivered:{icon:"🎉",name:"Pedido entregado"},cancelled:{icon:"❌",name:"Pedido cancelado"}};return s[status]||{icon:"📋",name:status||"Sin estado"};}
+function isOrderEditable(order){return Boolean(order&&order.status==="received");}
+function setOwnerMode(enabled){document.body.classList.toggle("owner-mode",Boolean(enabled));if(enabled){closeCart();closeAuth();editingOrderId=null;cart=[];renderCart();}}
+function prepareLogin(){authMode="login";authTitle.textContent="Ingresar";authDescription.textContent="Ingresá para confirmar tu pedido.";authSubmit.textContent="Ingresar";authSwitchText.textContent="¿No tenés cuenta?";authSwitch.textContent="Crear cuenta";nameGroup.style.display="none";authName.required=false;$("authPassword").autocomplete="current-password";}
+function prepareRegister(){authMode="register";authTitle.textContent="Crear cuenta";authDescription.textContent="Creá tu cuenta para realizar pedidos.";authSubmit.textContent="Crear cuenta";authSwitchText.textContent="¿Ya tenés cuenta?";authSwitch.textContent="Ingresar";nameGroup.style.display="block";authName.required=true;$("authPassword").autocomplete="new-password";}
+function openAuth(){if(currentRole==="restaurant")return;authModal.classList.add("active");document.body.classList.add("no-scroll");}
+function closeAuth(){authModal.classList.remove("active");if(!cartOverlay.classList.contains("active"))document.body.classList.remove("no-scroll");}
+function openCart(){if(currentRole==="restaurant")return;cartOverlay.classList.add("active");document.body.classList.add("no-scroll");}
+function closeCart(){cartOverlay.classList.remove("active");if(!authModal.classList.contains("active"))document.body.classList.remove("no-scroll");}
 
-function showToast(message){
- toast.textContent=String(message??"");
- toast.classList.add("show");
- clearTimeout(toastTimeout);
- toastTimeout=setTimeout(()=>toast.classList.remove("show"),3200);
-}
-
-function formatPrice(value){
- return new Intl.NumberFormat("es-AR",{style:"currency",currency:"ARS",maximumFractionDigits:0}).format(Number(value)||0);
-}
-
-function escapeHtml(text){
- const div=document.createElement("div");
- div.textContent=text??"";
- return div.innerHTML;
-}
-
-function getCategoryIcon(name){
- const value=String(name||"").toLowerCase();
- if(value.includes("empan"))return"🥟";
- if(value.includes("carne")||value.includes("cordero")||value.includes("bife"))return"🥩";
- if(value.includes("pesc")||value.includes("trucha")||value.includes("mar"))return"🐟";
- if(value.includes("pasta")||value.includes("risotto"))return"🍝";
- if(value.includes("postre")||value.includes("dulce"))return"🍰";
- if(value.includes("vino")||value.includes("bebida"))return"🍷";
- if(value.includes("entrada")||value.includes("comenzar"))return"🥗";
- return"🍽️";
-}
-
-function getOrderStatus(status){
- const statuses={
-  received:{icon:"📥",name:"Pedido recibido"},
-  accepted:{icon:"✅",name:"Pedido aceptado"},
-  preparing:{icon:"👨‍🍳",name:"Preparando pedido"},
-  ready:{icon:"🔥",name:"Pedido listo"},
-  delivered:{icon:"🎉",name:"Pedido entregado"},
-  cancelled:{icon:"❌",name:"Pedido cancelado"}
- };
- return statuses[status]||{icon:"📋",name:status||"Sin estado"};
-}
-
-function isOrderEditable(order){
- return Boolean(order&&order.status==="received");
-}
-
-function setOwnerMode(enabled){
- document.body.classList.toggle("owner-mode",Boolean(enabled));
- if(enabled){
-  closeCart();
-  closeAuth();
-  editingOrderId=null;
-  cart=[];
-  renderCart();
- }
-}
+$("accountBtn").addEventListener("click",()=>{if(currentUser&&currentRole==="customer")$("mis-pedidos").scrollIntoView({behavior:"smooth"});else if(!currentUser){prepareLogin();openAuth();}else if(currentRole!=="restaurant"){prepareLogin();openAuth();}});
+$("openCart").addEventListener("click",openCart);
+$("heroCart").addEventListener("click",()=>{if(currentRole==="restaurant")return;if(cart.length)openCart();else $("menu").scrollIntoView({behavior:"smooth"});});
+$("closeCart").addEventListener("click",closeCart);
+cartOverlay.addEventListener("click",e=>{if(e.target===cartOverlay)closeCart();});
+$("closeAuth").addEventListener("click",closeAuth);
+authSwitch.addEventListener("click",()=>authMode==="login"?prepareRegister():prepareLogin());
 
 async function loadMenu(){
  menuContainer.innerHTML='<div class="menu-loading">Cargando menú...</div>';
-
- const{data,error}=await supabaseClient
-  .from("menu_categories")
-  .select("id,name,description,sort_order,menu_items(id,name,description,price,image_url,available,sort_order)")
-  .eq("active",true)
-  .order("sort_order");
-
- if(error){
-  console.error("Error cargando menú:",error);
-  menuContainer.innerHTML='<div class="menu-error">No pudimos cargar el menú.<br><br>Revisá la conexión con Supabase.</div>';
-  return;
- }
-
- const uniqueItems=new Map();
-
- (data||[]).forEach(category=>{
-  (Array.isArray(category.menu_items)?category.menu_items:[])
-   .filter(item=>item.available)
-   .sort((a,b)=>(a.sort_order||0)-(b.sort_order||0))
-   .forEach(item=>{
-    const name=String(item.name||"").trim().toLowerCase();
-    if(name&&!uniqueItems.has(name)){
-     uniqueItems.set(name,{...item,category_id:category.id,category_name:category.name});
-    }
-   });
- });
-
- menuItems=Array.from(uniqueItems.values());
- renderMenu(data||[]);
+ const{data,error}=await db.from("menu_categories").select("id,name,description,sort_order,menu_items(id,name,description,price,image_url,available,sort_order)").eq("active",true).order("sort_order");
+ if(error){console.error(error);menuContainer.innerHTML='<div class="menu-error">No pudimos cargar el menú. Revisá la conexión con Supabase.</div>';return;}
+ const seen=new Map();
+ (data||[]).forEach(c=>(c.menu_items||[]).filter(i=>i.available).sort((a,b)=>(a.sort_order||0)-(b.sort_order||0)).forEach(i=>{const n=String(i.name||"").trim().toLowerCase();if(n&&!seen.has(n))seen.set(n,{...i,category_id:c.id,category_name:c.name});}));
+ menuItems=[...seen.values()];renderMenu(data||[]);
 }
-
 function renderMenu(categories){
- menuContainer.innerHTML="";
- const renderedNames=new Set();
- const usableCategories=[];
-
+ menuContainer.innerHTML="";const rendered=new Set();
  categories.forEach(category=>{
-  const items=(Array.isArray(category.menu_items)?category.menu_items:[])
-   .filter(item=>item.available)
-   .sort((a,b)=>(a.sort_order||0)-(b.sort_order||0))
-   .filter(item=>{
-    const name=String(item.name||"").trim().toLowerCase();
-    if(!name||renderedNames.has(name)||!menuItems.some(menuItem=>menuItem.id===item.id))return false;
-    renderedNames.add(name);
-    return true;
-   });
-
-  if(items.length)usableCategories.push({category,items});
+  const items=(category.menu_items||[]).filter(i=>i.available).sort((a,b)=>(a.sort_order||0)-(b.sort_order||0)).filter(i=>{const n=String(i.name||"").trim().toLowerCase();if(!n||rendered.has(n)||!menuItems.some(m=>m.id===i.id))return false;rendered.add(n);return true;});
+  if(!items.length)return;
+  const el=document.createElement("div");el.className="menu-category";
+  el.innerHTML=`<button class="menu-category-header" type="button" aria-expanded="false"><div class="menu-category-title"><div class="menu-category-icon">${getCategoryIcon(category.name)}</div><div><div class="menu-category-name">${escapeHtml(category.name)}</div>${category.description?`<span class="menu-category-description">${escapeHtml(category.description)}</span>`:""}</div></div><span class="menu-category-toggle">+</span></button><div class="menu-category-content"><div class="menu-category-items">${items.map(i=>`<div class="menu-item"><div><h4>${escapeHtml(i.name)}</h4><p>${escapeHtml(i.description||"")}</p><div class="menu-actions"><button class="add-btn" type="button" data-add="${Number(i.id)}">+ Agregar al pedido</button></div></div><div class="menu-price">${formatPrice(i.price)}</div></div>`).join("")}</div></div>`;
+  el.querySelector(".menu-category-header").addEventListener("click",()=>{const active=el.classList.contains("active");document.querySelectorAll(".menu-category.active").forEach(o=>{o.classList.remove("active");o.querySelector(".menu-category-header").setAttribute("aria-expanded","false");o.querySelector(".menu-category-toggle").textContent="+";});if(!active){el.classList.add("active");el.querySelector(".menu-category-header").setAttribute("aria-expanded","true");el.querySelector(".menu-category-toggle").textContent="−";}});
+  el.querySelectorAll("[data-add]").forEach(b=>b.addEventListener("click",()=>addToCart(Number(b.dataset.add))));
+  menuContainer.appendChild(el);
  });
-
- usableCategories.forEach(({category,items})=>{
-  const element=document.createElement("div");
-  element.className="menu-category";
-
-  element.innerHTML=`
-   <button class="menu-category-header" type="button" aria-expanded="false">
-    <div class="menu-category-title">
-     <div class="menu-category-icon">${getCategoryIcon(category.name)}</div>
-     <div>
-      <div class="menu-category-name">${escapeHtml(category.name)}</div>
-      ${category.description?`<span class="menu-category-description">${escapeHtml(category.description)}</span>`:""}
-     </div>
-    </div>
-    <span class="menu-category-toggle">+</span>
-   </button>
-   <div class="menu-category-content">
-    <div class="menu-category-inner">
-     <div class="menu-category-items">
-      ${items.map(item=>`
-       <div class="menu-item">
-        <div>
-         <h4>${escapeHtml(item.name)}</h4>
-         <p>${escapeHtml(item.description||"")}</p>
-         <div class="menu-actions">
-          <button class="add-btn" type="button" onclick="addToCart(${Number(item.id)})">+ Agregar al pedido</button>
-         </div>
-        </div>
-        <div class="menu-price">${formatPrice(item.price)}</div>
-       </div>`).join("")}
-     </div>
-    </div>
-   </div>`;
-
-  const button=element.querySelector(".menu-category-header");
-
-  button.addEventListener("click",()=>{
-   const active=element.classList.contains("active");
-
-   document.querySelectorAll(".menu-category.active").forEach(open=>{
-    open.classList.remove("active");
-    const b=open.querySelector(".menu-category-header");
-    if(b)b.setAttribute("aria-expanded","false");
-    const t=open.querySelector(".menu-category-toggle");
-    if(t)t.textContent="+";
-   });
-
-   if(!active){
-    element.classList.add("active");
-    button.setAttribute("aria-expanded","true");
-    element.querySelector(".menu-category-toggle").textContent="−";
-   }
-  });
-
-  menuContainer.appendChild(element);
- });
-
- if(!menuContainer.children.length){
-  menuContainer.innerHTML='<div class="menu-error">No hay productos disponibles en este momento.</div>';
- }
+ if(!menuContainer.children.length)menuContainer.innerHTML='<div class="menu-error">No hay productos disponibles en este momento.</div>';
 }
-
-window.addToCart=function(itemId){
- if(currentRole==="restaurant"){
-  showToast("El panel del restaurante es solo para consultar pedidos.");
-  return;
- }
-
- const product=menuItems.find(item=>Number(item.id)===Number(itemId));
-
- if(!product){
-  showToast("No encontramos ese producto.");
-  return;
- }
-
- const existing=cart.find(item=>Number(item.id)===Number(itemId));
-
- if(existing)existing.quantity++;
- else cart.push({id:Number(product.id),name:product.name,price:Number(product.price),quantity:1});
-
- renderCart();
- openCart();
- showToast(`${product.name} agregado al pedido`);
-};
-
+function addToCart(itemId){
+ if(currentRole==="restaurant"){showToast("El panel del restaurante es solo para consultar pedidos.");return;}
+ const p=menuItems.find(i=>Number(i.id)===Number(itemId));if(!p){showToast("No encontramos ese producto.");return;}
+ const existing=cart.find(i=>Number(i.id)===Number(itemId));if(existing)existing.quantity++;else cart.push({id:Number(p.id),name:p.name,price:Number(p.price),quantity:1});
+ renderCart();openCart();showToast(p.name+" agregado al pedido");
+}
 function renderCart(){
- if(!cart.length){
-  cartItems.innerHTML='<div class="empty-cart">Tu carrito está vacío.</div>';
-  cartCount.textContent="0";
-  cartTotal.textContent=formatPrice(0);
-  checkoutButton.disabled=false;
-  checkoutButton.textContent=editingOrderId?"Guardar cambios":"Confirmar pedido";
-  cartEditingLabel.style.display=editingOrderId?"block":"none";
-  checkoutButton.classList.toggle("editing",Boolean(editingOrderId));
-  return;
- }
-
- let total=0;
- let quantityTotal=0;
+ if(!cart.length){cartItems.innerHTML='<div class="empty-cart">Tu carrito está vacío.</div>';cartCount.textContent="0";cartTotal.textContent=formatPrice(0);checkoutButton.textContent=editingOrderId?"Guardar cambios":"Confirmar pedido";$("cartEditingLabel").style.display=editingOrderId?"block":"none";checkoutButton.classList.toggle("editing",Boolean(editingOrderId));return;}
+ let total=0,qty=0;
  cartItems.innerHTML="";
+ cart.forEach(i=>{const subtotal=i.price*i.quantity;total+=subtotal;qty+=i.quantity;const el=document.createElement("div");el.className="cart-item";el.innerHTML=`<div class="cart-item-top"><div><div class="cart-item-name">${escapeHtml(i.name)}</div><small>${formatPrice(i.price)} c/u</small></div><div class="cart-item-price">${formatPrice(subtotal)}</div></div><div class="quantity-controls"><button type="button" data-change="-1" aria-label="Restar">−</button><strong>${i.quantity}</strong><button type="button" data-change="1" aria-label="Sumar">+</button><button type="button" data-remove style="margin-left:auto">×</button></div>`;el.querySelector('[data-change="-1"]').addEventListener("click",()=>changeQuantity(i.id,-1));el.querySelector('[data-change="1"]').addEventListener("click",()=>changeQuantity(i.id,1));el.querySelector("[data-remove]").addEventListener("click",()=>removeFromCart(i.id));cartItems.appendChild(el);});
+ cartCount.textContent=qty;cartTotal.textContent=formatPrice(total);checkoutButton.textContent=editingOrderId?"Guardar cambios":"Confirmar pedido";$("cartEditingLabel").style.display=editingOrderId?"block":"none";checkoutButton.classList.toggle("editing",Boolean(editingOrderId));
+}
+function changeQuantity(id,change){if(currentRole==="restaurant")return;const i=cart.find(x=>Number(x.id)===Number(id));if(!i)return;i.quantity+=change;if(i.quantity<=0)cart=cart.filter(x=>Number(x.id)!==Number(id));renderCart();}
+function removeFromCart(id){if(currentRole==="restaurant")return;cart=cart.filter(x=>Number(x.id)!==Number(id));renderCart();}
+function renderLoggedOutOrders(){ordersContainer.innerHTML='<div class="orders-login"><div class="orders-empty-icon">🍷</div><h3>Ingresá para ver tus pedidos</h3><p>Una vez que hayas iniciado sesión vas a poder consultar todo lo que compraste.</p><button class="btn btn-primary" id="ordersLoginBtn" type="button">Iniciar sesión</button></div>';$("ordersLoginBtn").addEventListener("click",()=>{prepareLogin();openAuth();});}
 
- cart.forEach(item=>{
-  const subtotal=Number(item.price)*Number(item.quantity);
-  total+=subtotal;
-  quantityTotal+=Number(item.quantity);
-
-  const element=document.createElement("div");
-  element.className="cart-item";
-  element.innerHTML=`
-   <div class="cart-item-top">
-    <div>
-     <div class="cart-item-name">${escapeHtml(item.name)}</div>
-     <small>${formatPrice(item.price)} c/u</small>
-    </div>
-    <div class="cart-item-price">${formatPrice(subtotal)}</div>
-   </div>
-   <div class="quantity-controls">
-    <button type="button" aria-label="Restar una unidad" onclick="changeQuantity(${item.id},-1)">−</button>
-    <strong>${item.quantity}</strong>
-    <button type="button" aria-label="Agregar una unidad" onclick="changeQuantity(${item.id},1)">+</button>
-    <button type="button" aria-label="Eliminar producto" onclick="removeFromCart(${item.id})" style="margin-left:auto;border-color:#999;color:#777">×</button>
-   </div>`;
-
-  cartItems.appendChild(element);
- });
-
- cartCount.textContent=quantityTotal;
- cartTotal.textContent=formatPrice(total);
- checkoutButton.textContent=editingOrderId?"Guardar cambios":"Confirmar pedido";
- checkoutButton.classList.toggle("editing",Boolean(editingOrderId));
- cartEditingLabel.style.display=editingOrderId?"block":"none";
+async function loadCurrentUser(){
+ const{data,error}=await db.auth.getUser();
+ if(error||!data.user){currentUser=null;currentRole=null;userBar.style.display="none";$("accountBtn").textContent="Ingresar / Crear cuenta";setOwnerMode(false);return;}
+ currentUser=data.user;
+ const{data:profile,error:profileError}=await db.from("profiles").select("full_name,role").eq("id",currentUser.id).maybeSingle();
+ if(profileError||!profile){console.error("Perfil no verificado:",profileError);currentRole=null;userName.textContent="Perfil no encontrado";userBar.style.display="flex";$("accountBtn").textContent="Cuenta pendiente";setOwnerMode(false);return;}
+ currentRole=profile.role;
+ let displayName=profile.full_name||currentUser.user_metadata?.full_name||currentUser.email||"Usuario";
+ if(currentRole==="restaurant")displayName+=" · Restaurante";
+ userName.textContent=displayName;userBar.style.display="flex";
+ $("accountBtn").textContent=currentRole==="restaurant"?"Panel del restaurante":"Mi cuenta";
+ setOwnerMode(currentRole==="restaurant");
 }
 
-window.changeQuantity=function(itemId,change){
- if(currentRole==="restaurant")return;
- const item=cart.find(item=>Number(item.id)===Number(itemId));
- if(!item)return;
- item.quantity+=Number(change);
- if(item.quantity<=0)cart=cart.filter(item=>Number(item.id)!==Number(itemId));
- renderCart();
-};
-
-window.removeFromCart=function(itemId){
- if(currentRole==="restaurant")return;
- cart=cart.filter(item=>Number(item.id)!==Number(itemId));
- renderCart();
-};
-
-function openCart(){
- if(currentRole==="restaurant")return;
- cartOverlay.classList.add("active");
- document.body.classList.add("no-scroll");
-}
-
-function closeCart(){
- cartOverlay.classList.remove("active");
- if(!authModal.classList.contains("active"))document.body.classList.remove("no-scroll");
-}
-
-document.getElementById("openCart").addEventListener("click",openCart);
-
-document.getElementById("heroCart").addEventListener("click",()=>{
- if(currentRole==="restaurant")return;
- if(cart.length){
-  openCart();
- }else{
-  document.getElementById("menu").scrollIntoView({behavior:"smooth"});
- }
-});
-
-document.getElementById("closeCart").addEventListener("click",closeCart);
-
-cartOverlay.addEventListener("click",event=>{
- if(event.target===cartOverlay)closeCart();
-});
-
-function cancelOrderEditing(){
- editingOrderId=null;
- cart=[];
- renderCart();
- closeCart();
- showToast("Edición cancelada.");
-}
-
-window.editOrder=function(orderId){
- if(currentRole==="restaurant"){
-  showToast("Desde el panel del restaurante no se editan pedidos.");
-  return;
- }
-
- if(!currentUser){
-  prepareLogin();
-  openAuth();
-  return;
- }
-
- const order=myOrders.find(item=>String(item.id)===String(orderId));
-
- if(!order){
-  showToast("No encontramos ese pedido.");
-  return;
- }
-
- if(order.user_id!==currentUser.id){
-  showToast("No podés editar este pedido.");
-  return;
- }
-
- if(!isOrderEditable(order)){
-  showToast("Este pedido ya fue aceptado y no se puede editar.");
-  return;
- }
-
- const products=Array.isArray(order.order_items)?order.order_items:[];
-
- if(!products.length){
-  showToast("Este pedido no tiene productos para editar.");
-  return;
- }
-
- editingOrderId=Number(order.id);
- cart=products.map(product=>({
-  id:Number(product.menu_item_id),
-  name:product.product_name,
-  price:Number(product.unit_price),
-  quantity:Number(product.quantity)
- })).filter(item=>item.id&&item.quantity>0);
-
- renderCart();
- openCart();
- showToast(`Editando pedido #${order.id}`);
-};
-
-function openAuth(){
- if(currentRole==="restaurant")return;
- authModal.classList.add("active");
- document.body.classList.add("no-scroll");
-}
-
-function closeAuth(){
- authModal.classList.remove("active");
- if(!cartOverlay.classList.contains("active"))document.body.classList.remove("no-scroll");
-}
-
-document.getElementById("closeAuth").addEventListener("click",closeAuth);
-
-function prepareLogin(){
- authMode="login";
- authTitle.textContent="Ingresar";
- authDescription.textContent="Ingresá para confirmar tu pedido.";
- authSubmit.textContent="Ingresar";
- authSwitchText.textContent="¿No tenés cuenta?";
- authSwitch.textContent="Crear cuenta";
- nameGroup.style.display="none";
- authName.required=false;
- document.getElementById("authPassword").autocomplete="current-password";
-}
-
-function prepareRegister(){
- authMode="register";
- authTitle.textContent="Crear cuenta";
- authDescription.textContent="Creá tu cuenta para realizar pedidos.";
- authSubmit.textContent="Crear cuenta";
- authSwitchText.textContent="¿Ya tenés cuenta?";
- authSwitch.textContent="Ingresar";
- nameGroup.style.display="block";
- authName.required=true;
- document.getElementById("authPassword").autocomplete="new-password";
-}
-
-authSwitch.addEventListener("click",()=>{
- authMode==="login"?prepareRegister():prepareLogin();
-});
-
-authForm.addEventListener("submit",async event=>{
- event.preventDefault();
-
- if(authRequestInProgress)return;
- authRequestInProgress=true;
-
- const name=authName.value.trim();
- const email=document.getElementById("authEmail").value.trim();
- const password=document.getElementById("authPassword").value;
-
- authSubmit.disabled=true;
- authSubmit.textContent="Procesando...";
-
+authForm.addEventListener("submit",async e=>{
+ e.preventDefault();if(authRequestInProgress)return;authRequestInProgress=true;
+ const name=authName.value.trim(),email=$("authEmail").value.trim(),password=$("authPassword").value;
+ authSubmit.disabled=true;authSubmit.textContent="Procesando...";
  try{
   if(authMode==="register"){
    if(name.length<2)throw new Error("Ingresá tu nombre.");
    if(password.length<6)throw new Error("La contraseña debe tener al menos 6 caracteres.");
-
-   const{data,error}=await supabaseClient.auth.signUp({
-    email,
-    password,
-    options:{data:{full_name:name}}
-   });
-
+   const{data,error}=await db.auth.signUp({email,password,options:{data:{full_name:name}}});
    if(error)throw error;
-
-   if(!data.session){
-    alert("Cuenta creada correctamente.\n\nRevisá tu email para confirmar la cuenta antes de ingresar.");
-    authForm.reset();
-    prepareLogin();
-    closeAuth();
-   }else{
-    currentUser=data.user;
-    await loadCurrentUser();
-    authForm.reset();
-    closeAuth();
-
-    if(currentRole==="restaurant")await loadRestaurantOrders();
-    else if(currentRole==="customer")await loadMyOrders();
-    else showToast("No pudimos verificar el perfil de tu cuenta.");
-   }
+   if(!data.session){alert("Cuenta creada correctamente. Revisá tu email para confirmar la cuenta antes de ingresar.");authForm.reset();prepareLogin();closeAuth();}
+   else{currentUser=data.user;await loadCurrentUser();authForm.reset();closeAuth();if(currentRole==="restaurant")await loadRestaurantOrders();else if(currentRole==="customer")await loadMyOrders();else showToast("Tu cuenta se creó, pero falta configurar tu perfil en Supabase.");}
   }else{
-   const{data,error}=await supabaseClient.auth.signInWithPassword({email,password});
-   if(error)throw error;
-
-   currentUser=data.user;
-   await loadCurrentUser();
-   authForm.reset();
-   closeAuth();
-
-   if(currentRole==="restaurant")await loadRestaurantOrders();
-   else if(currentRole==="customer")await loadMyOrders();
-   else showToast("No pudimos verificar el perfil de tu cuenta.");
+   const{data,error}=await db.auth.signInWithPassword({email,password});if(error)throw error;
+   currentUser=data.user;await loadCurrentUser();authForm.reset();closeAuth();
+   if(currentRole==="restaurant")await loadRestaurantOrders();else if(currentRole==="customer")await loadMyOrders();else showToast("No pudimos verificar el perfil de tu cuenta.");
   }
- }catch(error){
-  console.error("Error de autenticación:",error);
-  alert("No pudimos completar la operación:\n\n"+(error.message||"Error desconocido."));
- }finally{
-  authRequestInProgress=false;
-  authSubmit.disabled=false;
-  authSubmit.textContent=authMode==="login"?"Ingresar":"Crear cuenta";
- }
+ }catch(err){console.error(err);alert("No pudimos completar la operación:\n\n"+(err.message||"Error desconocido."));}
+ finally{authRequestInProgress=false;authSubmit.disabled=false;authSubmit.textContent=authMode==="login"?"Ingresar":"Crear cuenta";}
 });
 
-async function loadCurrentUser(){
- const{data,error}=await supabaseClient.auth.getUser();
-
- if(error||!data.user){
-  currentUser=null;
-  currentRole=null;
-  userBar.style.display="none";
-  setOwnerMode(false);
-  return;
- }
-
- currentUser=data.user;
-
- const{data:profile,error:profileError}=await supabaseClient
-  .from("profiles")
-  .select("full_name,role")
-  .eq("id",currentUser.id)
-  .maybeSingle();
-
- if(profileError){
-  console.error("No se pudo verificar el perfil:",profileError);
-  currentRole=null;
-  userName.textContent="No se pudo verificar el perfil";
-  userBar.style.display="flex";
-  setOwnerMode(false);
-  return;
- }
-
- if(!profile){
-  currentRole=null;
-  userName.textContent="Perfil no encontrado";
-  userBar.style.display="flex";
-  setOwnerMode(false);
-  return;
- }
-
- currentRole=profile.role;
-
- let displayName=profile.full_name||currentUser.user_metadata?.full_name||currentUser.email||"Usuario";
-
- if(currentRole==="restaurant")displayName+=" · Restaurante";
-
- userName.textContent=displayName;
- userBar.style.display="flex";
- setOwnerMode(currentRole==="restaurant");
-}
-
-document.getElementById("logoutBtn").addEventListener("click",async()=>{
- const{error}=await supabaseClient.auth.signOut({scope:"local"});
-
- if(error){
-  console.error("Error cerrando sesión:",error);
-  showToast("No se pudo cerrar la sesión.");
-  return;
- }
-
- currentUser=null;
- currentRole=null;
- myOrders=[];
- editingOrderId=null;
- cart=[];
- userBar.style.display="none";
- setOwnerMode(false);
- renderCart();
- renderLoggedOutOrders();
- showToast("Sesión cerrada correctamente");
+$("logoutBtn").addEventListener("click",async()=>{
+ const{error}=await db.auth.signOut({scope:"local"});if(error){showToast("No se pudo cerrar la sesión.");return;}
+ currentUser=null;currentRole=null;myOrders=[];editingOrderId=null;cart=[];userBar.style.display="none";$("accountBtn").textContent="Ingresar / Crear cuenta";setOwnerMode(false);renderCart();renderLoggedOutOrders();showToast("Sesión cerrada correctamente");
 });
 
 async function loadMyOrders(){
- if(currentRole==="restaurant"){
-  await loadRestaurantOrders();
-  return;
- }
-
- if(!currentUser||currentRole!=="customer"){
-  renderLoggedOutOrders();
-  return;
- }
-
- ordersContainer.innerHTML='<div class="orders-empty"><div class="orders-empty-icon">⏳</div><h3>Cargando tus pedidos...</h3></div>';
-
- const{data:orders,error}=await supabaseClient
-  .from("orders")
-  .select("id,user_id,customer_name,customer_email,total,status,notes,created_at,updated_at,order_items(id,menu_item_id,product_name,quantity,unit_price,subtotal,created_at)")
-  .eq("user_id",currentUser.id)
-  .order("created_at",{ascending:false});
-
- if(error){
-  console.error("Error cargando pedidos:",error);
-  ordersContainer.innerHTML=`<div class="orders-empty"><div class="orders-empty-icon">⚠️</div><h3>No pudimos cargar tus pedidos</h3><p>${escapeHtml(error.message)}</p></div>`;
-  return;
- }
-
- myOrders=(orders||[]).filter(order=>order.user_id===currentUser.id);
-
- if(!myOrders.length){
-  ordersContainer.innerHTML='<div class="orders-empty"><div class="orders-empty-icon">🍽️</div><h3>Todavía no hiciste ningún pedido</h3><p>Cuando hagas tu primera compra, aparecerá acá.</p></div>';
-  return;
- }
-
+ if(currentRole==="restaurant"){await loadRestaurantOrders();return;}
+ if(!currentUser||currentRole!=="customer"){renderLoggedOutOrders();return;}
+ ordersContainer.innerHTML='<div class="orders-empty">⏳ Cargando tus pedidos...</div>';
+ const{data:orders,error}=await db.from("orders").select("id,user_id,customer_name,customer_email,total,status,notes,created_at,updated_at,order_items(id,menu_item_id,product_name,quantity,unit_price,subtotal,created_at)").eq("user_id",currentUser.id).order("created_at",{ascending:false});
+ if(error){console.error(error);ordersContainer.innerHTML=`<div class="orders-empty"><h3>No pudimos cargar tus pedidos</h3><p>${escapeHtml(error.message)}</p></div>`;return;}
+ myOrders=(orders||[]).filter(o=>o.user_id===currentUser.id);
+ if(!myOrders.length){ordersContainer.innerHTML='<div class="orders-empty"><div class="orders-empty-icon">🍽️</div><h3>Todavía no hiciste ningún pedido</h3><p>Cuando hagas tu primera compra, aparecerá acá.</p></div>';return;}
  renderMyOrders(myOrders);
 }
+function renderMyOrders(orders){ordersContainer.innerHTML=`<div class="orders-list">${orders.map(renderOrderCard).join("")}</div>`;}
+function renderOrderCard(order){
+ const status=getOrderStatus(order.status),date=new Date(order.created_at),dateText=Number.isNaN(date.getTime())?"Fecha no disponible":date.toLocaleDateString("es-AR"),timeText=Number.isNaN(date.getTime())?"":date.toLocaleTimeString("es-AR",{hour:"2-digit",minute:"2-digit"}),products=Array.isArray(order.order_items)?order.order_items:[],editable=isOrderEditable(order);
+ return `<article class="order-card"><div class="order-card-header"><div><div class="order-number">Pedido #${Number(order.id)}</div><div class="order-date">${dateText} ${timeText}</div></div><div class="order-status">${status.icon} ${escapeHtml(status.name)}</div></div><div class="order-products">${products.map(p=>`<div class="order-product"><div><div class="order-product-name">${escapeHtml(p.product_name||"Producto")}</div><div class="order-product-detail">${Number(p.quantity)} × ${formatPrice(p.unit_price)}</div></div><div class="order-product-subtotal">${formatPrice(p.subtotal)}</div></div>`).join("")}</div>${order.notes?`<div style="padding:0 24px 15px;color:var(--muted)"><strong>Nota:</strong> ${escapeHtml(order.notes)}</div>`:""}<div class="order-card-footer"><div><span class="order-total-label">Total del pedido</span><br><strong class="order-total">${formatPrice(order.total)}</strong></div><div class="order-actions">${editable?`<button class="order-edit-btn" data-edit="${Number(order.id)}">✏️ Editar pedido</button>`:`<span class="order-edit-locked">${order.status==="cancelled"?"Pedido cancelado":"Edición bloqueada porque el restaurante ya lo está gestionando."}</span>`}<button class="order-delete-btn" data-delete="${Number(order.id)}">🗑️ Eliminar pedido</button></div></div></article>`;
+}
+ordersContainer.addEventListener("click",e=>{const edit=e.target.closest("[data-edit]"),del=e.target.closest("[data-delete]");if(edit)editOrder(Number(edit.dataset.edit));if(del)deleteOrder(Number(del.dataset.delete));});
+
+async function editOrder(orderId){
+ if(!currentUser||currentRole!=="customer"){showToast("Iniciá sesión como cliente.");return;}
+ const order=myOrders.find(o=>String(o.id)===String(orderId));
+ if(!order||order.user_id!==currentUser.id){showToast("No podés editar este pedido.");return;}
+ if(!isOrderEditable(order)){showToast("Este pedido ya fue aceptado y no se puede editar.");return;}
+ const products=Array.isArray(order.order_items)?order.order_items:[];
+ if(!products.length){showToast("Este pedido no tiene productos para editar.");return;}
+ editingOrderId=Number(order.id);cart=products.map(p=>({id:Number(p.menu_item_id),name:p.product_name,price:Number(p.unit_price),quantity:Number(p.quantity)})).filter(p=>p.id&&p.quantity>0);renderCart();openCart();showToast("Editando pedido #"+order.id);
+}
+async function deleteOrder(orderId){
+ if(!currentUser||currentRole!=="customer"){showToast("Iniciá sesión para eliminar un pedido.");return;}
+ const order=myOrders.find(o=>String(o.id)===String(orderId));
+ if(!order||order.user_id!==currentUser.id){showToast("No podés eliminar este pedido.");return;}
+ if(!confirm(`¿Eliminar definitivamente el pedido #${order.id}?\nEsta acción no se puede deshacer.`))return;
+ try{
+  const{error}=await db.rpc("delete_my_order",{p_order_id:Number(order.id)});if(error)throw error;
+  if(String(editingOrderId)===String(order.id)){editingOrderId=null;cart=[];renderCart();closeCart();}
+  await loadMyOrders();showToast("Pedido eliminado correctamente.");
+ }catch(err){console.error(err);showToast(err.message||"No se pudo eliminar el pedido.");}
+}
+async function updateExistingOrder(){
+ if(!editingOrderId)throw new Error("No hay pedido en edición.");
+ const order=myOrders.find(o=>String(o.id)===String(editingOrderId));
+ if(!order||order.user_id!==currentUser.id||!isOrderEditable(order))throw new Error("Este pedido ya no está disponible para editar.");
+ if(!cart.length)throw new Error("El pedido no puede quedar vacío.");
+ const total=cart.reduce((s,i)=>s+i.price*i.quantity,0);
+ const{data:updated,error}=await db.from("orders").update({total,updated_at:new Date().toISOString()}).eq("id",Number(editingOrderId)).eq("user_id",currentUser.id).eq("status","received").select("id").maybeSingle();
+ if(error)throw error;if(!updated)throw new Error("El pedido ya no está disponible para editar.");
+ const{error:delErr}=await db.from("order_items").delete().eq("order_id",Number(editingOrderId));if(delErr)throw delErr;
+ const items=cart.map(i=>({order_id:Number(editingOrderId),menu_item_id:Number(i.id),product_name:i.name,quantity:Number(i.quantity),unit_price:Number(i.price),subtotal:Number(i.price)*Number(i.quantity)}));
+ const{error:insErr}=await db.from("order_items").insert(items);if(insErr)throw insErr;
+ editingOrderId=null;cart=[];renderCart();closeCart();await loadMyOrders();showToast("¡Pedido actualizado correctamente!");
+}
+checkoutButton.addEventListener("click",async()=>{
+ if(currentRole==="restaurant"){showToast("El panel del restaurante es solo para consultar pedidos.");return;}
+ if(isSubmittingOrder)return;
+ if(!cart.length){showToast("Agregá al menos un producto al pedido.");return;}
+ if(!currentUser){closeCart();prepareLogin();openAuth();return;}
+ if(currentRole!=="customer"){showToast("No pudimos verificar tu cuenta. Volvé a iniciar sesión.");return;}
+ isSubmittingOrder=true;checkoutButton.disabled=true;checkoutButton.textContent=editingOrderId?"Guardando cambios...":"Enviando pedido...";
+ try{
+  if(editingOrderId){await updateExistingOrder();return;}
+  const total=cart.reduce((s,i)=>s+i.price*i.quantity,0);
+  const{data:profile}=await db.from("profiles").select("full_name,email").eq("id",currentUser.id).maybeSingle();
+  const customerName=profile?.full_name||currentUser.user_metadata?.full_name||currentUser.email||"Cliente",customerEmail=profile?.email||currentUser.email||"";
+  const{data:order,error}=await db.from("orders").insert({user_id:currentUser.id,customer_name:customerName,customer_email:customerEmail,status:"received",total}).select().single();
+  if(error)throw error;
+  const items=cart.map(i=>({order_id:order.id,menu_item_id:Number(i.id),product_name:i.name,quantity:Number(i.quantity),unit_price:Number(i.price),subtotal:Number(i.price)*Number(i.quantity)}));
+  const{error:itemsError}=await db.from("order_items").insert(items);if(itemsError)throw itemsError;
+  cart=[];renderCart();closeCart();await loadMyOrders();showToast("¡Pedido enviado correctamente! 🍷");
+  setTimeout(()=>$("mis-pedidos").scrollIntoView({behavior:"smooth"}),300);
+ }catch(err){console.error(err);alert(err.message||"No pudimos guardar el pedido.");}
+ finally{isSubmittingOrder=false;checkoutButton.disabled=false;checkoutButton.textContent=editingOrderId?"Guardar cambios":"Confirmar pedido";}
+});
 
 async function loadRestaurantOrders(showMessage=false){
- if(!currentUser||currentRole!=="restaurant"){
-  ownerPanel.style.display="none";
-  return;
- }
-
- ownerOrdersContainer.innerHTML='<div class="owner-empty">⏳ Cargando pedidos...</div>';
- refreshOwnerOrdersButton.disabled=true;
- refreshOwnerOrdersButton.textContent="Cargando...";
-
+ if(!currentUser||currentRole!=="restaurant"){ownerPanel.style.display="none";return;}
+ ownerOrdersContainer.innerHTML='<div class="owner-empty">⏳ Cargando pedidos...</div>';refreshOwnerOrdersButton.disabled=true;
  try{
-  const{data:orders,error}=await supabaseClient
-   .from("orders")
-   .select("id,user_id,customer_name,customer_email,total,status,notes,created_at,updated_at,order_items(id,menu_item_id,product_name,quantity,unit_price,subtotal,created_at)")
-   .order("created_at",{ascending:false});
-
+  const{data:orders,error}=await db.from("orders").select("id,user_id,customer_name,customer_email,total,status,notes,created_at,order_items(id,menu_item_id,product_name,quantity,unit_price,subtotal)").order("created_at",{ascending:false});
   if(error)throw error;
-
-  const allOrders=orders||[];
-  const received=allOrders.filter(order=>order.status==="received").length;
-  const inProgress=allOrders.filter(order=>["accepted","preparing"].includes(order.status)).length;
-  const readyOrDelivered=allOrders.filter(order=>["ready","delivered"].includes(order.status)).length;
-
-  ownerOrdersSummary.innerHTML=`
-   <div class="owner-summary-card"><span>Total de pedidos</span><strong>${allOrders.length}</strong></div>
-   <div class="owner-summary-card"><span>Recibidos</span><strong>${received}</strong></div>
-   <div class="owner-summary-card"><span>En gestión</span><strong>${inProgress}</strong></div>
-   <div class="owner-summary-card"><span>Listos / entregados</span><strong>${readyOrDelivered}</strong></div>`;
-
-  if(!allOrders.length){
-   ownerOrdersContainer.innerHTML=`
-    <div class="owner-empty">
-     <div style="font-size:40px;margin-bottom:12px">🍽️</div>
-     <h3 style="font-family:'Cormorant Garamond',serif;font-size:30px;color:#5A1F24">Todavía no hay pedidos</h3>
-     <p>Cuando un cliente realice un pedido, aparecerá acá.</p>
-    </div>`;
-   if(showMessage)showToast("Pedidos actualizados.");
-   return;
-  }
-
-  ownerOrdersContainer.innerHTML=allOrders.map(renderRestaurantOrder).join("");
-
-  if(showMessage)showToast("Pedidos actualizados correctamente.");
- }catch(error){
-  console.error("Error cargando pedidos del restaurante:",error);
-  ownerOrdersSummary.innerHTML="";
-  ownerOrdersContainer.innerHTML=`
-   <div class="owner-empty">
-    <h3 style="color:#9b3c32;margin-bottom:8px">No pudimos cargar los pedidos</h3>
-    <p>${escapeHtml(error.message||"Error desconocido.")}</p>
-    <p style="margin-top:10px;font-size:12px">Verificá que el perfil tenga el rol restaurant y que las políticas RLS de Supabase permitan consultar los pedidos al restaurante.</p>
-   </div>`;
- }finally{
-  refreshOwnerOrdersButton.disabled=false;
-  refreshOwnerOrdersButton.textContent="↻ Actualizar pedidos";
- }
+  const all=orders||[],received=all.filter(o=>o.status==="received").length,progress=all.filter(o=>["accepted","preparing"].includes(o.status)).length,done=all.filter(o=>["ready","delivered"].includes(o.status)).length;
+  ownerOrdersSummary.innerHTML=`<div class="owner-summary-card"><span>Total de pedidos</span><strong>${all.length}</strong></div><div class="owner-summary-card"><span>Recibidos</span><strong>${received}</strong></div><div class="owner-summary-card"><span>En gestión</span><strong>${progress}</strong></div><div class="owner-summary-card"><span>Listos / entregados</span><strong>${done}</strong></div>`;
+  ownerOrdersContainer.innerHTML=all.length?all.map(renderRestaurantOrder).join():'<div class="owner-empty">🍽️ Todavía no hay pedidos.</div>';
+  if(showMessage)showToast("Pedidos actualizados.");
+ }catch(err){console.error(err);ownerOrdersContainer.innerHTML=`<div class="owner-empty">No pudimos cargar los pedidos.<br>${escapeHtml(err.message)}</div>`;}
+ finally{refreshOwnerOrdersButton.disabled=false;}
 }
-
 function renderRestaurantOrder(order){
- const status=getOrderStatus(order.status);
- const date=new Date(order.created_at);
-
- const dateText=Number.isNaN(date.getTime())
-  ?"Fecha no disponible"
-  :date.toLocaleDateString("es-AR",{day:"2-digit",month:"2-digit",year:"numeric"});
-
- const timeText=Number.isNaN(date.getTime())
-  ?""
-  :date.toLocaleTimeString("es-AR",{hour:"2-digit",minute:"2-digit"});
-
- const products=Array.isArray(order.order_items)?order.order_items:[];
- const customerName=order.customer_name||"Cliente sin nombre";
- const customerEmail=order.customer_email||"Email no disponible";
-
- return `
-  <article class="owner-order-card">
-   <div class="owner-order-head">
-    <div>
-     <h3>Pedido #${escapeHtml(order.id)}</h3>
-     <div class="owner-order-date">${dateText}${timeText?" · "+timeText:""}</div>
-    </div>
-    <div class="owner-order-status">${status.icon} ${escapeHtml(status.name)}</div>
-   </div>
-   <div class="owner-order-customer">
-    <strong>Cliente:</strong> ${escapeHtml(customerName)}<br>
-    <strong>Email:</strong> ${escapeHtml(customerEmail)}
-   </div>
-   <div class="owner-order-products">
-    ${products.length?products.map(product=>`
-     <div class="owner-order-product">
-      <div>
-       <strong>${escapeHtml(product.product_name||"Producto")}</strong>
-       <small>${Number(product.quantity)||0} × ${formatPrice(product.unit_price)}</small>
-      </div>
-      <strong>${formatPrice(product.subtotal??(Number(product.quantity||0)*Number(product.unit_price||0)))}</strong>
-     </div>`).join(""):'<p style="padding:15px 0;color:#9b3c32">Este pedido no tiene productos asociados.</p>'}
-   </div>
-   ${order.notes?`<div class="owner-order-note"><strong>Nota del cliente:</strong> ${escapeHtml(order.notes)}</div>`:""}
-   <div class="owner-order-total">
-    <span>Total del pedido</span>
-    <strong>${formatPrice(order.total)}</strong>
-   </div>
-  </article>`;
+ const s=getOrderStatus(order.status),d=new Date(order.created_at),date=Number.isNaN(d.getTime())?"Fecha no disponible":d.toLocaleString("es-AR"),products=Array.isArray(order.order_items)?order.order_items:[];
+ return `<article class="owner-order-card"><div class="owner-order-head"><div><h3>Pedido #${escapeHtml(order.id)}</h3><div class="owner-order-date">${date}</div></div><div>${s.icon} ${escapeHtml(s.name)}</div></div><div class="owner-order-customer"><strong>Cliente:</strong> ${escapeHtml(order.customer_name||"Cliente sin nombre")}<br><strong>Email:</strong> ${escapeHtml(order.customer_email||"Email no disponible")}</div><div class="owner-order-products">${products.map(p=>`<div class="owner-order-product"><div><strong>${escapeHtml(p.product_name||"Producto")}</strong><small>${Number(p.quantity)||0} × ${formatPrice(p.unit_price)}</small></div><strong>${formatPrice(p.subtotal??Number(p.quantity)*Number(p.unit_price))}</strong></div>`).join("")}</div>${order.notes?`<div class="owner-order-note"><strong>Nota:</strong> ${escapeHtml(order.notes)}</div>`:""}<div class="owner-order-total"><span>Total del pedido</span><strong>${formatPrice(order.total)}</strong></div></article>`;
 }
-
 refreshOwnerOrdersButton.addEventListener("click",()=>loadRestaurantOrders(true));
 
-function renderMyOrders(orders){
- ordersContainer.innerHTML=`<div class="orders-list">${orders.map(renderOrderCard).join("")}</div>`;
-}
-
-function renderOrderCard(order){
- const status=getOrderStatus(order.status);
- const date=new Date(order.created_at);
- const dateText=Number.isNaN(date.getTime())?"Fecha no disponible":date.toLocaleDateString("es-AR",{day:"2-digit",month:"2-digit",year:"numeric"});
- const timeText=Number.isNaN(date.getTime())?"":date.toLocaleTimeString("es-AR",{hour:"2-digit",minute:"2-digit"});
- const products=Array.isArray(order.order_items)?order.order_items:[];
- const editable=isOrderEditable(order);
-
- return `
-  <article class="order-card" data-order-id="${Number(order.id)}">
-   <div class="order-card-header">
-    <div>
-     <div class="order-number">Pedido #${Number(order.id)}</div>
-     <div class="order-date">${dateText}${timeText?" · "+timeText:""}</div>
-    </div>
-    <div class="order-status">${status.icon} ${escapeHtml(status.name)}</div>
-   </div>
-   <div class="order-products">
-    ${products.length?products.map(product=>`
-     <div class="order-product">
-      <div>
-       <div class="order-product-name">${escapeHtml(product.product_name||"Producto")}</div>
-       <div class="order-product-detail">${Number(product.quantity)} × ${formatPrice(product.unit_price)}</div>
-      </div>
-      <div class="order-product-subtotal">${formatPrice(product.subtotal)}</div>
-     </div>`).join(""):'<div class="orders-empty">No se encontraron productos en este pedido.</div>'}
-   </div>
-   ${order.notes?`<div style="padding:0 25px 20px;color:var(--muted);font-size:13px"><strong>Nota:</strong> ${escapeHtml(order.notes)}</div>`:""}
-   <div class="order-card-footer">
-    <div>
-     <span class="order-total-label">Total del pedido</span><br>
-     <strong class="order-total">${formatPrice(order.total)}</strong>
-    </div>
-    <div class="order-actions">
-     ${editable?`<button class="order-edit-btn" type="button" onclick="editOrder(${Number(order.id)})">✏️ Editar pedido</button>`:`<span class="order-edit-locked">${order.status==="cancelled"?"Pedido cancelado":"Edición bloqueada porque el restaurante ya lo está gestionando."}</span>`}
-     <button class="order-delete-btn" type="button" data-delete-order="${Number(order.id)}" onclick="deleteOrder(${Number(order.id)})">🗑️ Eliminar pedido</button>
-    </div>
-   </div>
-  </article>`;
-}
-
-function renderLoggedOutOrders(){
- ordersContainer.innerHTML=`
-  <div class="orders-login">
-   <div class="orders-empty-icon">🍷</div>
-   <h3>Ingresá para ver tus pedidos</h3>
-   <p>Una vez que hayas iniciado sesión vas a poder consultar todo lo que compraste.</p>
-   <button class="btn btn-primary" id="ordersLoginBtn" type="button">Iniciar sesión</button>
-  </div>`;
-
- const button=document.getElementById("ordersLoginBtn");
- if(button)button.addEventListener("click",()=>{prepareLogin();openAuth();});
-}
-
-window.deleteOrder=async function(orderId){
- if(currentRole==="restaurant"){
-  showToast("El panel del restaurante es de solo lectura.");
-  return;
- }
-
- if(!currentUser||currentRole!=="customer"){
-  showToast("Iniciá sesión para eliminar un pedido.");
-  return;
- }
-
- const order=myOrders.find(item=>String(item.id)===String(orderId));
-
- if(!order||order.user_id!==currentUser.id){
-  showToast("No podés eliminar este pedido.");
-  return;
- }
-
- if(!window.confirm(`¿Eliminar definitivamente el pedido #${order.id}?\n\nEsta acción no se puede deshacer.`))return;
-
- const button=document.querySelector(`[data-delete-order="${Number(order.id)}"]`);
- if(button){button.disabled=true;button.textContent="Eliminando...";}
-
- try{
-  const{error}=await supabaseClient.rpc("delete_my_order",{p_order_id:Number(order.id)});
-  if(error)throw error;
-
-  if(String(editingOrderId)===String(order.id)){
-   editingOrderId=null;
-   cart=[];
-   renderCart();
-   closeCart();
-  }
-
-  await loadMyOrders();
-  showToast(`Pedido #${order.id} eliminado correctamente.`);
- }catch(error){
-  console.error("Error eliminando el pedido:",error);
-  showToast(error.message||"No se pudo eliminar el pedido.");
-  await loadMyOrders();
- }
-};
-
-async function updateExistingOrder(){
- if(!editingOrderId)throw new Error("No hay ningún pedido en edición.");
-
- const order=myOrders.find(item=>String(item.id)===String(editingOrderId));
-
- if(!order)throw new Error("No encontramos el pedido que querés editar.");
- if(order.user_id!==currentUser.id)throw new Error("No podés editar este pedido.");
- if(!isOrderEditable(order))throw new Error("El restaurante ya aceptó este pedido y ya no se puede editar.");
- if(!cart.length)throw new Error("El pedido no puede quedar vacío.");
-
- const total=cart.reduce((sum,item)=>sum+Number(item.price)*Number(item.quantity),0);
-
- const{data:updatedOrder,error:orderUpdateError}=await supabaseClient
-  .from("orders")
-  .update({total,updated_at:new Date().toISOString()})
-  .eq("id",Number(editingOrderId))
-  .eq("user_id",currentUser.id)
-  .eq("status","received")
-  .select("id")
-  .maybeSingle();
-
- if(orderUpdateError)throw new Error("No pudimos actualizar el pedido: "+orderUpdateError.message);
- if(!updatedOrder)throw new Error("El pedido ya no está disponible para editar.");
-
- const{error:deleteItemsError}=await supabaseClient
-  .from("order_items")
-  .delete()
-  .eq("order_id",Number(editingOrderId));
-
- if(deleteItemsError)throw new Error("No pudimos actualizar los productos del pedido: "+deleteItemsError.message);
-
- const newOrderItems=cart.map(item=>({
-  order_id:Number(editingOrderId),
-  menu_item_id:Number(item.id),
-  product_name:item.name,
-  quantity:Number(item.quantity),
-  unit_price:Number(item.price),
-  subtotal:Number(item.price)*Number(item.quantity)
- }));
-
- const{error:insertItemsError}=await supabaseClient.from("order_items").insert(newOrderItems);
-
- if(insertItemsError){
-  throw new Error("El total se actualizó, pero no pudimos guardar los nuevos productos: "+insertItemsError.message);
- }
-
- editingOrderId=null;
- cart=[];
- renderCart();
- closeCart();
- await loadMyOrders();
- showToast("¡Pedido actualizado correctamente! 🍷");
-
- setTimeout(()=>{
-  document.getElementById("mis-pedidos").scrollIntoView({behavior:"smooth",block:"start"});
- },300);
-}
-
-checkoutButton.addEventListener("click",async()=>{
- if(currentRole==="restaurant"){
-  showToast("El panel del restaurante es solo para consultar pedidos.");
-  return;
- }
-
- if(isSubmittingOrder)return;
-
- if(!cart.length){
-  alert("Agregá al menos un producto al pedido.");
-  return;
- }
-
- if(!currentUser){
-  closeCart();
-  prepareLogin();
-  openAuth();
-  return;
- }
-
- if(currentRole!=="customer"){
-  showToast("No pudimos verificar tu cuenta. Volvé a iniciar sesión.");
-  return;
- }
-
- isSubmittingOrder=true;
- checkoutButton.disabled=true;
- checkoutButton.textContent=editingOrderId?"Guardando cambios...":"Enviando pedido...";
-
- try{
-  if(editingOrderId){
-   await updateExistingOrder();
-   return;
-  }
-
-  const total=cart.reduce((sum,item)=>sum+Number(item.price)*Number(item.quantity),0);
-
-  const{data:profile,error:profileError}=await supabaseClient
-   .from("profiles")
-   .select("full_name,email")
-   .eq("id",currentUser.id)
-   .maybeSingle();
-
-  if(profileError)console.warn("No se pudo cargar el perfil:",profileError);
-
-  const customerName=profile?.full_name||currentUser.user_metadata?.full_name||currentUser.email||"Cliente";
-  const customerEmail=profile?.email||currentUser.email||"";
-
-  const{data:order,error:orderError}=await supabaseClient
-   .from("orders")
-   .insert({
-    user_id:currentUser.id,
-    customer_name:customerName,
-    customer_email:customerEmail,
-    status:"received",
-    total
-   })
-   .select()
-   .single();
-
-  if(orderError)throw new Error("No pudimos crear el pedido: "+orderError.message);
-
-  const orderItems=cart.map(item=>({
-   order_id:order.id,
-   menu_item_id:Number(item.id),
-   product_name:item.name,
-   quantity:Number(item.quantity),
-   unit_price:Number(item.price),
-   subtotal:Number(item.price)*Number(item.quantity)
-  }));
-
-  const{error:itemsError}=await supabaseClient.from("order_items").insert(orderItems);
-
-  if(itemsError){
-   console.error("Error guardando order_items:",itemsError);
-   throw new Error("El pedido #"+order.id+" fue creado, pero no pudimos guardar sus productos.\n\n"+itemsError.message);
-  }
-
-  cart=[];
-  renderCart();
-  closeCart();
-  await loadMyOrders();
-  showToast("¡Pedido enviado correctamente! 🍷");
-
-  setTimeout(()=>{
-   document.getElementById("mis-pedidos").scrollIntoView({behavior:"smooth",block:"start"});
-  },350);
- }catch(error){
-  console.error("Error creando/actualizando pedido:",error);
-  alert(error.message||"No pudimos guardar el pedido.");
- }finally{
-  isSubmittingOrder=false;
-  checkoutButton.disabled=false;
-  checkoutButton.textContent=editingOrderId?"Guardar cambios":"Confirmar pedido";
- }
-});
-
-document.querySelectorAll(".faq-item").forEach(item=>{
- const button=item.querySelector(".faq-question");
- button.addEventListener("click",()=>{
-  item.classList.toggle("active");
-  const icon=button.querySelector("span");
-  icon.textContent=item.classList.contains("active")?"−":"+";
- });
-});
-
-window.addEventListener("scroll",()=>{
- header.classList.toggle("scrolled",window.scrollY>60);
-});
+document.querySelectorAll(".faq-item").forEach(item=>item.querySelector(".faq-question").addEventListener("click",()=>{item.classList.toggle("active");item.querySelector("span").textContent=item.classList.contains("active")?"−":"+";}));
+window.addEventListener("scroll",()=>header.classList.toggle("scrolled",window.scrollY>60));
 
 let authStateChangePending=false;
-
-supabaseClient.auth.onAuthStateChange((event,session)=>{
- if(authStateChangePending)return;
- authStateChangePending=true;
-
+db.auth.onAuthStateChange((event,session)=>{
+ if(authStateChangePending)return;authStateChangePending=true;
  setTimeout(async()=>{
   try{
-   currentUser=session?.user||null;
-   await loadCurrentUser();
-
-   if(!currentUser){
-    currentRole=null;
-    myOrders=[];
-    renderLoggedOutOrders();
-    return;
-   }
-
-   if(currentRole==="restaurant"){
-    await loadRestaurantOrders();
-   }else if(currentRole==="customer"){
-    await loadMyOrders();
-   }else{
-    ordersContainer.innerHTML=`
-     <div class="orders-empty">
-      <div class="orders-empty-icon">⚠️</div>
-      <h3>No pudimos verificar tu perfil</h3>
-      <p>Cerrá sesión y volvé a ingresar. Si el problema continúa, revisá el perfil en Supabase.</p>
-     </div>`;
-   }
-  }catch(error){
-   console.error("Error actualizando la sesión:",error);
-  }finally{
-   authStateChangePending=false;
-  }
+   currentUser=session?.user||null;await loadCurrentUser();
+   if(!currentUser){currentRole=null;myOrders=[];renderLoggedOutOrders();return;}
+   if(currentRole==="restaurant")await loadRestaurantOrders();
+   else if(currentRole==="customer")await loadMyOrders();
+   else ordersContainer.innerHTML='<div class="orders-empty"><h3>Perfil no verificado</h3><p>Revisá tu cuenta en Supabase.</p></div>';
+  }catch(err){console.error(err);}finally{authStateChangePending=false;}
  },0);
 });
-
 async function init(){
- renderCart();
- prepareLogin();
-
- await loadCurrentUser();
- await loadMenu();
-
- if(currentUser&&currentRole==="restaurant"){
-  await loadRestaurantOrders();
- }else if(currentUser&&currentRole==="customer"){
-  await loadMyOrders();
- }else if(!currentUser){
-  renderLoggedOutOrders();
- }else{
-  ordersContainer.innerHTML=`
-   <div class="orders-empty">
-    <div class="orders-empty-icon">⚠️</div>
-    <h3>No pudimos verificar tu perfil</h3>
-    <p>Revisá tu cuenta en Supabase e intentá ingresar nuevamente.</p>
-   </div>`;
- }
+ renderCart();prepareLogin();renderLoggedOutOrders();
+ await loadCurrentUser();await loadMenu();
+ if(currentUser&&currentRole==="restaurant")await loadRestaurantOrders();
+ else if(currentUser&&currentRole==="customer")await loadMyOrders();
 }
-
 init();
 </script>
 </body>
