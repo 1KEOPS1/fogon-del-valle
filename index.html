@@ -10,7 +10,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <style>
 :root{--wine:#5A1F24;--wine-dark:#351316;--terracotta:#B65A3A;--cream:#F4EBDD;--cream-light:#FBF7F0;--dark:#241B17;--gold:#C79A55;--muted:#756861;--white:#fff;--border:rgba(36,27,23,.14);--green:#58734d;--red:#9b3c32}
 *{margin:0;padding:0;box-sizing:border-box}
@@ -193,8 +192,6 @@ footer{background:#17110e;color:rgba(255,255,255,.55);padding:30px 6%}
 .logout-btn{border:0;background:var(--terracotta);color:white;padding:5px 9px;border-radius:15px;cursor:pointer;font-size:10px}
 .toast{position:fixed;right:20px;bottom:20px;z-index:6000;background:var(--wine);color:white;padding:14px 18px;border-radius:6px;box-shadow:0 10px 35px rgba(0,0,0,.25);transform:translateY(30px);opacity:0;pointer-events:none;transition:.3s;max-width:340px;font-size:13px}
 .toast.show{transform:translateY(0);opacity:1}
-
-/* Panel privado del restaurante */
 #ownerPanel{display:none;min-height:100vh;background:#F4EBDD;padding:110px 6% 70px;color:#241B17}
 #ownerPanel .owner-inner{max-width:1180px;margin:auto}
 .owner-top{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;margin-bottom:35px}
@@ -233,7 +230,6 @@ header{padding:18px 5%}.logo{font-size:26px}.hero{min-height:92vh}.hero-content{
 }
 </style>
 </head>
-
 <body>
 <header id="header">
 <div class="nav">
@@ -250,7 +246,7 @@ header{padding:18px 5%}.logo{font-size:26px}.hero{min-height:92vh}.hero-content{
 <div class="eyebrow">Trevelin · Patagonia</div>
 <h1>Sabores que nacen <em>del valle.</em></h1>
 <p>Cocina patagónica de estación, productos locales y vinos de la cordillera en un ambiente cálido frente al paisaje de Trevelin.</p>
-<div class="hero-buttons"><a href="#menu" class="btn btn-primary">Descubrir el menú</a><button class="btn btn-outline" id="heroCart" type="button">Ver mi pedido</button></div>
+<div class="hero-buttons"><a href="#menu" class="btn btn-primary">Descubrir el menú</a><button class="btn btn-outline" id="heroCart" type="button">Realizar pedido</button></div>
 </div>
 </section>
 
@@ -328,7 +324,7 @@ header{padding:18px 5%}.logo{font-size:26px}.hero{min-height:92vh}.hero-content{
 </section>
 
 <section class="reservation">
-<div class="reservation-content"><div class="eyebrow">Tu mesa te espera</div><h2>Una noche para recordar.</h2><p>Elegí tus platos y enviá tu pedido directamente desde nuestra carta.</p><button class="btn btn-primary" id="reservationLogin" type="button">Realizar pedido</button></div>
+<div class="reservation-content"><div class="eyebrow">Tu mesa te espera</div><h2>Una noche para recordar.</h2><p>Elegí tus platos y enviá tu pedido directamente desde nuestra carta.</p></div>
 </section>
 
 <footer>
@@ -694,7 +690,16 @@ function closeCart(){
 }
 
 document.getElementById("openCart").addEventListener("click",openCart);
-document.getElementById("heroCart").addEventListener("click",openCart);
+
+document.getElementById("heroCart").addEventListener("click",()=>{
+ if(currentRole==="restaurant")return;
+ if(cart.length){
+  openCart();
+ }else{
+  document.getElementById("menu").scrollIntoView({behavior:"smooth"});
+ }
+});
+
 document.getElementById("closeCart").addEventListener("click",closeCart);
 
 cartOverlay.addEventListener("click",event=>{
@@ -1327,12 +1332,6 @@ checkoutButton.addEventListener("click",async()=>{
   checkoutButton.disabled=false;
   checkoutButton.textContent=editingOrderId?"Guardar cambios":"Confirmar pedido";
  }
-});
-
-document.getElementById("reservationLogin").addEventListener("click",()=>{
- if(currentRole==="restaurant")return;
- if(cart.length)openCart();
- else document.getElementById("menu").scrollIntoView({behavior:"smooth"});
 });
 
 document.querySelectorAll(".faq-item").forEach(item=>{
