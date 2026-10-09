@@ -10,6 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
 :root{--wine:#5A1F24;--wine-dark:#351316;--terracotta:#B65A3A;--cream:#F4EBDD;--cream-light:#FBF7F0;--dark:#241B17;--gold:#C79A55;--muted:#756861;--white:#fff;--border:rgba(36,27,23,.14);--green:#58734d;--red:#9b3c32}
 *{margin:0;padding:0;box-sizing:border-box}
@@ -188,14 +189,51 @@ footer{background:#17110e;color:rgba(255,255,255,.55);padding:30px 6%}
 .form-group input:focus{border-color:var(--terracotta)}
 .auth-switch{margin-top:18px;text-align:center;font-size:13px}
 .auth-switch button{border:0;background:none;color:var(--terracotta);font-weight:700;cursor:pointer}
-.user-bar{position:fixed;bottom:18px;left:18px;z-index:2000;background:var(--wine);color:white;padding:10px 15px;border-radius:30px;font-size:12px;display:none;align-items:center;gap:10px;box-shadow:0 8px 25px rgba(0,0,0,.2)}
+.user-bar{position:fixed;bottom:18px;left:18px;z-index:5000;background:var(--wine);color:white;padding:10px 15px;border-radius:30px;font-size:12px;display:none;align-items:center;gap:10px;box-shadow:0 8px 25px rgba(0,0,0,.2)}
 .logout-btn{border:0;background:var(--terracotta);color:white;padding:5px 9px;border-radius:15px;cursor:pointer;font-size:10px}
 .toast{position:fixed;right:20px;bottom:20px;z-index:6000;background:var(--wine);color:white;padding:14px 18px;border-radius:6px;box-shadow:0 10px 35px rgba(0,0,0,.25);transform:translateY(30px);opacity:0;pointer-events:none;transition:.3s;max-width:340px;font-size:13px}
 .toast.show{transform:translateY(0);opacity:1}
+
+/* Panel privado del restaurante */
+#ownerPanel{display:none;min-height:100vh;background:#F4EBDD;padding:110px 6% 70px;color:#241B17}
+#ownerPanel .owner-inner{max-width:1180px;margin:auto}
+.owner-top{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;margin-bottom:35px}
+.owner-eyebrow{color:#B65A3A;text-transform:uppercase;letter-spacing:3px;font-size:11px;font-weight:700}
+.owner-title{font-family:"Cormorant Garamond",serif;font-size:clamp(42px,6vw,66px);color:#5A1F24;line-height:1;margin-top:8px}
+.owner-subtitle{color:#756861;margin-top:12px}
+.owner-refresh{background:#5A1F24;color:white;border:0;padding:13px 20px;border-radius:4px;font-weight:700;cursor:pointer}
+.owner-refresh:disabled{opacity:.6;cursor:wait}
+.owner-summary{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:25px}
+.owner-summary-card{background:white;border:1px solid rgba(36,27,23,.12);padding:15px 20px;min-width:145px;flex:1}
+.owner-summary-card span{display:block;font-size:12px;color:#756861}
+.owner-summary-card strong{font-size:25px;color:#5A1F24}
+.owner-order-card{background:#fff;border:1px solid rgba(36,27,23,.14);margin-bottom:20px;box-shadow:0 8px 25px rgba(36,27,23,.05)}
+.owner-order-head{background:#5A1F24;color:#fff;padding:20px 24px;display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}
+.owner-order-head h3{font-family:"Cormorant Garamond",serif;font-size:28px}
+.owner-order-date{font-size:12px;color:rgba(255,255,255,.7);margin-top:3px}
+.owner-order-status{padding:7px 12px;border-radius:20px;background:rgba(255,255,255,.13);font-size:12px}
+.owner-order-customer{padding:16px 24px;background:#FBF7F0;border-bottom:1px solid rgba(36,27,23,.12);font-size:13px;overflow-wrap:anywhere}
+.owner-order-products{padding:8px 24px}
+.owner-order-product{display:flex;justify-content:space-between;gap:15px;padding:14px 0;border-bottom:1px solid rgba(36,27,23,.12)}
+.owner-order-product:last-child{border-bottom:0}
+.owner-order-product strong{font-family:"Cormorant Garamond",serif;font-size:21px;color:#5A1F24}
+.owner-order-product small{display:block;color:#756861;font-size:12px}
+.owner-order-total{padding:17px 24px;border-top:1px solid rgba(36,27,23,.12);display:flex;justify-content:space-between;gap:15px;align-items:center;background:#FBF7F0}
+.owner-order-total strong{font-size:22px;color:#5A1F24}
+.owner-order-note{padding:0 24px 18px;font-size:13px;color:#756861;overflow-wrap:anywhere}
+.owner-empty{background:white;padding:35px;text-align:center;color:#756861;border:1px solid rgba(36,27,23,.12)}
+body.owner-mode{background:#F4EBDD}
+body.owner-mode> :not(#ownerPanel):not(#userBar):not(#toast){display:none!important}
+body.owner-mode #ownerPanel{display:block!important}
+body.owner-mode #userBar{display:flex!important}
 @media(max-width:900px){.nav-links{display:none}.intro-grid,.contact-grid{grid-template-columns:1fr;gap:45px}.dishes,.experience-grid{grid-template-columns:1fr}.gallery{grid-template-columns:1fr 1fr;grid-template-rows:240px 240px 240px}.gallery-item:first-child{grid-column:span 2;grid-row:span 1}.footer-inner{flex-direction:column;align-items:flex-start;gap:15px}}
-@media(max-width:600px){header{padding:18px 5%}.logo{font-size:26px}.hero{min-height:92vh}.hero-content{width:90%}.hero h1{font-size:59px}.section{padding:80px 6%}.section-title{font-size:48px}.intro-content h2{font-size:48px}.intro-image img{height:480px}.gallery{grid-template-columns:1fr;grid-template-rows:repeat(5,250px)}.gallery-item:first-child{grid-column:auto}.menu-category-header{padding:18px}.menu-category-name{font-size:28px}.menu-category-description{max-width:190px}.menu-category-items{padding:0 18px 8px}.menu-item{grid-template-columns:1fr;gap:8px}.menu-price{order:-1;justify-self:start}.order-card-header{flex-direction:column;align-items:flex-start}.order-product{align-items:flex-start}.order-card-footer{flex-direction:column;align-items:flex-start}.order-actions{width:100%;justify-content:flex-start}.editing-banner{align-items:flex-start;flex-direction:column}}
+@media(max-width:600px){
+header{padding:18px 5%}.logo{font-size:26px}.hero{min-height:92vh}.hero-content{width:90%}.hero h1{font-size:59px}.section{padding:80px 6%}.section-title{font-size:48px}.intro-content h2{font-size:48px}.intro-image img{height:480px}.gallery{grid-template-columns:1fr;grid-template-rows:repeat(5,250px)}.gallery-item:first-child{grid-column:auto}.menu-category-header{padding:18px}.menu-category-name{font-size:28px}.menu-category-description{max-width:190px}.menu-category-items{padding:0 18px 8px}.menu-item{grid-template-columns:1fr;gap:8px}.menu-price{order:-1;justify-self:start}.order-card-header{flex-direction:column;align-items:flex-start}.order-product{align-items:flex-start}.order-card-footer{flex-direction:column;align-items:flex-start}.order-actions{width:100%;justify-content:flex-start}.editing-banner{align-items:flex-start;flex-direction:column}
+#ownerPanel{padding:100px 5% 85px}.owner-order-head{align-items:flex-start;flex-direction:column}.owner-order-customer,.owner-order-products,.owner-order-total{padding-left:16px;padding-right:16px}.owner-order-note{padding-left:16px;padding-right:16px}.owner-order-product strong{font-size:19px}
+}
 </style>
 </head>
+
 <body>
 <header id="header">
 <div class="nav">
@@ -206,6 +244,7 @@ footer{background:#17110e;color:rgba(255,255,255,.55);padding:30px 6%}
 </nav>
 </div>
 </header>
+
 <section class="hero" id="inicio">
 <div class="hero-content">
 <div class="eyebrow">Trevelin · Patagonia</div>
@@ -214,6 +253,7 @@ footer{background:#17110e;color:rgba(255,255,255,.55);padding:30px 6%}
 <div class="hero-buttons"><a href="#menu" class="btn btn-primary">Descubrir el menú</a><button class="btn btn-outline" id="heroCart" type="button">Ver mi pedido</button></div>
 </div>
 </section>
+
 <section class="section intro" id="historia">
 <div class="container intro-grid">
 <div class="intro-image"><img src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1200&q=85" alt="Plato de cocina de estación"><div class="image-note"><strong>Producto local.</strong><span>Cocina de estación · Patagonia</span></div></div>
@@ -226,12 +266,14 @@ footer{background:#17110e;color:rgba(255,255,255,.55);padding:30px 6%}
 </div>
 </div>
 </section>
+
 <section class="section menu" id="menu">
 <div class="container">
 <div class="section-header"><div class="section-label">Nuestra carta</div><h2 class="section-title">Sabores del valle.</h2><p class="section-text">Elegí una categoría para descubrir sus platos.</p></div>
 <div class="menu-grid" id="menuContainer"><div class="menu-loading">Cargando menú...</div></div>
 </div>
 </section>
+
 <section class="section featured">
 <div class="container">
 <div class="section-header"><div class="section-label">Recomendados</div><h2 class="section-title">Del fuego a la mesa.</h2><p class="section-text">Algunos de nuestros platos favoritos.</p></div>
@@ -242,12 +284,14 @@ footer{background:#17110e;color:rgba(255,255,255,.55);padding:30px 6%}
 </div>
 </div>
 </section>
+
 <section class="section orders-section" id="mis-pedidos">
 <div class="container">
 <div class="orders-header"><div class="section-label">Tu cuenta</div><h2 class="section-title">Mis pedidos.</h2><p class="section-text">Acá solamente vas a ver tus propios pedidos. Podés editar un pedido mientras todavía no haya sido aceptado.</p></div>
 <div id="ordersContainer"><div class="orders-login"><div class="orders-empty-icon">🍷</div><h3>Ingresá para ver tus pedidos</h3><p>Una vez que hayas iniciado sesión vas a poder consultar todo lo que compraste.</p><button class="btn btn-primary" id="ordersLoginBtn" type="button">Iniciar sesión</button></div></div>
 </div>
 </section>
+
 <section class="section experience" id="experiencia">
 <div class="container">
 <div class="section-header"><div class="section-label">Mucho más que una cena</div><h2 class="section-title">Una experiencia patagónica.</h2><p class="section-text">Venir a Fogón del Valle es sentarse a disfrutar de la comida, el vino y el paisaje.</p></div>
@@ -258,6 +302,7 @@ footer{background:#17110e;color:rgba(255,255,255,.55);padding:30px 6%}
 </div>
 </div>
 </section>
+
 <section class="section" id="galeria">
 <div class="container">
 <div class="section-header"><div class="section-label">Galería</div><h2 class="section-title">Así se vive Fogón.</h2></div>
@@ -270,6 +315,7 @@ footer{background:#17110e;color:rgba(255,255,255,.55);padding:30px 6%}
 </div>
 </div>
 </section>
+
 <section class="section faq">
 <div class="container">
 <div class="section-header"><div class="section-label">Preguntas frecuentes</div><h2 class="section-title">Antes de venir.</h2></div>
@@ -280,12 +326,15 @@ footer{background:#17110e;color:rgba(255,255,255,.55);padding:30px 6%}
 </div>
 </div>
 </section>
+
 <section class="reservation">
 <div class="reservation-content"><div class="eyebrow">Tu mesa te espera</div><h2>Una noche para recordar.</h2><p>Elegí tus platos y enviá tu pedido directamente desde nuestra carta.</p><button class="btn btn-primary" id="reservationLogin" type="button">Realizar pedido</button></div>
 </section>
+
 <footer>
 <div class="footer-inner"><div><div class="footer-brand">FOGÓN DEL VALLE</div><div class="footer-demo">Demo ficticia · Desarrollada por WEBS PATAGONIA</div></div><div>© 2026 Fogón del Valle · Trevelin, Patagonia</div></div>
 </footer>
+
 <div class="cart-overlay" id="cartOverlay">
 <div class="cart-panel">
 <div class="cart-header"><div><h2>Tu pedido</h2><div class="cart-editing-label" id="cartEditingLabel" style="display:none">Editando pedido</div></div><button class="close-cart" id="closeCart" type="button">×</button></div>
@@ -293,6 +342,7 @@ footer{background:#17110e;color:rgba(255,255,255,.55);padding:30px 6%}
 <div class="cart-footer"><div class="cart-total"><span>Total</span><span id="cartTotal">$0</span></div><button class="btn btn-primary checkout-btn" id="checkoutBtn" type="button">Confirmar pedido</button></div>
 </div>
 </div>
+
 <div class="modal-overlay" id="authModal">
 <div class="modal">
 <button class="modal-close" id="closeAuth" type="button">×</button>
@@ -306,12 +356,23 @@ footer{background:#17110e;color:rgba(255,255,255,.55);padding:30px 6%}
 <div class="auth-switch"><span id="authSwitchText">¿No tenés cuenta?</span> <button id="authSwitch" type="button">Crear cuenta</button></div>
 </div>
 </div>
+
 <div class="user-bar" id="userBar"><span id="userName">Usuario</span><button class="logout-btn" id="logoutBtn" type="button">Salir</button></div>
 <div class="toast" id="toast"></div>
+
 <script>
+"use strict";
+
 const SUPABASE_URL="https://gyjxkcrseotwahclwupu.supabase.co";
 const SUPABASE_KEY="sb_publishable_zY7b84xLNWlpLWbxTHpV6Q_Ai1JvaeK";
+
+if(!window.supabase){
+ alert("No se pudo cargar Supabase. Revisá tu conexión a internet.");
+ throw new Error("No se pudo cargar la biblioteca de Supabase.");
+}
+
 const supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+
 const menuContainer=document.getElementById("menuContainer");
 const cartOverlay=document.getElementById("cartOverlay");
 const cartItems=document.getElementById("cartItems");
@@ -332,230 +393,1022 @@ const userName=document.getElementById("userName");
 const ordersContainer=document.getElementById("ordersContainer");
 const toast=document.getElementById("toast");
 const checkoutButton=document.getElementById("checkoutBtn");
-let cart=[],authMode="login",currentUser=null,menuItems=[],myOrders=[],editingOrderId=null,isSubmittingOrder=false,toastTimeout=null;
-function showToast(message){toast.textContent=message;toast.classList.add("show");clearTimeout(toastTimeout);toastTimeout=setTimeout(()=>toast.classList.remove("show"),3200)}
-function formatPrice(value){return new Intl.NumberFormat("es-AR",{style:"currency",currency:"ARS",maximumFractionDigits:0}).format(Number(value)||0)}
-function escapeHtml(text){const div=document.createElement("div");div.textContent=text??"";return div.innerHTML}
-function getCategoryIcon(name){const value=String(name||"").toLowerCase();if(value.includes("empan"))return"🥟";if(value.includes("carne")||value.includes("cordero")||value.includes("bife"))return"🥩";if(value.includes("pesc")||value.includes("trucha")||value.includes("mar"))return"🐟";if(value.includes("pasta")||value.includes("risotto"))return"🍝";if(value.includes("postre")||value.includes("dulce"))return"🍰";if(value.includes("vino")||value.includes("bebida"))return"🍷";if(value.includes("entrada")||value.includes("comenzar"))return"🥗";return"🍽️"}
-function getOrderStatus(status){const statuses={received:{icon:"📥",name:"Pedido recibido"},accepted:{icon:"✅",name:"Pedido aceptado"},preparing:{icon:"👨‍🍳",name:"Preparando tu pedido"},ready:{icon:"🔥",name:"Pedido listo"},delivered:{icon:"🎉",name:"Pedido entregado"},cancelled:{icon:"❌",name:"Pedido cancelado"}};return statuses[status]||{icon:"📋",name:"Pedido"}}
-function isOrderEditable(order){return Boolean(order&&order.status==="received")}
+const header=document.getElementById("header");
+
+let cart=[];
+let authMode="login";
+let currentUser=null;
+let currentRole=null;
+let menuItems=[];
+let myOrders=[];
+let editingOrderId=null;
+let isSubmittingOrder=false;
+let toastTimeout=null;
+let authRequestInProgress=false;
+
+const ownerPanel=document.createElement("main");
+ownerPanel.id="ownerPanel";
+ownerPanel.innerHTML=`
+<div class="owner-inner">
+ <div class="owner-top">
+  <div>
+   <div class="owner-eyebrow">Fogón del Valle · Trevelin</div>
+   <h1 class="owner-title">Panel de pedidos.</h1>
+   <p class="owner-subtitle">Pedidos de todos los clientes, del más reciente al más antiguo.</p>
+  </div>
+  <button id="refreshOwnerOrders" class="owner-refresh" type="button">↻ Actualizar pedidos</button>
+ </div>
+ <div id="ownerOrdersSummary" class="owner-summary"></div>
+ <div id="ownerOrdersContainer"><div class="owner-empty">Cargando pedidos...</div></div>
+</div>`;
+document.body.insertBefore(ownerPanel,userBar);
+
+const ownerOrdersContainer=document.getElementById("ownerOrdersContainer");
+const ownerOrdersSummary=document.getElementById("ownerOrdersSummary");
+const refreshOwnerOrdersButton=document.getElementById("refreshOwnerOrders");
+
+function showToast(message){
+ toast.textContent=String(message??"");
+ toast.classList.add("show");
+ clearTimeout(toastTimeout);
+ toastTimeout=setTimeout(()=>toast.classList.remove("show"),3200);
+}
+
+function formatPrice(value){
+ return new Intl.NumberFormat("es-AR",{style:"currency",currency:"ARS",maximumFractionDigits:0}).format(Number(value)||0);
+}
+
+function escapeHtml(text){
+ const div=document.createElement("div");
+ div.textContent=text??"";
+ return div.innerHTML;
+}
+
+function getCategoryIcon(name){
+ const value=String(name||"").toLowerCase();
+ if(value.includes("empan"))return"🥟";
+ if(value.includes("carne")||value.includes("cordero")||value.includes("bife"))return"🥩";
+ if(value.includes("pesc")||value.includes("trucha")||value.includes("mar"))return"🐟";
+ if(value.includes("pasta")||value.includes("risotto"))return"🍝";
+ if(value.includes("postre")||value.includes("dulce"))return"🍰";
+ if(value.includes("vino")||value.includes("bebida"))return"🍷";
+ if(value.includes("entrada")||value.includes("comenzar"))return"🥗";
+ return"🍽️";
+}
+
+function getOrderStatus(status){
+ const statuses={
+  received:{icon:"📥",name:"Pedido recibido"},
+  accepted:{icon:"✅",name:"Pedido aceptado"},
+  preparing:{icon:"👨‍🍳",name:"Preparando pedido"},
+  ready:{icon:"🔥",name:"Pedido listo"},
+  delivered:{icon:"🎉",name:"Pedido entregado"},
+  cancelled:{icon:"❌",name:"Pedido cancelado"}
+ };
+ return statuses[status]||{icon:"📋",name:status||"Sin estado"};
+}
+
+function isOrderEditable(order){
+ return Boolean(order&&order.status==="received");
+}
+
+function setOwnerMode(enabled){
+ document.body.classList.toggle("owner-mode",Boolean(enabled));
+ if(enabled){
+  closeCart();
+  closeAuth();
+  editingOrderId=null;
+  cart=[];
+  renderCart();
+ }
+}
+
 async function loadMenu(){
  menuContainer.innerHTML='<div class="menu-loading">Cargando menú...</div>';
- const{data,error}=await supabaseClient.from("menu_categories").select("id,name,description,sort_order,menu_items(id,name,description,price,image_url,available,sort_order)").eq("active",true).order("sort_order");
- if(error){console.error("Error cargando menú:",error);menuContainer.innerHTML='<div class="menu-error">No pudimos cargar el menú.<br><br>Revisá la conexión con Supabase.</div>';return}
+
+ const{data,error}=await supabaseClient
+  .from("menu_categories")
+  .select("id,name,description,sort_order,menu_items(id,name,description,price,image_url,available,sort_order)")
+  .eq("active",true)
+  .order("sort_order");
+
+ if(error){
+  console.error("Error cargando menú:",error);
+  menuContainer.innerHTML='<div class="menu-error">No pudimos cargar el menú.<br><br>Revisá la conexión con Supabase.</div>';
+  return;
+ }
+
  const uniqueItems=new Map();
- (data||[]).forEach(category=>(Array.isArray(category.menu_items)?category.menu_items:[]).filter(item=>item.available).sort((a,b)=>(a.sort_order||0)-(b.sort_order||0)).forEach(item=>{const name=String(item.name||"").trim().toLowerCase();if(name&&!uniqueItems.has(name))uniqueItems.set(name,{...item,category_id:category.id,category_name:category.name})}));
- menuItems=Array.from(uniqueItems.values());renderMenu(data||[])
-}
-function renderMenu(categories){
- menuContainer.innerHTML="";const renderedNames=new Set();
- const usableCategories=[];
- categories.forEach(category=>{
-  const items=(Array.isArray(category.menu_items)?category.menu_items:[]).filter(item=>item.available).sort((a,b)=>(a.sort_order||0)-(b.sort_order||0)).filter(item=>{
-   const name=String(item.name||"").trim().toLowerCase();
-   if(!name||renderedNames.has(name)||!menuItems.some(menuItem=>menuItem.id===item.id))return false;
-   renderedNames.add(name);return true
-  });
-  if(items.length)usableCategories.push({category,items})
+
+ (data||[]).forEach(category=>{
+  (Array.isArray(category.menu_items)?category.menu_items:[])
+   .filter(item=>item.available)
+   .sort((a,b)=>(a.sort_order||0)-(b.sort_order||0))
+   .forEach(item=>{
+    const name=String(item.name||"").trim().toLowerCase();
+    if(name&&!uniqueItems.has(name)){
+     uniqueItems.set(name,{...item,category_id:category.id,category_name:category.name});
+    }
+   });
  });
+
+ menuItems=Array.from(uniqueItems.values());
+ renderMenu(data||[]);
+}
+
+function renderMenu(categories){
+ menuContainer.innerHTML="";
+ const renderedNames=new Set();
+ const usableCategories=[];
+
+ categories.forEach(category=>{
+  const items=(Array.isArray(category.menu_items)?category.menu_items:[])
+   .filter(item=>item.available)
+   .sort((a,b)=>(a.sort_order||0)-(b.sort_order||0))
+   .filter(item=>{
+    const name=String(item.name||"").trim().toLowerCase();
+    if(!name||renderedNames.has(name)||!menuItems.some(menuItem=>menuItem.id===item.id))return false;
+    renderedNames.add(name);
+    return true;
+   });
+
+  if(items.length)usableCategories.push({category,items});
+ });
+
  usableCategories.forEach(({category,items})=>{
-  const element=document.createElement("div");element.className="menu-category";
-  element.innerHTML=`<button class="menu-category-header" type="button" aria-expanded="false"><div class="menu-category-title"><div class="menu-category-icon">${getCategoryIcon(category.name)}</div><div><div class="menu-category-name">${escapeHtml(category.name)}</div>${category.description?`<span class="menu-category-description">${escapeHtml(category.description)}</span>`:""}</div></div><span class="menu-category-toggle">+</span></button><div class="menu-category-content"><div class="menu-category-inner"><div class="menu-category-items">${items.map(item=>`<div class="menu-item"><div><h4>${escapeHtml(item.name)}</h4><p>${escapeHtml(item.description||"")}</p><div class="menu-actions"><button class="add-btn" type="button" onclick="addToCart(${Number(item.id)})">+ Agregar al pedido</button></div></div><div class="menu-price">${formatPrice(item.price)}</div></div>`).join("")}</div></div></div>`;
+  const element=document.createElement("div");
+  element.className="menu-category";
+
+  element.innerHTML=`
+   <button class="menu-category-header" type="button" aria-expanded="false">
+    <div class="menu-category-title">
+     <div class="menu-category-icon">${getCategoryIcon(category.name)}</div>
+     <div>
+      <div class="menu-category-name">${escapeHtml(category.name)}</div>
+      ${category.description?`<span class="menu-category-description">${escapeHtml(category.description)}</span>`:""}
+     </div>
+    </div>
+    <span class="menu-category-toggle">+</span>
+   </button>
+   <div class="menu-category-content">
+    <div class="menu-category-inner">
+     <div class="menu-category-items">
+      ${items.map(item=>`
+       <div class="menu-item">
+        <div>
+         <h4>${escapeHtml(item.name)}</h4>
+         <p>${escapeHtml(item.description||"")}</p>
+         <div class="menu-actions">
+          <button class="add-btn" type="button" onclick="addToCart(${Number(item.id)})">+ Agregar al pedido</button>
+         </div>
+        </div>
+        <div class="menu-price">${formatPrice(item.price)}</div>
+       </div>`).join("")}
+     </div>
+    </div>
+   </div>`;
+
   const button=element.querySelector(".menu-category-header");
+
   button.addEventListener("click",()=>{
    const active=element.classList.contains("active");
-   document.querySelectorAll(".menu-category.active").forEach(open=>{open.classList.remove("active");const b=open.querySelector(".menu-category-header");if(b)b.setAttribute("aria-expanded","false");const t=open.querySelector(".menu-category-toggle");if(t)t.textContent="+"});
-   if(!active){element.classList.add("active");button.setAttribute("aria-expanded","true");element.querySelector(".menu-category-toggle").textContent="−"}
+
+   document.querySelectorAll(".menu-category.active").forEach(open=>{
+    open.classList.remove("active");
+    const b=open.querySelector(".menu-category-header");
+    if(b)b.setAttribute("aria-expanded","false");
+    const t=open.querySelector(".menu-category-toggle");
+    if(t)t.textContent="+";
+   });
+
+   if(!active){
+    element.classList.add("active");
+    button.setAttribute("aria-expanded","true");
+    element.querySelector(".menu-category-toggle").textContent="−";
+   }
   });
-  menuContainer.appendChild(element)
+
+  menuContainer.appendChild(element);
  });
- if(!menuContainer.children.length)menuContainer.innerHTML='<div class="menu-error">No hay productos disponibles en este momento.</div>'
+
+ if(!menuContainer.children.length){
+  menuContainer.innerHTML='<div class="menu-error">No hay productos disponibles en este momento.</div>';
+ }
 }
+
 window.addToCart=function(itemId){
+ if(currentRole==="restaurant"){
+  showToast("El panel del restaurante es solo para consultar pedidos.");
+  return;
+ }
+
  const product=menuItems.find(item=>Number(item.id)===Number(itemId));
- if(!product){showToast("No encontramos ese producto.");return}
+
+ if(!product){
+  showToast("No encontramos ese producto.");
+  return;
+ }
+
  const existing=cart.find(item=>Number(item.id)===Number(itemId));
- if(existing)existing.quantity++;else cart.push({id:Number(product.id),name:product.name,price:Number(product.price),quantity:1});
- renderCart();openCart();showToast(`${product.name} agregado al pedido`)
+
+ if(existing)existing.quantity++;
+ else cart.push({id:Number(product.id),name:product.name,price:Number(product.price),quantity:1});
+
+ renderCart();
+ openCart();
+ showToast(`${product.name} agregado al pedido`);
 };
+
 function renderCart(){
  if(!cart.length){
-  cartItems.innerHTML='<div class="empty-cart">Tu carrito está vacío.</div>';cartCount.textContent="0";cartTotal.textContent=formatPrice(0);checkoutButton.disabled=false;checkoutButton.textContent=editingOrderId?"Guardar cambios":"Confirmar pedido";cartEditingLabel.style.display=editingOrderId?"block":"none";checkoutButton.classList.toggle("editing",Boolean(editingOrderId));return
+  cartItems.innerHTML='<div class="empty-cart">Tu carrito está vacío.</div>';
+  cartCount.textContent="0";
+  cartTotal.textContent=formatPrice(0);
+  checkoutButton.disabled=false;
+  checkoutButton.textContent=editingOrderId?"Guardar cambios":"Confirmar pedido";
+  cartEditingLabel.style.display=editingOrderId?"block":"none";
+  checkoutButton.classList.toggle("editing",Boolean(editingOrderId));
+  return;
  }
- let total=0,quantityTotal=0;cartItems.innerHTML="";
+
+ let total=0;
+ let quantityTotal=0;
+ cartItems.innerHTML="";
+
  cart.forEach(item=>{
-  const subtotal=Number(item.price)*Number(item.quantity);total+=subtotal;quantityTotal+=Number(item.quantity);
-  const element=document.createElement("div");element.className="cart-item";
-  element.innerHTML=`<div class="cart-item-top"><div><div class="cart-item-name">${escapeHtml(item.name)}</div><small>${formatPrice(item.price)} c/u</small></div><div class="cart-item-price">${formatPrice(subtotal)}</div></div><div class="quantity-controls"><button type="button" aria-label="Restar una unidad" onclick="changeQuantity(${item.id},-1)">−</button><strong>${item.quantity}</strong><button type="button" aria-label="Agregar una unidad" onclick="changeQuantity(${item.id},1)">+</button><button type="button" aria-label="Eliminar producto" onclick="removeFromCart(${item.id})" style="margin-left:auto;border-color:#999;color:#777">×</button></div>`;
-  cartItems.appendChild(element)
+  const subtotal=Number(item.price)*Number(item.quantity);
+  total+=subtotal;
+  quantityTotal+=Number(item.quantity);
+
+  const element=document.createElement("div");
+  element.className="cart-item";
+  element.innerHTML=`
+   <div class="cart-item-top">
+    <div>
+     <div class="cart-item-name">${escapeHtml(item.name)}</div>
+     <small>${formatPrice(item.price)} c/u</small>
+    </div>
+    <div class="cart-item-price">${formatPrice(subtotal)}</div>
+   </div>
+   <div class="quantity-controls">
+    <button type="button" aria-label="Restar una unidad" onclick="changeQuantity(${item.id},-1)">−</button>
+    <strong>${item.quantity}</strong>
+    <button type="button" aria-label="Agregar una unidad" onclick="changeQuantity(${item.id},1)">+</button>
+    <button type="button" aria-label="Eliminar producto" onclick="removeFromCart(${item.id})" style="margin-left:auto;border-color:#999;color:#777">×</button>
+   </div>`;
+
+  cartItems.appendChild(element);
  });
- cartCount.textContent=quantityTotal;cartTotal.textContent=formatPrice(total);checkoutButton.textContent=editingOrderId?"Guardar cambios":"Confirmar pedido";checkoutButton.classList.toggle("editing",Boolean(editingOrderId));cartEditingLabel.style.display=editingOrderId?"block":"none"
+
+ cartCount.textContent=quantityTotal;
+ cartTotal.textContent=formatPrice(total);
+ checkoutButton.textContent=editingOrderId?"Guardar cambios":"Confirmar pedido";
+ checkoutButton.classList.toggle("editing",Boolean(editingOrderId));
+ cartEditingLabel.style.display=editingOrderId?"block":"none";
 }
-window.changeQuantity=function(itemId,change){const item=cart.find(item=>Number(item.id)===Number(itemId));if(!item)return;item.quantity+=Number(change);if(item.quantity<=0)cart=cart.filter(item=>Number(item.id)!==Number(itemId));renderCart()};
-window.removeFromCart=function(itemId){cart=cart.filter(item=>Number(item.id)!==Number(itemId));renderCart()};
-function openCart(){cartOverlay.classList.add("active");document.body.classList.add("no-scroll")}
-function closeCart(){cartOverlay.classList.remove("active");document.body.classList.remove("no-scroll")}
+
+window.changeQuantity=function(itemId,change){
+ if(currentRole==="restaurant")return;
+ const item=cart.find(item=>Number(item.id)===Number(itemId));
+ if(!item)return;
+ item.quantity+=Number(change);
+ if(item.quantity<=0)cart=cart.filter(item=>Number(item.id)!==Number(itemId));
+ renderCart();
+};
+
+window.removeFromCart=function(itemId){
+ if(currentRole==="restaurant")return;
+ cart=cart.filter(item=>Number(item.id)!==Number(itemId));
+ renderCart();
+};
+
+function openCart(){
+ if(currentRole==="restaurant")return;
+ cartOverlay.classList.add("active");
+ document.body.classList.add("no-scroll");
+}
+
+function closeCart(){
+ cartOverlay.classList.remove("active");
+ if(!authModal.classList.contains("active"))document.body.classList.remove("no-scroll");
+}
+
 document.getElementById("openCart").addEventListener("click",openCart);
 document.getElementById("heroCart").addEventListener("click",openCart);
 document.getElementById("closeCart").addEventListener("click",closeCart);
-cartOverlay.addEventListener("click",event=>{if(event.target===cartOverlay)closeCart()});
-function cancelOrderEditing(){editingOrderId=null;cart=[];renderCart();closeCart();showToast("Edición cancelada.")}
+
+cartOverlay.addEventListener("click",event=>{
+ if(event.target===cartOverlay)closeCart();
+});
+
+function cancelOrderEditing(){
+ editingOrderId=null;
+ cart=[];
+ renderCart();
+ closeCart();
+ showToast("Edición cancelada.");
+}
+
 window.editOrder=function(orderId){
- if(!currentUser){prepareLogin();openAuth();return}
+ if(currentRole==="restaurant"){
+  showToast("Desde el panel del restaurante no se editan pedidos.");
+  return;
+ }
+
+ if(!currentUser){
+  prepareLogin();
+  openAuth();
+  return;
+ }
+
  const order=myOrders.find(item=>String(item.id)===String(orderId));
- if(!order){showToast("No encontramos ese pedido.");return}
- if(order.user_id!==currentUser.id){showToast("No podés editar este pedido.");return}
- if(!isOrderEditable(order)){showToast("Este pedido ya fue aceptado y no se puede editar.");return}
+
+ if(!order){
+  showToast("No encontramos ese pedido.");
+  return;
+ }
+
+ if(order.user_id!==currentUser.id){
+  showToast("No podés editar este pedido.");
+  return;
+ }
+
+ if(!isOrderEditable(order)){
+  showToast("Este pedido ya fue aceptado y no se puede editar.");
+  return;
+ }
+
  const products=Array.isArray(order.order_items)?order.order_items:[];
- if(!products.length){showToast("Este pedido no tiene productos para editar.");return}
+
+ if(!products.length){
+  showToast("Este pedido no tiene productos para editar.");
+  return;
+ }
+
  editingOrderId=Number(order.id);
- cart=products.map(product=>({id:Number(product.menu_item_id),name:product.product_name,price:Number(product.unit_price),quantity:Number(product.quantity)})).filter(item=>item.id&&item.quantity>0);
- renderCart();openCart();showToast(`Editando pedido #${order.id}`)
+ cart=products.map(product=>({
+  id:Number(product.menu_item_id),
+  name:product.product_name,
+  price:Number(product.unit_price),
+  quantity:Number(product.quantity)
+ })).filter(item=>item.id&&item.quantity>0);
+
+ renderCart();
+ openCart();
+ showToast(`Editando pedido #${order.id}`);
 };
-function openAuth(){authModal.classList.add("active");document.body.classList.add("no-scroll")}
-function closeAuth(){authModal.classList.remove("active");document.body.classList.remove("no-scroll")}
+
+function openAuth(){
+ if(currentRole==="restaurant")return;
+ authModal.classList.add("active");
+ document.body.classList.add("no-scroll");
+}
+
+function closeAuth(){
+ authModal.classList.remove("active");
+ if(!cartOverlay.classList.contains("active"))document.body.classList.remove("no-scroll");
+}
+
 document.getElementById("closeAuth").addEventListener("click",closeAuth);
-function prepareLogin(){authMode="login";authTitle.textContent="Ingresar";authDescription.textContent="Ingresá para confirmar tu pedido.";authSubmit.textContent="Ingresar";authSwitchText.textContent="¿No tenés cuenta?";authSwitch.textContent="Crear cuenta";nameGroup.style.display="none";authName.required=false}
-function prepareRegister(){authMode="register";authTitle.textContent="Crear cuenta";authDescription.textContent="Creá tu cuenta para realizar pedidos.";authSubmit.textContent="Crear cuenta";authSwitchText.textContent="¿Ya tenés cuenta?";authSwitch.textContent="Ingresar";nameGroup.style.display="block";authName.required=true}
-authSwitch.addEventListener("click",()=>authMode==="login"?prepareRegister():prepareLogin());
+
+function prepareLogin(){
+ authMode="login";
+ authTitle.textContent="Ingresar";
+ authDescription.textContent="Ingresá para confirmar tu pedido.";
+ authSubmit.textContent="Ingresar";
+ authSwitchText.textContent="¿No tenés cuenta?";
+ authSwitch.textContent="Crear cuenta";
+ nameGroup.style.display="none";
+ authName.required=false;
+ document.getElementById("authPassword").autocomplete="current-password";
+}
+
+function prepareRegister(){
+ authMode="register";
+ authTitle.textContent="Crear cuenta";
+ authDescription.textContent="Creá tu cuenta para realizar pedidos.";
+ authSubmit.textContent="Crear cuenta";
+ authSwitchText.textContent="¿Ya tenés cuenta?";
+ authSwitch.textContent="Ingresar";
+ nameGroup.style.display="block";
+ authName.required=true;
+ document.getElementById("authPassword").autocomplete="new-password";
+}
+
+authSwitch.addEventListener("click",()=>{
+ authMode==="login"?prepareRegister():prepareLogin();
+});
+
 authForm.addEventListener("submit",async event=>{
- event.preventDefault();const name=authName.value.trim();const email=document.getElementById("authEmail").value.trim();const password=document.getElementById("authPassword").value;authSubmit.disabled=true;authSubmit.textContent="Procesando...";
+ event.preventDefault();
+
+ if(authRequestInProgress)return;
+ authRequestInProgress=true;
+
+ const name=authName.value.trim();
+ const email=document.getElementById("authEmail").value.trim();
+ const password=document.getElementById("authPassword").value;
+
+ authSubmit.disabled=true;
+ authSubmit.textContent="Procesando...";
+
  try{
   if(authMode==="register"){
    if(name.length<2)throw new Error("Ingresá tu nombre.");
    if(password.length<6)throw new Error("La contraseña debe tener al menos 6 caracteres.");
-   const{data,error}=await supabaseClient.auth.signUp({email,password,options:{data:{full_name:name}}});if(error)throw error;
-   if(!data.session){alert("Cuenta creada correctamente.\n\nRevisá tu email para confirmar la cuenta antes de ingresar.");authForm.reset();prepareLogin();closeAuth()}
-   else{currentUser=data.user;await loadCurrentUser();await loadMyOrders();authForm.reset();closeAuth()}
+
+   const{data,error}=await supabaseClient.auth.signUp({
+    email,
+    password,
+    options:{data:{full_name:name}}
+   });
+
+   if(error)throw error;
+
+   if(!data.session){
+    alert("Cuenta creada correctamente.\n\nRevisá tu email para confirmar la cuenta antes de ingresar.");
+    authForm.reset();
+    prepareLogin();
+    closeAuth();
+   }else{
+    currentUser=data.user;
+    await loadCurrentUser();
+    authForm.reset();
+    closeAuth();
+
+    if(currentRole==="restaurant")await loadRestaurantOrders();
+    else if(currentRole==="customer")await loadMyOrders();
+    else showToast("No pudimos verificar el perfil de tu cuenta.");
+   }
   }else{
-   const{data,error}=await supabaseClient.auth.signInWithPassword({email,password});if(error)throw error;currentUser=data.user;await loadCurrentUser();await loadMyOrders();authForm.reset();closeAuth()
+   const{data,error}=await supabaseClient.auth.signInWithPassword({email,password});
+   if(error)throw error;
+
+   currentUser=data.user;
+   await loadCurrentUser();
+   authForm.reset();
+   closeAuth();
+
+   if(currentRole==="restaurant")await loadRestaurantOrders();
+   else if(currentRole==="customer")await loadMyOrders();
+   else showToast("No pudimos verificar el perfil de tu cuenta.");
   }
- }catch(error){console.error("Error de autenticación:",error);alert("No pudimos completar la operación:\n\n"+error.message)}
- finally{authSubmit.disabled=false;authSubmit.textContent=authMode==="login"?"Ingresar":"Crear cuenta"}
+ }catch(error){
+  console.error("Error de autenticación:",error);
+  alert("No pudimos completar la operación:\n\n"+(error.message||"Error desconocido."));
+ }finally{
+  authRequestInProgress=false;
+  authSubmit.disabled=false;
+  authSubmit.textContent=authMode==="login"?"Ingresar":"Crear cuenta";
+ }
 });
+
 async function loadCurrentUser(){
  const{data,error}=await supabaseClient.auth.getUser();
- if(error||!data.user){currentUser=null;userBar.style.display="none";return}
+
+ if(error||!data.user){
+  currentUser=null;
+  currentRole=null;
+  userBar.style.display="none";
+  setOwnerMode(false);
+  return;
+ }
+
  currentUser=data.user;
- const{data:profile,error:profileError}=await supabaseClient.from("profiles").select("full_name,role").eq("id",currentUser.id).maybeSingle();
- if(profileError)console.warn("No se pudo cargar el perfil:",profileError);
- let displayName=profile?.full_name||currentUser.user_metadata?.full_name||currentUser.email;
- if(profile?.role==="restaurant")displayName+=" · Restaurante";
- userName.textContent=displayName;userBar.style.display="flex"
+
+ const{data:profile,error:profileError}=await supabaseClient
+  .from("profiles")
+  .select("full_name,role")
+  .eq("id",currentUser.id)
+  .maybeSingle();
+
+ if(profileError){
+  console.error("No se pudo verificar el perfil:",profileError);
+  currentRole=null;
+  userName.textContent="No se pudo verificar el perfil";
+  userBar.style.display="flex";
+  setOwnerMode(false);
+  return;
+ }
+
+ if(!profile){
+  currentRole=null;
+  userName.textContent="Perfil no encontrado";
+  userBar.style.display="flex";
+  setOwnerMode(false);
+  return;
+ }
+
+ currentRole=profile.role;
+
+ let displayName=profile.full_name||currentUser.user_metadata?.full_name||currentUser.email||"Usuario";
+
+ if(currentRole==="restaurant")displayName+=" · Restaurante";
+
+ userName.textContent=displayName;
+ userBar.style.display="flex";
+ setOwnerMode(currentRole==="restaurant");
 }
+
 document.getElementById("logoutBtn").addEventListener("click",async()=>{
  const{error}=await supabaseClient.auth.signOut({scope:"local"});
- if(error){console.error("Error cerrando sesión:",error);showToast("No se pudo cerrar la sesión.");return}
- currentUser=null;myOrders=[];editingOrderId=null;cart=[];userBar.style.display="none";renderCart();renderLoggedOutOrders();showToast("Sesión cerrada correctamente")
+
+ if(error){
+  console.error("Error cerrando sesión:",error);
+  showToast("No se pudo cerrar la sesión.");
+  return;
+ }
+
+ currentUser=null;
+ currentRole=null;
+ myOrders=[];
+ editingOrderId=null;
+ cart=[];
+ userBar.style.display="none";
+ setOwnerMode(false);
+ renderCart();
+ renderLoggedOutOrders();
+ showToast("Sesión cerrada correctamente");
 });
+
 async function loadMyOrders(){
- if(!currentUser){renderLoggedOutOrders();return}
+ if(currentRole==="restaurant"){
+  await loadRestaurantOrders();
+  return;
+ }
+
+ if(!currentUser||currentRole!=="customer"){
+  renderLoggedOutOrders();
+  return;
+ }
+
  ordersContainer.innerHTML='<div class="orders-empty"><div class="orders-empty-icon">⏳</div><h3>Cargando tus pedidos...</h3></div>';
- const{data:orders,error}=await supabaseClient.from("orders").select("id,user_id,customer_name,customer_email,total,status,notes,created_at,updated_at,order_items(id,menu_item_id,product_name,quantity,unit_price,subtotal,created_at)").eq("user_id",currentUser.id).order("created_at",{ascending:false});
- if(error){console.error("Error cargando pedidos:",error);ordersContainer.innerHTML=`<div class="orders-empty"><div class="orders-empty-icon">⚠️</div><h3>No pudimos cargar tus pedidos</h3><p>${escapeHtml(error.message)}</p></div>`;return}
+
+ const{data:orders,error}=await supabaseClient
+  .from("orders")
+  .select("id,user_id,customer_name,customer_email,total,status,notes,created_at,updated_at,order_items(id,menu_item_id,product_name,quantity,unit_price,subtotal,created_at)")
+  .eq("user_id",currentUser.id)
+  .order("created_at",{ascending:false});
+
+ if(error){
+  console.error("Error cargando pedidos:",error);
+  ordersContainer.innerHTML=`<div class="orders-empty"><div class="orders-empty-icon">⚠️</div><h3>No pudimos cargar tus pedidos</h3><p>${escapeHtml(error.message)}</p></div>`;
+  return;
+ }
+
  myOrders=(orders||[]).filter(order=>order.user_id===currentUser.id);
- if(!myOrders.length){ordersContainer.innerHTML='<div class="orders-empty"><div class="orders-empty-icon">🍽️</div><h3>Todavía no hiciste ningún pedido</h3><p>Cuando hagas tu primera compra, aparecerá acá.</p></div>';return}
- renderMyOrders(myOrders)
+
+ if(!myOrders.length){
+  ordersContainer.innerHTML='<div class="orders-empty"><div class="orders-empty-icon">🍽️</div><h3>Todavía no hiciste ningún pedido</h3><p>Cuando hagas tu primera compra, aparecerá acá.</p></div>';
+  return;
+ }
+
+ renderMyOrders(myOrders);
 }
-function renderMyOrders(orders){ordersContainer.innerHTML=`<div class="orders-list">${orders.map(renderOrderCard).join("")}</div>`}
+
+async function loadRestaurantOrders(showMessage=false){
+ if(!currentUser||currentRole!=="restaurant"){
+  ownerPanel.style.display="none";
+  return;
+ }
+
+ ownerOrdersContainer.innerHTML='<div class="owner-empty">⏳ Cargando pedidos...</div>';
+ refreshOwnerOrdersButton.disabled=true;
+ refreshOwnerOrdersButton.textContent="Cargando...";
+
+ try{
+  const{data:orders,error}=await supabaseClient
+   .from("orders")
+   .select("id,user_id,customer_name,customer_email,total,status,notes,created_at,updated_at,order_items(id,menu_item_id,product_name,quantity,unit_price,subtotal,created_at)")
+   .order("created_at",{ascending:false});
+
+  if(error)throw error;
+
+  const allOrders=orders||[];
+  const received=allOrders.filter(order=>order.status==="received").length;
+  const inProgress=allOrders.filter(order=>["accepted","preparing"].includes(order.status)).length;
+  const readyOrDelivered=allOrders.filter(order=>["ready","delivered"].includes(order.status)).length;
+
+  ownerOrdersSummary.innerHTML=`
+   <div class="owner-summary-card"><span>Total de pedidos</span><strong>${allOrders.length}</strong></div>
+   <div class="owner-summary-card"><span>Recibidos</span><strong>${received}</strong></div>
+   <div class="owner-summary-card"><span>En gestión</span><strong>${inProgress}</strong></div>
+   <div class="owner-summary-card"><span>Listos / entregados</span><strong>${readyOrDelivered}</strong></div>`;
+
+  if(!allOrders.length){
+   ownerOrdersContainer.innerHTML=`
+    <div class="owner-empty">
+     <div style="font-size:40px;margin-bottom:12px">🍽️</div>
+     <h3 style="font-family:'Cormorant Garamond',serif;font-size:30px;color:#5A1F24">Todavía no hay pedidos</h3>
+     <p>Cuando un cliente realice un pedido, aparecerá acá.</p>
+    </div>`;
+   if(showMessage)showToast("Pedidos actualizados.");
+   return;
+  }
+
+  ownerOrdersContainer.innerHTML=allOrders.map(renderRestaurantOrder).join("");
+
+  if(showMessage)showToast("Pedidos actualizados correctamente.");
+ }catch(error){
+  console.error("Error cargando pedidos del restaurante:",error);
+  ownerOrdersSummary.innerHTML="";
+  ownerOrdersContainer.innerHTML=`
+   <div class="owner-empty">
+    <h3 style="color:#9b3c32;margin-bottom:8px">No pudimos cargar los pedidos</h3>
+    <p>${escapeHtml(error.message||"Error desconocido.")}</p>
+    <p style="margin-top:10px;font-size:12px">Verificá que el perfil tenga el rol restaurant y que las políticas RLS de Supabase permitan consultar los pedidos al restaurante.</p>
+   </div>`;
+ }finally{
+  refreshOwnerOrdersButton.disabled=false;
+  refreshOwnerOrdersButton.textContent="↻ Actualizar pedidos";
+ }
+}
+
+function renderRestaurantOrder(order){
+ const status=getOrderStatus(order.status);
+ const date=new Date(order.created_at);
+
+ const dateText=Number.isNaN(date.getTime())
+  ?"Fecha no disponible"
+  :date.toLocaleDateString("es-AR",{day:"2-digit",month:"2-digit",year:"numeric"});
+
+ const timeText=Number.isNaN(date.getTime())
+  ?""
+  :date.toLocaleTimeString("es-AR",{hour:"2-digit",minute:"2-digit"});
+
+ const products=Array.isArray(order.order_items)?order.order_items:[];
+ const customerName=order.customer_name||"Cliente sin nombre";
+ const customerEmail=order.customer_email||"Email no disponible";
+
+ return `
+  <article class="owner-order-card">
+   <div class="owner-order-head">
+    <div>
+     <h3>Pedido #${escapeHtml(order.id)}</h3>
+     <div class="owner-order-date">${dateText}${timeText?" · "+timeText:""}</div>
+    </div>
+    <div class="owner-order-status">${status.icon} ${escapeHtml(status.name)}</div>
+   </div>
+   <div class="owner-order-customer">
+    <strong>Cliente:</strong> ${escapeHtml(customerName)}<br>
+    <strong>Email:</strong> ${escapeHtml(customerEmail)}
+   </div>
+   <div class="owner-order-products">
+    ${products.length?products.map(product=>`
+     <div class="owner-order-product">
+      <div>
+       <strong>${escapeHtml(product.product_name||"Producto")}</strong>
+       <small>${Number(product.quantity)||0} × ${formatPrice(product.unit_price)}</small>
+      </div>
+      <strong>${formatPrice(product.subtotal??(Number(product.quantity||0)*Number(product.unit_price||0)))}</strong>
+     </div>`).join(""):'<p style="padding:15px 0;color:#9b3c32">Este pedido no tiene productos asociados.</p>'}
+   </div>
+   ${order.notes?`<div class="owner-order-note"><strong>Nota del cliente:</strong> ${escapeHtml(order.notes)}</div>`:""}
+   <div class="owner-order-total">
+    <span>Total del pedido</span>
+    <strong>${formatPrice(order.total)}</strong>
+   </div>
+  </article>`;
+}
+
+refreshOwnerOrdersButton.addEventListener("click",()=>loadRestaurantOrders(true));
+
+function renderMyOrders(orders){
+ ordersContainer.innerHTML=`<div class="orders-list">${orders.map(renderOrderCard).join("")}</div>`;
+}
+
 function renderOrderCard(order){
- const status=getOrderStatus(order.status);const date=new Date(order.created_at);
- const dateText=date.toLocaleDateString("es-AR",{day:"2-digit",month:"2-digit",year:"numeric"});
- const timeText=date.toLocaleTimeString("es-AR",{hour:"2-digit",minute:"2-digit"});
+ const status=getOrderStatus(order.status);
+ const date=new Date(order.created_at);
+ const dateText=Number.isNaN(date.getTime())?"Fecha no disponible":date.toLocaleDateString("es-AR",{day:"2-digit",month:"2-digit",year:"numeric"});
+ const timeText=Number.isNaN(date.getTime())?"":date.toLocaleTimeString("es-AR",{hour:"2-digit",minute:"2-digit"});
  const products=Array.isArray(order.order_items)?order.order_items:[];
  const editable=isOrderEditable(order);
- return `<article class="order-card" data-order-id="${Number(order.id)}">
- <div class="order-card-header"><div><div class="order-number">Pedido #${Number(order.id)}</div><div class="order-date">${dateText} · ${timeText}</div></div><div class="order-status">${status.icon} ${escapeHtml(status.name)}</div></div>
- <div class="order-products">${products.length?products.map(product=>`<div class="order-product"><div><div class="order-product-name">${escapeHtml(product.product_name)}</div><div class="order-product-detail">${Number(product.quantity)} × ${formatPrice(product.unit_price)}</div></div><div class="order-product-subtotal">${formatPrice(product.subtotal)}</div></div>`).join(""):'<div class="orders-empty">No se encontraron productos en este pedido.</div>'}</div>
- ${order.notes?`<div style="padding:0 25px 20px;color:var(--muted);font-size:13px"><strong>Nota:</strong> ${escapeHtml(order.notes)}</div>`:""}
- <div class="order-card-footer"><div><span class="order-total-label">Total del pedido</span><br><strong class="order-total">${formatPrice(order.total)}</strong></div>
- <div class="order-actions">
- ${editable?`<button class="order-edit-btn" type="button" onclick="editOrder(${Number(order.id)})">✏️ Editar pedido</button>`:`<span class="order-edit-locked">${order.status==="cancelled"?"Pedido cancelado":"Edición bloqueada porque el restaurante ya lo está gestionando."}</span>`}
- <button class="order-delete-btn" type="button" data-delete-order="${Number(order.id)}" onclick="deleteOrder(${Number(order.id)})">🗑️ Eliminar pedido</button>
- </div></div></article>`
+
+ return `
+  <article class="order-card" data-order-id="${Number(order.id)}">
+   <div class="order-card-header">
+    <div>
+     <div class="order-number">Pedido #${Number(order.id)}</div>
+     <div class="order-date">${dateText}${timeText?" · "+timeText:""}</div>
+    </div>
+    <div class="order-status">${status.icon} ${escapeHtml(status.name)}</div>
+   </div>
+   <div class="order-products">
+    ${products.length?products.map(product=>`
+     <div class="order-product">
+      <div>
+       <div class="order-product-name">${escapeHtml(product.product_name||"Producto")}</div>
+       <div class="order-product-detail">${Number(product.quantity)} × ${formatPrice(product.unit_price)}</div>
+      </div>
+      <div class="order-product-subtotal">${formatPrice(product.subtotal)}</div>
+     </div>`).join(""):'<div class="orders-empty">No se encontraron productos en este pedido.</div>'}
+   </div>
+   ${order.notes?`<div style="padding:0 25px 20px;color:var(--muted);font-size:13px"><strong>Nota:</strong> ${escapeHtml(order.notes)}</div>`:""}
+   <div class="order-card-footer">
+    <div>
+     <span class="order-total-label">Total del pedido</span><br>
+     <strong class="order-total">${formatPrice(order.total)}</strong>
+    </div>
+    <div class="order-actions">
+     ${editable?`<button class="order-edit-btn" type="button" onclick="editOrder(${Number(order.id)})">✏️ Editar pedido</button>`:`<span class="order-edit-locked">${order.status==="cancelled"?"Pedido cancelado":"Edición bloqueada porque el restaurante ya lo está gestionando."}</span>`}
+     <button class="order-delete-btn" type="button" data-delete-order="${Number(order.id)}" onclick="deleteOrder(${Number(order.id)})">🗑️ Eliminar pedido</button>
+    </div>
+   </div>
+  </article>`;
 }
+
 function renderLoggedOutOrders(){
- ordersContainer.innerHTML='<div class="orders-login"><div class="orders-empty-icon">🍷</div><h3>Ingresá para ver tus pedidos</h3><p>Una vez que hayas iniciado sesión vas a poder consultar todo lo que compraste.</p><button class="btn btn-primary" id="ordersLoginBtn" type="button">Iniciar sesión</button></div>';
+ ordersContainer.innerHTML=`
+  <div class="orders-login">
+   <div class="orders-empty-icon">🍷</div>
+   <h3>Ingresá para ver tus pedidos</h3>
+   <p>Una vez que hayas iniciado sesión vas a poder consultar todo lo que compraste.</p>
+   <button class="btn btn-primary" id="ordersLoginBtn" type="button">Iniciar sesión</button>
+  </div>`;
+
  const button=document.getElementById("ordersLoginBtn");
- if(button)button.addEventListener("click",()=>{prepareLogin();openAuth()})
+ if(button)button.addEventListener("click",()=>{prepareLogin();openAuth();});
 }
+
 window.deleteOrder=async function(orderId){
- if(!currentUser){showToast("Iniciá sesión para eliminar un pedido.");return}
+ if(currentRole==="restaurant"){
+  showToast("El panel del restaurante es de solo lectura.");
+  return;
+ }
+
+ if(!currentUser||currentRole!=="customer"){
+  showToast("Iniciá sesión para eliminar un pedido.");
+  return;
+ }
+
  const order=myOrders.find(item=>String(item.id)===String(orderId));
- if(!order||order.user_id!==currentUser.id){showToast("No podés eliminar este pedido.");return}
+
+ if(!order||order.user_id!==currentUser.id){
+  showToast("No podés eliminar este pedido.");
+  return;
+ }
+
  if(!window.confirm(`¿Eliminar definitivamente el pedido #${order.id}?\n\nEsta acción no se puede deshacer.`))return;
+
  const button=document.querySelector(`[data-delete-order="${Number(order.id)}"]`);
- if(button){button.disabled=true;button.textContent="Eliminando..."}
+ if(button){button.disabled=true;button.textContent="Eliminando...";}
+
  try{
   const{error}=await supabaseClient.rpc("delete_my_order",{p_order_id:Number(order.id)});
   if(error)throw error;
-  if(String(editingOrderId)===String(order.id)){editingOrderId=null;cart=[];renderCart();closeCart()}
-  await loadMyOrders();showToast(`Pedido #${order.id} eliminado correctamente.`)
+
+  if(String(editingOrderId)===String(order.id)){
+   editingOrderId=null;
+   cart=[];
+   renderCart();
+   closeCart();
+  }
+
+  await loadMyOrders();
+  showToast(`Pedido #${order.id} eliminado correctamente.`);
  }catch(error){
   console.error("Error eliminando el pedido:",error);
   showToast(error.message||"No se pudo eliminar el pedido.");
-  await loadMyOrders()
+  await loadMyOrders();
  }
 };
+
 async function updateExistingOrder(){
  if(!editingOrderId)throw new Error("No hay ningún pedido en edición.");
+
  const order=myOrders.find(item=>String(item.id)===String(editingOrderId));
+
  if(!order)throw new Error("No encontramos el pedido que querés editar.");
  if(order.user_id!==currentUser.id)throw new Error("No podés editar este pedido.");
  if(!isOrderEditable(order))throw new Error("El restaurante ya aceptó este pedido y ya no se puede editar.");
  if(!cart.length)throw new Error("El pedido no puede quedar vacío.");
+
  const total=cart.reduce((sum,item)=>sum+Number(item.price)*Number(item.quantity),0);
- const{data:updatedOrder,error:orderUpdateError}=await supabaseClient.from("orders").update({total,updated_at:new Date().toISOString()}).eq("id",Number(editingOrderId)).eq("user_id",currentUser.id).eq("status","received").select("id").maybeSingle();
+
+ const{data:updatedOrder,error:orderUpdateError}=await supabaseClient
+  .from("orders")
+  .update({total,updated_at:new Date().toISOString()})
+  .eq("id",Number(editingOrderId))
+  .eq("user_id",currentUser.id)
+  .eq("status","received")
+  .select("id")
+  .maybeSingle();
+
  if(orderUpdateError)throw new Error("No pudimos actualizar el pedido: "+orderUpdateError.message);
  if(!updatedOrder)throw new Error("El pedido ya no está disponible para editar.");
- const{error:deleteItemsError}=await supabaseClient.from("order_items").delete().eq("order_id",Number(editingOrderId));
+
+ const{error:deleteItemsError}=await supabaseClient
+  .from("order_items")
+  .delete()
+  .eq("order_id",Number(editingOrderId));
+
  if(deleteItemsError)throw new Error("No pudimos actualizar los productos del pedido: "+deleteItemsError.message);
- const newOrderItems=cart.map(item=>({order_id:Number(editingOrderId),menu_item_id:Number(item.id),product_name:item.name,quantity:Number(item.quantity),unit_price:Number(item.price),subtotal:Number(item.price)*Number(item.quantity)}));
+
+ const newOrderItems=cart.map(item=>({
+  order_id:Number(editingOrderId),
+  menu_item_id:Number(item.id),
+  product_name:item.name,
+  quantity:Number(item.quantity),
+  unit_price:Number(item.price),
+  subtotal:Number(item.price)*Number(item.quantity)
+ }));
+
  const{error:insertItemsError}=await supabaseClient.from("order_items").insert(newOrderItems);
- if(insertItemsError)throw new Error("El total se actualizó, pero no pudimos guardar los nuevos productos: "+insertItemsError.message);
- editingOrderId=null;cart=[];renderCart();closeCart();await loadMyOrders();showToast("¡Pedido actualizado correctamente! 🍷");
- setTimeout(()=>document.getElementById("mis-pedidos").scrollIntoView({behavior:"smooth",block:"start"}),300)
+
+ if(insertItemsError){
+  throw new Error("El total se actualizó, pero no pudimos guardar los nuevos productos: "+insertItemsError.message);
+ }
+
+ editingOrderId=null;
+ cart=[];
+ renderCart();
+ closeCart();
+ await loadMyOrders();
+ showToast("¡Pedido actualizado correctamente! 🍷");
+
+ setTimeout(()=>{
+  document.getElementById("mis-pedidos").scrollIntoView({behavior:"smooth",block:"start"});
+ },300);
 }
+
 checkoutButton.addEventListener("click",async()=>{
+ if(currentRole==="restaurant"){
+  showToast("El panel del restaurante es solo para consultar pedidos.");
+  return;
+ }
+
  if(isSubmittingOrder)return;
- if(!cart.length){alert("Agregá al menos un producto al pedido.");return}
- if(!currentUser){closeCart();prepareLogin();openAuth();return}
- isSubmittingOrder=true;checkoutButton.disabled=true;checkoutButton.textContent=editingOrderId?"Guardando cambios...":"Enviando pedido...";
+
+ if(!cart.length){
+  alert("Agregá al menos un producto al pedido.");
+  return;
+ }
+
+ if(!currentUser){
+  closeCart();
+  prepareLogin();
+  openAuth();
+  return;
+ }
+
+ if(currentRole!=="customer"){
+  showToast("No pudimos verificar tu cuenta. Volvé a iniciar sesión.");
+  return;
+ }
+
+ isSubmittingOrder=true;
+ checkoutButton.disabled=true;
+ checkoutButton.textContent=editingOrderId?"Guardando cambios...":"Enviando pedido...";
+
  try{
-  if(editingOrderId){await updateExistingOrder();return}
+  if(editingOrderId){
+   await updateExistingOrder();
+   return;
+  }
+
   const total=cart.reduce((sum,item)=>sum+Number(item.price)*Number(item.quantity),0);
-  const{data:profile,error:profileError}=await supabaseClient.from("profiles").select("full_name,email").eq("id",currentUser.id).maybeSingle();
+
+  const{data:profile,error:profileError}=await supabaseClient
+   .from("profiles")
+   .select("full_name,email")
+   .eq("id",currentUser.id)
+   .maybeSingle();
+
   if(profileError)console.warn("No se pudo cargar el perfil:",profileError);
+
   const customerName=profile?.full_name||currentUser.user_metadata?.full_name||currentUser.email||"Cliente";
   const customerEmail=profile?.email||currentUser.email||"";
-  const{data:order,error:orderError}=await supabaseClient.from("orders").insert({user_id:currentUser.id,customer_name:customerName,customer_email:customerEmail,status:"received",total}).select().single();
+
+  const{data:order,error:orderError}=await supabaseClient
+   .from("orders")
+   .insert({
+    user_id:currentUser.id,
+    customer_name:customerName,
+    customer_email:customerEmail,
+    status:"received",
+    total
+   })
+   .select()
+   .single();
+
   if(orderError)throw new Error("No pudimos crear el pedido: "+orderError.message);
-  const orderItems=cart.map(item=>({order_id:order.id,menu_item_id:Number(item.id),product_name:item.name,quantity:Number(item.quantity),unit_price:Number(item.price),subtotal:Number(item.price)*Number(item.quantity)}));
+
+  const orderItems=cart.map(item=>({
+   order_id:order.id,
+   menu_item_id:Number(item.id),
+   product_name:item.name,
+   quantity:Number(item.quantity),
+   unit_price:Number(item.price),
+   subtotal:Number(item.price)*Number(item.quantity)
+  }));
+
   const{error:itemsError}=await supabaseClient.from("order_items").insert(orderItems);
-  if(itemsError){console.error("Error guardando order_items:",itemsError);throw new Error("El pedido #"+order.id+" fue creado, pero no pudimos guardar sus productos.\n\n"+itemsError.message)}
-  cart=[];renderCart();closeCart();await loadMyOrders();showToast("¡Pedido enviado correctamente! 🍷");
-  setTimeout(()=>document.getElementById("mis-pedidos").scrollIntoView({behavior:"smooth",block:"start"}),350)
- }catch(error){console.error("Error creando/actualizando pedido:",error);alert(error.message||"No pudimos guardar el pedido.")}
- finally{isSubmittingOrder=false;checkoutButton.disabled=false;checkoutButton.textContent=editingOrderId?"Guardar cambios":"Confirmar pedido"}
+
+  if(itemsError){
+   console.error("Error guardando order_items:",itemsError);
+   throw new Error("El pedido #"+order.id+" fue creado, pero no pudimos guardar sus productos.\n\n"+itemsError.message);
+  }
+
+  cart=[];
+  renderCart();
+  closeCart();
+  await loadMyOrders();
+  showToast("¡Pedido enviado correctamente! 🍷");
+
+  setTimeout(()=>{
+   document.getElementById("mis-pedidos").scrollIntoView({behavior:"smooth",block:"start"});
+  },350);
+ }catch(error){
+  console.error("Error creando/actualizando pedido:",error);
+  alert(error.message||"No pudimos guardar el pedido.");
+ }finally{
+  isSubmittingOrder=false;
+  checkoutButton.disabled=false;
+  checkoutButton.textContent=editingOrderId?"Guardar cambios":"Confirmar pedido";
+ }
 });
-document.getElementById("reservationLogin").addEventListener("click",()=>{if(cart.length)openCart();else document.getElementById("menu").scrollIntoView({behavior:"smooth"})});
+
+document.getElementById("reservationLogin").addEventListener("click",()=>{
+ if(currentRole==="restaurant")return;
+ if(cart.length)openCart();
+ else document.getElementById("menu").scrollIntoView({behavior:"smooth"});
+});
+
 document.querySelectorAll(".faq-item").forEach(item=>{
  const button=item.querySelector(".faq-question");
- button.addEventListener("click",()=>{item.classList.toggle("active");const icon=button.querySelector("span");icon.textContent=item.classList.contains("active")?"−":"+"})
+ button.addEventListener("click",()=>{
+  item.classList.toggle("active");
+  const icon=button.querySelector("span");
+  icon.textContent=item.classList.contains("active")?"−":"+";
+ });
 });
-const header=document.getElementById("header");
-window.addEventListener("scroll",()=>header.classList.toggle("scrolled",window.scrollY>60));
+
+window.addEventListener("scroll",()=>{
+ header.classList.toggle("scrolled",window.scrollY>60);
+});
+
+let authStateChangePending=false;
+
 supabaseClient.auth.onAuthStateChange((event,session)=>{
+ if(authStateChangePending)return;
+ authStateChangePending=true;
+
  setTimeout(async()=>{
-  currentUser=session?.user||null;
-  await loadCurrentUser();
-  if(currentUser)await loadMyOrders();else renderLoggedOutOrders()
- },0)
+  try{
+   currentUser=session?.user||null;
+   await loadCurrentUser();
+
+   if(!currentUser){
+    currentRole=null;
+    myOrders=[];
+    renderLoggedOutOrders();
+    return;
+   }
+
+   if(currentRole==="restaurant"){
+    await loadRestaurantOrders();
+   }else if(currentRole==="customer"){
+    await loadMyOrders();
+   }else{
+    ordersContainer.innerHTML=`
+     <div class="orders-empty">
+      <div class="orders-empty-icon">⚠️</div>
+      <h3>No pudimos verificar tu perfil</h3>
+      <p>Cerrá sesión y volvé a ingresar. Si el problema continúa, revisá el perfil en Supabase.</p>
+     </div>`;
+   }
+  }catch(error){
+   console.error("Error actualizando la sesión:",error);
+  }finally{
+   authStateChangePending=false;
+  }
+ },0);
 });
+
 async function init(){
- renderCart();prepareLogin();await loadMenu();await loadCurrentUser();
- if(currentUser)await loadMyOrders();else renderLoggedOutOrders()
+ renderCart();
+ prepareLogin();
+
+ await loadCurrentUser();
+ await loadMenu();
+
+ if(currentUser&&currentRole==="restaurant"){
+  await loadRestaurantOrders();
+ }else if(currentUser&&currentRole==="customer"){
+  await loadMyOrders();
+ }else if(!currentUser){
+  renderLoggedOutOrders();
+ }else{
+  ordersContainer.innerHTML=`
+   <div class="orders-empty">
+    <div class="orders-empty-icon">⚠️</div>
+    <h3>No pudimos verificar tu perfil</h3>
+    <p>Revisá tu cuenta en Supabase e intentá ingresar nuevamente.</p>
+   </div>`;
+ }
 }
+
 init();
 </script>
 </body>
